@@ -1,5 +1,5 @@
 public class Planet {
-	public double x, y, xVelocity, yVelocity, mass, xNetForce, yNetForce;
+	public double x, y, xVelocity, yVelocity, mass, xNetForce, yNetForce, yAccel, xAccel;
 	public String img;
 
 	public Planet(double xPosition, double yPosition, double startXVelocity,
@@ -58,6 +58,16 @@ public class Planet {
 	}
 	
 	public void draw() {
-		StdDraw.picture(x, y, img);
+		StdDraw.setScale(0.0,10.0);
+		StdDraw.picture(x, y, "images/"+img);
+	}
+	
+	public void update(double dt) {
+		xAccel = xNetForce / mass;
+		yAccel = yNetForce / mass;
+		xVelocity = xVelocity + dt * xAccel;
+		yVelocity = yVelocity + dt * yAccel;
+		x = x + dt * xVelocity;
+		y = y + dt * yVelocity;
 	}
 }
