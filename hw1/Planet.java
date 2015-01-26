@@ -58,7 +58,6 @@ public class Planet {
 	}
 	
 	public void draw() {
-		StdDraw.setScale(0.0,10.0);
 		StdDraw.picture(x, y, "images/"+img);
 	}
 	
