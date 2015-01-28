@@ -43,6 +43,8 @@ public class NBody {
 		    StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
 		    		currentPlanet.x, currentPlanet.y, currentPlanet.xVelocity, currentPlanet.yVelocity, currentPlanet.mass, currentPlanet.img);
 		}
+
+		System.exit(0);
 	}
 	
 	public static Planet getPlanet(In in) {
