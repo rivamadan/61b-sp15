@@ -24,6 +24,8 @@ public class NBody {
 		while (time <= T) {
 			for(int i = 0; i < numPlanets; i += 1) {
 				allPlanets[i].setNetForce(allPlanets);
+			}
+			for(int i = 0; i < numPlanets; i += 1) {
 				allPlanets[i].update(dt);
 			}
 			StdDraw.picture(0, 0, "images/starfield.jpg");
