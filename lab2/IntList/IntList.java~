@@ -70,6 +70,7 @@ public class IntList {
 	}
 	A = A.tail;
     }
+    return B;
   }
 
   /** Returns a list consisting of the elements of A followed by the
