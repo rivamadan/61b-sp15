@@ -58,8 +58,8 @@ public class CalculatorTest {
 
     @Test
     public void testMultiply() {
-        int result8 = tester.multiply(3, 2);
-        assertEquals(6, result8);
+        int result8 = tester.multiply(3, 4);
+        assertEquals(12, result8);
 
         int result10 = tester.multiply(3, 3);
         assertEquals(9, result10);

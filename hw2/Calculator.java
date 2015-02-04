@@ -37,15 +37,31 @@ public class Calculator {
      * @return the product of x and y
      **/
     public int multiply(int x, int y) {
-
-        int product = 0;
-        while (y != 0) {
-            product = add(x, product);
-            y -= 1;
+        if (x == 0 || y == 0) {
+            return 0;
         }
-        return product;
+        int n = findN(y);
+        return add(x << n, multiply(x, y - (1 << n)));
+    
+        // int product = 0;
+        // while (y != 0) {
+        //     product = add(x, product);
+        //     y -= 1;
+        // }
+        // return product;
     }
 
+    /* Finds n in the largest 2^n below x. */
+    private int findN(int x) {
+        int result = 0;
+        for(int i = 0; i < 32; i++) {
+            result = x >> i;
+            if (result == 1) {
+                return i;
+            }
+        }
+        return result;
+    }
 
     /**
      * TASK 5A: CALCULATOR HISTORY - IMPLEMENTING THE HISTORY DATA STRUCTURE
