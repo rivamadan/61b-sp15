@@ -72,7 +72,7 @@ public class IntList {
     	}
     	temp.tail = B;
     	return A;
-	}
+  	}
   }
 
   /** Returns a list consisting of the elements of A followed by the
@@ -104,6 +104,14 @@ public class IntList {
 
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> 97ebda5e930db6b1fe3a92f8cf7e43430c0550d0
   /** DO NOT MODIFY ANYTHING BELOW THIS LINE! In fact, I wouldn't even
     * look below this line since it's likely to confuse you. */
 
