@@ -15,7 +15,7 @@ public class Calculator {
         if (y == 0) {
             return x;
         }
-        int sum, carry;
+        int carry;
         carry = (x & y) << 1;
         return add((x ^ y), carry);
     }
@@ -38,7 +38,6 @@ public class Calculator {
      **/
     public int multiply(int x, int y) {
 
-        // return x << y;
         int product = 0;
         while (y != 0) {
             product = add(x, product);
