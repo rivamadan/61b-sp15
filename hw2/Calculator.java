@@ -84,7 +84,12 @@ public class Calculator {
      * Ex   "1 + 2 = 3"
      **/
     public void printHistory(int n) {
-        // YOUR CODE HERE
+        EquationList copy = input;
+        while (n > 0) {
+            System.out.println(copy.equation + " = " + copy.result);
+            copy = copy.next;
+            n -= 1;
+        }
     }    
 
     /**
@@ -92,7 +97,7 @@ public class Calculator {
      * undoEquation() removes the most recent equation we saved to our history.
     **/
     public void undoEquation() {
-        // YOUR CODE HERE
+        input = input.next;
     }
 
     /**
@@ -100,7 +105,7 @@ public class Calculator {
      * clearHistory() removes all entries in our history.
      **/
     public void clearHistory() {
-        // YOUR CODE HERE
+        input = null;
     }
 
     /**
@@ -110,8 +115,13 @@ public class Calculator {
      * @return the sum of all of the results in history
      **/
     public int cumulativeSum() {
-        // YOUR CODE HERE
-        return -1;
+        EquationList copy = input;
+        int sum = 0;
+        while (copy != null) {
+            sum += copy.result;
+            copy = copy.next;
+        }
+        return sum;
     }
 
     /**
@@ -121,7 +131,12 @@ public class Calculator {
      * @return the product of all of the results in history
      **/
     public int cumulativeProduct() {
-        // YOUR CODE HERE
-        return -1;
+        EquationList copy = input;
+        int product = 1;
+        while (copy != null) {
+            product *= copy.result;
+            copy = copy.next;
+        }
+        return product;
     }
 }

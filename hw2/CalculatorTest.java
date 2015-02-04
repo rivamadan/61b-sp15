@@ -25,8 +25,8 @@ public class CalculatorTest {
     	int result0 = tester.add(2, 3);
     	assertEquals(5, result0);
 
-        // int result13 = tester.add(2147483647, 1);
-        // assertEquals(-2147483648, result13);
+        int result13 = tester.add(2147483647, 1);
+        assertEquals(-2147483648, result13);
     }
 	
 	@Test
