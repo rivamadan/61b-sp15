@@ -41,7 +41,8 @@ public class Calculator {
             return 0;
         }
         int n = findN(y);
-        return add(x << n, multiply(x, y - (1 << n)));
+        y = add(y, add((~(1 << n)), 1));
+        return add(x << n, multiply(x, y));
     	
 	/* very slow version without bitwise operators*/
         // int product = 0;
