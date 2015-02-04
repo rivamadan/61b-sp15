@@ -12,9 +12,21 @@ public class Calculator {
      * @return the sum of x and y
      **/
     public int add(int x, int y) {
-        // YOUR CODE HERE
-        return -1;
+        if (y == 0) {
+            return x;
+        }
+        int sum, carry;
+        carry = (x & y) << 1;
+        return add((x ^ y), carry);
     }
+
+    // private int getBit(int x, int i) {
+    //     return (x >>> i) & (1);
+    // }
+
+    // private int setBit(int x, int i) {
+    //     return x & (1 << i);
+    // }
 
     /**
      * TASK 3: MULTIPLYING WITH BIT OPERATIONS
