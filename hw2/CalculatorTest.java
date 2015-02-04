@@ -24,6 +24,9 @@ public class CalculatorTest {
     public void testAddition() {
     	int result0 = tester.add(2, 3);
     	assertEquals(5, result0);
+
+        // int result13 = tester.add(2147483647, 1);
+        // assertEquals(-2147483648, result13);
     }
 	
 	@Test
@@ -51,6 +54,33 @@ public class CalculatorTest {
 
     	int result7 = tester.add(3, 0);
     	assertEquals(3, result7);
+    }
+
+    @Test
+    public void testMultiply() {
+        int result8 = tester.multiply(3, 2);
+        assertEquals(6, result8);
+
+        int result10 = tester.multiply(3, 3);
+        assertEquals(9, result10);
+    }
+
+    @Test
+    public void testMultiplyWithZeros() {
+        int result9 = tester.multiply(0, 3);
+        assertEquals(0, result9);
+
+        int result13 = tester.multiply(0, 0);
+        assertEquals(0, result13);
+    }
+
+    @Test
+    public void testMultiplyWithNegative() {
+        int result11 = tester.multiply(-1, 2);
+        assertEquals(-2, result11);
+
+        int result12 = tester.multiply(-3, -2);
+        assertEquals(6, result12);
     }
 
     /* Run the unit tests in this file. */

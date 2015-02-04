@@ -1,7 +1,7 @@
 import list.EquationList;
 
 public class Calculator {
-    // YOU MAY WISH TO ADD SOME FIELDS
+    public EquationList input = null;
 
     /**
      * TASK 2: ADDING WITH BIT OPERATIONS
@@ -37,9 +37,16 @@ public class Calculator {
      * @return the product of x and y
      **/
     public int multiply(int x, int y) {
-        // YOUR CODE HERE
-        return -1;
+
+        // return x << y;
+        int product = 0;
+        while (y != 0) {
+            product = add(x, product);
+            y -= 1;
+        }
+        return product;
     }
+
 
     /**
      * TASK 5A: CALCULATOR HISTORY - IMPLEMENTING THE HISTORY DATA STRUCTURE
@@ -51,7 +58,7 @@ public class Calculator {
      * @param result is an integer corresponding to the result of the equation
      **/
     public void saveEquation(String equation, int result) {
-        // YOUR CODE HERE
+        input = new EquationList(equation, result, input);
     }
 
     /**
@@ -62,7 +69,11 @@ public class Calculator {
      * Ex   "1 + 2 = 3"
      **/
     public void printAllHistory() {
-        // YOUR CODE HERE
+        EquationList copy = input;
+        while (copy != null) {
+            System.out.println(copy.equation + " = " + copy.result);
+            copy = copy.next;
+        }
     }
 
     /**
