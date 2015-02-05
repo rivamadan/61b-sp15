@@ -64,27 +64,24 @@ public class IntList {
   public static IntList dcatenate(IntList A, IntList B) {
     //TODO:  fill in method
     if (A == null) {
-	return B;
-    } if (B == null) {
-	return A;
-    } if (A.tail == null) {
-	A.tail = B;
-	return A;
+    	return B;
     } else {
-	return dcatenate(A.tail, B);
-    }
-
+    	IntList temp = A;
+    	while (temp.tail != null) {
+    		temp = temp.tail;
+    	}
+    	temp.tail = B;
+    	return A;
+  	}
+  }
 
   /** Returns a list consisting of the elements of A followed by the
    ** elements of B.  May NOT modify items of A.  Use 'new'. */
   public static IntList catenate(IntList A, IntList B) {
     if (A == null) {
-	return B;
-    } if (B == null) {
-	return A;
+    	return B;
     } else {
-	IntList rest = new IntList(A.head, B);
-	return catenate(A, rest);
+    	return new IntList(A.head, catenate(A.tail, B));
     }
   }
 
@@ -107,11 +104,14 @@ public class IntList {
 
 
 
+<<<<<<< HEAD
+=======
 
 
 
 
 
+>>>>>>> 97ebda5e930db6b1fe3a92f8cf7e43430c0550d0
   /** DO NOT MODIFY ANYTHING BELOW THIS LINE! In fact, I wouldn't even
     * look below this line since it's likely to confuse you. */
 

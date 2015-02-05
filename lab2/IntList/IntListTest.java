@@ -84,7 +84,7 @@ public class IntListTest {
 	assertEquals(IntList.list(1, 2), L8);
 	assertEquals(IntList.list(3, 4, 5, 6), L9);
     }
-
+    
     /* Run the unit tests in this file. */
     public static void main(String... args) {
         jh61b.junit.textui.runClasses(IntListTest.class);
