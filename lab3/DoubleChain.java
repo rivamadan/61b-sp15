@@ -28,7 +28,6 @@ public class DoubleChain {
 	/** Adds D to the back of the DoubleChain. */	
 	public void insertBack(double d) {
 		if (head == null) {
-			return null;
 		}
 		DNode backNode = getBack();
 		backNode.next = new DNode(backNode, d, null);
