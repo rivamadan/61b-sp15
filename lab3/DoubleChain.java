@@ -34,7 +34,10 @@ public class DoubleChain {
 	/** Removes the last item in the DoubleChain and returns it. 
 	  * This is an extra challenge problem. */
 	public DNode deleteBack() {
-		return null;
+		DNode backNode = getBack();
+		backNode = backNode.prev;
+		backNode.next = null;
+		return getBack();
 	}
 	
 	/** Returns a string representation of the DoubleChain. 

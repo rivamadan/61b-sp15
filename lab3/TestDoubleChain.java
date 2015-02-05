@@ -33,13 +33,13 @@ public class TestDoubleChain {
 
     @Test
     public void testDeleteBack() {
-        oubleChain d = new DoubleChain(5);
+        DoubleChain d = new DoubleChain(5);
         d.insertFront(2);
         d.insertFront(1);
         d.insertBack(7);
         d.insertBack(8);
-        d.deleteBack();
-        assertEquals(7, d.getBack().val, 1e-11);
+        assertEquals(8, d.getBack().val, 1e-11);
+        assertEquals(7, d.deleteBack().val, 1e-11);
     }
 
     public static void main(String[] args) {
