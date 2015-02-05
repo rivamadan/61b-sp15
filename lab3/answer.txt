@@ -1,0 +1,1 @@
+Integer is an object type and int is a primitive type. i and j are ints in main, but are passed by value as Integers in isSameNumber. When == is used to compare objects it checks if the pointers point to the same object, which is not true when i = 128 because a's id is 419 and b's id is 420. Whereas, when i == 120, for example, a and b's id is both 412.
