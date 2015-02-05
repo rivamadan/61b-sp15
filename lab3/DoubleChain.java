@@ -28,7 +28,7 @@ public class DoubleChain {
 	/** Adds D to the back of the DoubleChain. */	
 	public void insertBack(double d) {
 		if (head == null) {
-			head == new DNode(d);
+			head = new DNode(d);
 		}
 		DNode backNode = getBack();
 		backNode.next = new DNode(backNode, d, null);
@@ -38,7 +38,7 @@ public class DoubleChain {
 	  * This is an extra challenge problem. */
 	public DNode deleteBack() {
 		if (head == null) {
-			return head;
+			return null;
 		}
 		DNode backNode = getBack();
 		backNode = backNode.prev;
