@@ -63,15 +63,17 @@ public class IntList {
 
   public static IntList dcatenate(IntList A, IntList B) {
     //TODO:  fill in method
-    while (A != null) {
-	if (A.tail == null) {
-	  A.tail = B;
-	  return A;
-	}
-	A = A.tail;
+    if (A == null) {
+	return B;
+    } if (B == null) {
+	return A;
+    } if (A.tail == null) {
+	A.tail = B;
+	return A;
+    } else {
+	return dcatenate(A.tail, B);
     }
-    return B;
-  }
+
 
   /** Returns a list consisting of the elements of A followed by the
    ** elements of B.  May NOT modify items of A.  Use 'new'. */
