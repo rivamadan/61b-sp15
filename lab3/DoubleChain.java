@@ -14,7 +14,7 @@ public class DoubleChain {
 	/** Returns the last item in the DoubleChain. */		
 	public DNode getBack() {
 		DNode copy = head;
-		while (copy.next != null) {
+		while (copy != null && copy.next != null) {
 			copy = copy.next;
 		}
 		return copy;
@@ -26,7 +26,6 @@ public class DoubleChain {
 		head.prev = newFront;
 		newFront.next = head;
 		head = newFront;
-
 	}
 	
 	/** Adds D to the back of the DoubleChain. */	
