@@ -50,12 +50,15 @@ public class DoubleChain {
 	  * This is an extra challenge problem. */
 	public String toString() {
 		DNode copy = head;
-		String dString = "<[";
+		StringBuilder dString = new StringBuilder("<[");
 		while (copy.next != null) {
-			dString += (copy.val + ", ");
+			dString.append(copy.val);
+			dString.append(", ");
 			copy = copy.next;
 		}
-		return (dString + copy.val + "]>");
+		dString.append(copy.val);
+		dString.append("]>");
+		return dString.toString();
 	}
 
 	public static class DNode {
