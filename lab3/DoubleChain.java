@@ -22,14 +22,15 @@ public class DoubleChain {
 	
 	/** Adds D to the front of the DoubleChain. */	
 	public void insertFront(double d) {
-		head = new DNode(null, d, head);
+		DNode newFront = new DNode(d);
+		head.prev = newFront;
+		newFront.next = head;
+		head = newFront;
+
 	}
 	
 	/** Adds D to the back of the DoubleChain. */	
 	public void insertBack(double d) {
-		if (head == null) {
-			head = new DNode(d);
-		}
 		DNode backNode = getBack();
 		backNode.next = new DNode(backNode, d, null);
 	}
@@ -37,7 +38,7 @@ public class DoubleChain {
 	/** Removes the last item in the DoubleChain and returns it. 
 	  * This is an extra challenge problem. */
 	public DNode deleteBack() {
-		if (head == null) {
+		if (head.next == null) {
 			return null;
 		}
 		DNode backNode = getBack();

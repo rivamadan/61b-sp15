@@ -24,16 +24,13 @@ public class TestDoubleChain {
         assertEquals(5, d.getBack().val, 1e-11);
 
         d.insertFront(2);
+        assertEquals(2, d.getFront().next.prev.val, 1e-11);
+        
         d.insertFront(1);
         d.insertBack(7);
         d.insertBack(8);
         assertEquals(1, d.getFront().val, 1e-11);
         assertEquals(8, d.getBack().val, 1e-11);
-
-        DoubleChain d2 = null;
-        d2.insertBack(2);
-        assertEquals(2, d2.getFront());
-
     }
 
     @Test
@@ -46,7 +43,7 @@ public class TestDoubleChain {
         assertEquals(8, d.getBack().val, 1e-11);
         assertEquals(7, d.deleteBack().val, 1e-11);
 
-        DoubleChain d3 = null;
+        DoubleChain d3 = new DoubleChain(5);
         assertEquals(null, d3.deleteBack());
     }
 
