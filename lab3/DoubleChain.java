@@ -22,17 +22,14 @@ public class DoubleChain {
 	
 	/** Adds D to the front of the DoubleChain. */	
 	public void insertFront(double d) {
-		if (head == null) {
-			head = new DNode(d);
-		}
-		head = new DNode(null, d, head);
+		DNode newFront = new DNode(d);
+		head.prev = newFront;
+		newFront.next = head;
+		head = newFront;
 	}
 	
 	/** Adds D to the back of the DoubleChain. */	
 	public void insertBack(double d) {
-		if (head == null) {
-			head = new DNode(d);
-		}
 		DNode backNode = getBack();
 		backNode.next = new DNode(backNode, d, null);
 	}
@@ -40,7 +37,7 @@ public class DoubleChain {
 	/** Removes the last item in the DoubleChain and returns it. 
 	  * This is an extra challenge problem. */
 	public DNode deleteBack() {
-		if (head == null) {
+		if (head.next == null) {
 			return null;
 		}
 		DNode backNode = getBack();
@@ -49,8 +46,9 @@ public class DoubleChain {
 		return getBack();
 	}
 	
-	/** Returns a string representation of the DoubleChain. 
-	  * This is an extra challenge problem. */
+	/* the following commented out code is not efficent 
+	  * b/c it creates a new string each time in a loop 
+	  * therefore it will take a lot of memorry */
 	// public String toString() {
 	// 	DNode copy = head;
 	// 	String dString = "<[";
@@ -60,6 +58,21 @@ public class DoubleChain {
 	// 	}
 	// 	return (dString + copy.val + "]>");
 	// }
+
+	/** Returns a string representation of the DoubleChain. 
+	  * This is an extra challenge problem. */
+	public String toString() {
+		DNode copy = head;
+		StringBuilder dString = new StringBuilder("<[");
+		while (copy.next != null) {
+			dString.append(copy.val);
+			dString.append(", ");
+			copy = copy.next;
+		}
+		dString.append(copy.val);
+		dString.append("]>");
+		return dString.toString();
+	}
 
 	public static class DNode {
 		public DNode prev;
