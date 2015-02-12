@@ -51,15 +51,15 @@ public class DoubleChain {
 	
 	/** Returns a string representation of the DoubleChain. 
 	  * This is an extra challenge problem. */
-	public String toString() {
-		DNode copy = head;
-		String dString = "<[";
-		while (copy.next != null) {
-			dString += (copy.val + ", ");
-			copy = copy.next;
-		}
-		return (dString + copy.val + "]>");
-	}
+	// public String toString() {
+	// 	DNode copy = head;
+	// 	String dString = "<[";
+	// 	while (copy.next != null) {
+	// 		dString += (copy.val + ", ");
+	// 		copy = copy.next;
+	// 	}
+	// 	return (dString + copy.val + "]>");
+	// }
 
 	public static class DNode {
 		public DNode prev;
