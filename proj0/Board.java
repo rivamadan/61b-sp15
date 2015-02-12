@@ -1,4 +1,5 @@
 public class Board {
+
 	private static int boardSize = 8;
 	private Piece[][] pieces;
 	private String winner;

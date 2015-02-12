@@ -48,9 +48,7 @@ public class TestPiece {
 		assertEquals(true, shieldPiece.isShield());
 		assertEquals(false, bombPiece.isShield());
 	}
-
-
-
+	
 	public static void main(String[] args) {
     	jh61b.junit.textui.runClasses(TestPiece.class);
 	}
