@@ -34,10 +34,6 @@ public class TestPiece {
 	}
 
 	@Test
-	public void testIsKing() {
-	}
-
-	@Test
 	public void testIsBomb() {
 		assertEquals(true, bombPiece.isBomb());
 		assertEquals(false, pawnPiece.isBomb());

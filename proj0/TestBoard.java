@@ -37,11 +37,6 @@ public class TestBoard {
 	}
 
 	@Test
-	public void testCanSelect() {
-
-	}
-
-	@Test
 	public void testRemove() {
 		assertEquals(true, b.remove(0,2).isBomb());
 		assertEquals(null, b.pieceAt(0,2));

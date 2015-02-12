@@ -7,46 +7,15 @@ public class Board {
 	private int firePieces = boardSize/2 * 3;
 	private int waterPieces = boardSize/2 * 3;
 	private Piece selectedPiece;
+	private boolean hasMoved;
+	private int pieceX;
+	private int pieceY;
 
 	public Board(boolean shouldBeEmpty) {
 		pieces = new Piece[boardSize][boardSize];
 		if (!shouldBeEmpty) {
 			createPieces();
 		}
-	}
-
-	private void drawBoard() {
-		for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
-                if ((i + j) % 2 == 0) {
-                	StdDrawPlus.setPenColor(StdDrawPlus.GRAY);
-                } else {
-                	StdDrawPlus.setPenColor(StdDrawPlus.RED);
-                }
-            	StdDrawPlus.filledSquare(i + .5, j + .5, .5);
-            	StdDrawPlus.setPenColor(StdDrawPlus.WHITE);
-            	Piece currentPiece = pieceAt(i, j);
-            	if (currentPiece == null) {
-            		continue;
-            	} if (currentPiece.isFire()) {
-            		if (currentPiece.isBomb()) {
-            			StdDrawPlus.picture(i + .5, j + .5, "img/bomb-fire.png", 1, 1);
-            		} else if (currentPiece.isShield()) {
-            			StdDrawPlus.picture(i + .5, j + .5, "img/shield-fire.png", 1, 1);
-            		} else {
-            			StdDrawPlus.picture(i + .5, j + .5, "img/pawn-fire.png", 1, 1);
-            		}
-            	} else {
-            		if (currentPiece.isBomb()) {
-            			StdDrawPlus.picture(i + .5, j + .5, "img/bomb-water.png", 1, 1);
-            		} else if (currentPiece.isShield()) {
-            			StdDrawPlus.picture(i + .5, j + .5, "img/shield-water.png", 1, 1);
-            		} else {
-            			StdDrawPlus.picture(i + .5, j + .5, "img/pawn-water.png", 1, 1);
-            		}	
-            	}
-            }
-        }
 	}
 
 	private void createPieces() {
@@ -74,17 +43,59 @@ public class Board {
 	}
 
 	public boolean canSelect(int x, int y) {
-		/****FIX THIS SHIT****/
-		if (firePlayerTurn) {
-			if (!pieceAt(x, y).isFire()) {
-				return false;
-			} return true;
-		} return true;
+		if (!hasMoved) {
+			/* selecting a piece*/
+			if ((selectedPiece == null) || ((selectedPiece != null) && (pieceAt(x,y) != null))) {
+				if (pieceAt(x, y) == null) {
+					return false;
+				} if (firePlayerTurn) {
+					return (pieceAt(x, y).isFire());
+				} else {
+					return (!pieceAt(x, y).isFire());
+				}
+			/* selecting where to move */
+			} else {
+				if (pieceAt(x, y) == null) {
+					return (validMove(x, y) || validCapture(x,y));
+				} return false;
+			}
+		} else {
+			/* allows double jumping */
+			if (selectedPiece.hasCaputured() && (pieceAt(x, y) == null)) {
+				return validCapture(x,y);
+			} return false;
+		}
+	}
+
+	/* check if piece is moving in the right direction*/
+	private boolean validMove(int x, int y) {
+		return ((selectedPiece.isFire() && (x == pieceX + 1 || x == pieceX - 1) && y == pieceY + 1) ||
+				(!selectedPiece.isFire() && (x == pieceX + 1 || x == pieceX - 1) && y == pieceY - 1) ||
+				(selectedPiece.isKing() && (x == pieceX + 1 || x == pieceX - 1) && (y == pieceY + 1 || y == pieceY - 1)));
+	}
+
+	/* check if piece can caputre and if it is caputring in the right direction*/
+	private boolean validCapture(int x, int y) {
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				if ((pieceAt(pieceX+i, pieceY+j) != null) && (pieceAt(pieceX+i, pieceY+j).isFire() != firePlayerTurn)) { 
+					return ((selectedPiece.isFire() && (x == pieceX + 2 || x == pieceX - 2) && y == pieceY + 2) ||
+							(!selectedPiece.isFire() && (x == pieceX + 2 || x == pieceX - 2) && y == pieceY - 2) ||
+							(selectedPiece.isKing() && (x == pieceX + 2 || x == pieceX - 2) && (y == pieceY + 2 || y == pieceY - 2)));
+				}
+			}
+		} return false;
 	}
 
 	public void select(int x, int y) {
-		/****FIX THIS SHIT****/
-		selectedPiece = pieceAt(x,y);
+		if (pieceAt(x,y) == null) {
+			selectedPiece.move(x, y);
+			hasMoved = true;
+		} else {
+			selectedPiece = pieceAt(x,y);
+			pieceX = x;
+			pieceY = y;
+		}
 	}
 
 	public void place(Piece p, int x, int y) {
@@ -113,13 +124,15 @@ public class Board {
 	}
 
 	public boolean canEndTurn() {
-		if (selectedPiece.hasCaptured() // FIX! || selectedPiece.hasMoved???//) { 
+		if (selectedPiece != null && hasMoved) { 
 			return true;
 		} return false;
 	}
 
 	public void endTurn() {
-		firePlayerTurn = false;
+		firePlayerTurn = !firePlayerTurn;
+		selectedPiece = null;
+		hasMoved = false;
 	}
 
 	public String winner() {
@@ -133,6 +146,64 @@ public class Board {
 			return null;
 		}
 	}	
+
+	private void drawBoard() {
+		for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if ((i + j) % 2 == 0) {
+                	StdDrawPlus.setPenColor(StdDrawPlus.GRAY);
+                } else {
+                	StdDrawPlus.setPenColor(StdDrawPlus.RED);
+                }
+            	StdDrawPlus.filledSquare(i + .5, j + .5, .5);
+            	StdDrawPlus.setPenColor(StdDrawPlus.WHITE);
+            	Piece currentPiece = pieceAt(i, j);
+            	if (currentPiece == null) {
+            		continue;
+            	} if (currentPiece.isFire()) {
+            		if (currentPiece.isBomb()) {
+            			if (currentPiece.isKing()) {
+            				StdDrawPlus.picture(i + .5, j + .5, "img/bomb-fire-crowned.png", 1, 1);
+            			} else {
+            				StdDrawPlus.picture(i + .5, j + .5, "img/bomb-fire.png", 1, 1);
+            			}
+            		} else if (currentPiece.isShield()) {
+            			if (currentPiece.isKing()) {
+            				StdDrawPlus.picture(i + .5, j + .5, "img/shield-fire-crowned.png", 1, 1);
+            			} else {
+            				StdDrawPlus.picture(i + .5, j + .5, "img/shield-fire.png", 1, 1);
+            			}
+            		} else {
+            			if (currentPiece.isKing()) {
+            				StdDrawPlus.picture(i + .5, j + .5, "img/pawn-fire-crowned.png", 1, 1);
+            			} else {
+            				StdDrawPlus.picture(i + .5, j + .5, "img/pawn-fire.png", 1, 1);
+            			}
+            		}
+            	} else {
+            		if (currentPiece.isBomb()) {
+            			if (currentPiece.isKing()) {
+            				StdDrawPlus.picture(i + .5, j + .5, "img/bomb-water-crowned.png", 1, 1);
+            			} else {
+            				StdDrawPlus.picture(i + .5, j + .5, "img/bomb-water.png", 1, 1);
+            			}
+            		} else if (currentPiece.isShield()) {
+            			if (currentPiece.isKing()) {
+            				StdDrawPlus.picture(i + .5, j + .5, "img/shield-water-crowned.png", 1, 1);
+            			} else {
+            				StdDrawPlus.picture(i + .5, j + .5, "img/shield-water.png", 1, 1);
+            			}
+            		} else {
+            			if (currentPiece.isKing()) {
+            				StdDrawPlus.picture(i + .5, j + .5, "img/pawn-water-crowned.png", 1, 1);
+            			} else {
+            				StdDrawPlus.picture(i + .5, j + .5, "img/pawn-water.png", 1, 1);
+            			}
+            		}	
+            	}
+            }
+        }
+	}
 
 	public static void main (String args[]) {
         StdDrawPlus.setXscale(0, boardSize);
