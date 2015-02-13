@@ -2,7 +2,6 @@ public class Board {
 
 	private static int boardSize = 8;
 	private Piece[][] pieces;
-	private String winner;
 	private boolean firePlayerTurn = true;
 	private int firePieces = 0;
 	private int waterPieces = 0;
@@ -74,7 +73,7 @@ public class Board {
 				(selectedPiece.isKing() && (x == pieceX + 1 || x == pieceX - 1) && (y == pieceY + 1 || y == pieceY - 1)));
 	}
 
-	/* check if piece can caputre and if it is caputuring in the right direction*/
+	/* check if piece can capture and if it is capturing in the right direction*/
 	private boolean validCapture(int x, int y) {
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {

@@ -4,7 +4,7 @@ public class Piece {
 	private int xPosition;
 	private int yPosition;
 	private String pieceType;
-	private boolean caputured;
+	private boolean hasCaputured;
 	private boolean isKing;
 
 
@@ -48,19 +48,19 @@ public class Piece {
 		if (xDifference == -2 && yDifference == -2) {
 			board.remove(xPosition - 1, yPosition - 1);
 			bombCapture(x, y);
-			caputured = true;
+			hasCaputured = true;
 		} else if (xDifference == 2 && yDifference == 2) {
 			board.remove(xPosition + 1, yPosition + 1);
 			bombCapture(x, y);
-			caputured = true;
+			hasCaputured = true;
 		} else if (xDifference == -2 && yDifference == 2) {
 			board.remove(xPosition - 1, yPosition + 1);
 			bombCapture(x, y);
-			caputured = true;
+			hasCaputured = true;
 		} else if (xDifference == 2 && yDifference == -2) {
 			board.remove(xPosition + 1, yPosition - 1);
 			bombCapture(x, y);
-			caputured = true;
+			hasCaputured = true;
 		}
 		
 		xPosition = x;
@@ -83,11 +83,11 @@ public class Piece {
 	}
 
 	public boolean hasCaputured() {
-		return caputured;
+		return hasCaputured;
 	}
 
 	public void doneCapturing() {
-		caputured = false;
+		hasCaputured = false;
 	}
 
 }
