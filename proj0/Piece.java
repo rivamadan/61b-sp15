@@ -43,17 +43,20 @@ public class Piece {
 		//*fix capturing!!!!!!!! not removing the right locationssss
 		int xDifference = x - xPosition;
 		int yDifference = y - xPosition;
-		if (xDifference == 2 || xDifference == -2) {
-			if (xDifference == -2 || yDifference == -2) {
-				board.remove(x + 1, y + 1);
-			} else if (xDifference == 2 || yDifference == 2) {
-				board.remove(x - 1, y - 1);
-			} else if (xDifference == -2 || yDifference == 2) {
-				board.remove(x + 1, y - 1);
-			} else {
-				board.remove(x - 1, y + 1);
-			}
+		if (xDifference == -2 || yDifference == -2) {
+			board.remove(x + 1, y + 1);
+			bombCapture(x, y);
+		} else if (xDifference == 2 || yDifference == 2) {
+			board.remove(x - 1, y - 1);
+			bombCapture(x, y);
+		} else if (xDifference == -2 || yDifference == 2) {
+			board.remove(x + 1, y - 1);
+			bombCapture(x, y);
+		} else if (xDifference == 2 || yDifference == -2){
+			board.remove(x - 1, y + 1);
+			bombCapture(x, y);
 		}
+
 		board.remove(xPosition, yPosition);
 		xPosition = x;
 		yPosition = y;
@@ -64,6 +67,18 @@ public class Piece {
 
 		hasCaputured = true;
 		doneCapturing();
+	}
+
+	private void bombCapture(int x, int y) {
+		if (isBomb()) {
+			for (int i = -1; i <= 1; i++) {
+				for (int j = -1; j <= 1; j++) {
+					if (board.pieceAt(x + i, y + j) != null && !board.pieceAt(x + i, y + j).isShield()) {
+						board.remove(x + i, y + j);
+					}
+				}
+			}
+		}
 	}
 
 	public boolean hasCaputured() {
