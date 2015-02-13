@@ -4,8 +4,8 @@ public class Board {
 	private Piece[][] pieces;
 	private String winner;
 	private boolean firePlayerTurn = true;
-	private int firePieces = boardSize/2 * 3;
-	private int waterPieces = boardSize/2 * 3;
+	private int firePieces = 0;
+	private int waterPieces = 0;
 	private Piece selectedPiece;
 	private boolean hasMoved;
 	private int pieceX;
@@ -35,7 +35,7 @@ public class Board {
 
 
 	public Piece pieceAt(int x, int y) {
-		if (x >= boardSize || y >= boardSize) {
+		if (x >= boardSize || y >= boardSize || x < 0 || y < 0) {
 			return null;
 		} if (pieces[x][y] == null) {
 			return null;
@@ -74,7 +74,7 @@ public class Board {
 				(selectedPiece.isKing() && (x == pieceX + 1 || x == pieceX - 1) && (y == pieceY + 1 || y == pieceY - 1)));
 	}
 
-	/* check if piece can caputre and if it is caputring in the right direction*/
+	/* check if piece can caputre and if it is caputuring in the right direction*/
 	private boolean validCapture(int x, int y) {
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
@@ -93,14 +93,19 @@ public class Board {
 			hasMoved = true;
 		} else {
 			selectedPiece = pieceAt(x,y);
-			pieceX = x;
-			pieceY = y;
 		}
+		pieceX = x;
+		pieceY = y;
 	}
 
 	public void place(Piece p, int x, int y) {
 		if (p != null && (x < boardSize && y < boardSize)) {
 			pieces[x][y] = p;
+			 if (p.isFire()) {
+				firePieces += 1;
+			} else {
+				waterPieces += 1;
+			}
 		}
 	}
 
@@ -131,6 +136,7 @@ public class Board {
 
 	public void endTurn() {
 		firePlayerTurn = !firePlayerTurn;
+		selectedPiece.doneCapturing();
 		selectedPiece = null;
 		hasMoved = false;
 	}
@@ -160,6 +166,8 @@ public class Board {
             	Piece currentPiece = pieceAt(i, j);
             	if (currentPiece == null) {
             		continue;
+            	} if (currentPiece == selectedPiece) {
+                	StdDrawPlus.filledSquare(i + .5, j + .5, .5);
             	} if (currentPiece.isFire()) {
             		if (currentPiece.isBomb()) {
             			if (currentPiece.isKing()) {
@@ -217,8 +225,6 @@ public class Board {
                 double y = StdDrawPlus.mouseY();
                 if (gameBoard.canSelect((int) x, (int) y)) {
                 	gameBoard.select((int) x, (int) y);
-                	// StdDrawPlus.setPenColor(StdDrawPlus.WHITE);
-                	// StdDrawPlus.filledSquare(x, y, .5);
                 }
             }          
             if (StdDrawPlus.isSpacePressed()){
@@ -227,6 +233,6 @@ public class Board {
     			}
             }
         	StdDrawPlus.show(10);
-        }  
+        }
 	}
 }
