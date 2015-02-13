@@ -45,9 +45,9 @@ public class Board {
 		if (!hasMoved) {
 			/* selecting a piece*/
 			if ((selectedPiece == null) || ((selectedPiece != null) && (pieceAt(x,y) != null))) {
-				// if (pieceAt(x, y) == null) {
-				// 	return false;
-				// } 
+				if (pieceAt(x, y) == null) {
+					return false;
+				} 
 				if (firePlayerTurn) {
 					return (pieceAt(x, y).isFire());
 				} else {
