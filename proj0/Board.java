@@ -76,14 +76,36 @@ public class Board {
 
 	/* check if piece can capture and if it is capturing in the right direction*/
 	private boolean validCapture(int x, int y) {
-		for (int i = -1; i <= 1; i++) {
-			for (int j = -1; j <= 1; j++) {
-				if ((pieceAt(pieceX+i, pieceY+j) != null) && (pieceAt(pieceX+i, pieceY+j).isFire() != firePlayerTurn)) { 
-					return ((selectedPiece.isFire() && (x == pieceX + 2 || x == pieceX - 2) && y == pieceY + 2) ||
-							(!selectedPiece.isFire() && (x == pieceX + 2 || x == pieceX - 2) && y == pieceY - 2) ||
-							(selectedPiece.isKing() && (x == pieceX + 2 || x == pieceX - 2) && (y == pieceY + 2 || y == pieceY - 2)));
-				}
+		if (selectedPiece.isKing()) {
+			if (y == pieceY + 2) {
+				if (x == pieceX + 2) {
+					return ((pieceAt(pieceX+1, pieceY+1) != null) && (pieceAt(pieceX+1, pieceY+1).isFire() != firePlayerTurn));
+				} if (x == pieceX - 2) {
+					return ((pieceAt(pieceX-1, pieceY+1) != null) && (pieceAt(pieceX-1, pieceY+1).isFire() != firePlayerTurn));
+				} return false;
+			} if (y == pieceY - 2) {
+				if (x == pieceX + 2) {
+					return ((pieceAt(pieceX+1, pieceY-1) != null) && (pieceAt(pieceX+1, pieceY-1).isFire() != firePlayerTurn));
+				} if (x == pieceX - 2) {
+					return ((pieceAt(pieceX-1, pieceY-1) != null) && (pieceAt(pieceX-1, pieceY-1).isFire() != firePlayerTurn));
+				} return false;
 			}
+		} if (selectedPiece.isFire()) {
+			if (y == pieceY + 2) {
+				if (x == pieceX + 2) {
+					return ((pieceAt(pieceX+1, pieceY+1) != null) && (!pieceAt(pieceX+1, pieceY+1).isFire()));
+				} if (x == pieceX - 2) {
+					return ((pieceAt(pieceX-1, pieceY+1) != null) && (!pieceAt(pieceX-1, pieceY+1).isFire()));
+				} return false;
+			} return false;
+		} if (!selectedPiece.isFire()) {
+			if (y == pieceY - 2) {
+				if (x == pieceX + 2) {
+					return ((pieceAt(pieceX+1, pieceY-1) != null) && (pieceAt(pieceX+1, pieceY-1).isFire()));
+				} if (x == pieceX - 2) {
+					return ((pieceAt(pieceX-1, pieceY-1) != null) && (pieceAt(pieceX-1, pieceY-1).isFire()));
+				} return false;
+			} return false;
 		} return false;
 	}
 
