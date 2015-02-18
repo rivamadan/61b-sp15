@@ -16,24 +16,27 @@ public class SortedComparableList {
         tail = tail0;
     }
 
-    /*** A list with null tail, and head = 0. */
+    /** A list with null tail, and head = 0. */
     public SortedComparableList(){
-        head = 0;
-        tail = null;
+        this(0, null);
     }
 
     /** Inserts Comparable c into its correct location in this list. */
     public void insert(Comparable c) {
-        SortedComparableList copy = this;
         if (c != null) {
-            if (copy.tail == null) {
-                copy.tail = new SortedComparableList(c, null);
-            }
-            else if (c.compareTo(head) < 0) {
+            // null check
+            if (c.compareTo(head) < 0) {
+                // edge case: inserting to front of list
                 tail = new SortedComparableList(head, tail);
                 head = c;
-            } else {
-                (copy.tail).insert(c);
+            }
+            else {
+                // inserting into middle or end of list
+                SortedComparableList curr = this;
+                while (curr.tail != null && c.compareTo(curr.tail.head) > 0) {
+                    curr = curr.tail;
+                }
+                curr.tail = new SortedComparableList(c, curr.tail);
             }
         }
     }
@@ -42,18 +45,26 @@ public class SortedComparableList {
      *  The first element, which is in location 0, is the 0th element.
      *  Assume i takes on the values [0, length of list - 1]. */
     public Comparable get(int i) {
-        SortedComparableList copy = this;
-        for (int loc = 0; loc < i; loc++) {
-            copy = copy.tail;
-        } return copy.head;
+        if (head == null || i == 0) {
+            //edge cases
+            return head;
+        }
+        else {
+            SortedComparableList curr = this;
+            while (curr.tail != null && i != 0) {
+                curr = curr.tail;
+                i--;
+            }
+            return curr.head;
+        }
     }
 
     /** Adds every item in THAT to this list. */
     public void extend(SortedComparableList that) {
-        Comparable thatElement;
-        for (int loc = 0; that.get(loc) != null; loc++) {
-            thatElement = that.get(loc);
-            this.insert(thatElement);
+        SortedComparableList curr = that;
+        while (curr != null) {
+            insert(curr.head);
+            curr = curr.tail;
         }
     }
 
@@ -63,14 +74,11 @@ public class SortedComparableList {
       *
       * This method should NOT modify L. */
     public static SortedComparableList subTail(SortedComparableList L, int start) {
-        if (L == null) {
+        if (L == null || start == 0) {
             return L;
         }
         else {
-            for (int i = 0; i < start; i++) {
-                L = L.tail;
-            }
-            return L;
+            return subTail(L.tail, start-1);
         }
     }
 
@@ -81,30 +89,26 @@ public class SortedComparableList {
      *  Assume START and END are >= 0.
      */
     public static SortedComparableList sublist(SortedComparableList L, int start, int len) {
-        if (len == 0 || L == null) {
+        if (len == 0) {
+            //base case
             return null;
-        } else {
-            for (int i = 0; i < start; i++) {
-                L = L.tail;
-            }
-            SortedComparableList copy = L;
-            for (int i = 0; i < len; i++) {
-                copy = copy.tail;
-            }
-            copy.tail = null;
-            return L;
         }
+        else if (start > 0) {
+            return sublist(L.tail, start - 1, len);
+        }
+        return new SortedComparableList(L.head, sublist(L.tail, 0, len - 1));
     }
 
     /** Removes items from L at position len+1 and later. */
     public static void expungeTail(SortedComparableList L, int len) {
-       if (len != 0 || L != null) {
-            SortedComparableList copy = L;
-            for (int i = 0; i <= len; i++) {
-                copy = copy.tail;
-            }
-            copy.tail = null;
+        if (L == null) {
+            return;
         }
+        else if (len == 0) {
+            L.tail = null;
+            return;
+        }
+        expungeTail(L.tail, len - 1);
     }
 
     /**
@@ -113,45 +117,42 @@ public class SortedComparableList {
      *  remains. No two consecutive items in this list are equals at the
      *  end of this method.
      *
-     *  You can assume the list is in sorted order when this method is
-     *  called.
-     *
-     *  For example, if the input list is [ 0 0 0 0 1 1 3 3 3 4 ], the
-     *  output list is [ 0 1 3 4 ].
+     *  For example, if the input list is [ 0 0 0 0 1 1 0 0 0 3 3 3 1 1 0 ], the
+     *  output list is [ 0 1 0 3 1 0 ].
      **/
     public void squish() {
-        SortedComparableList copy = this;
-        SortedComparableList next = this.tail;
-        while (next != null) {
-          if (copy.head.compareTo(next.head) == 0) {
-              next = next.tail;
-          } else {
-              copy = copy.tail;
-          }
-          next = next.tail;
+        if (tail != null) {
+            SortedComparableList prev = this;
+            SortedComparableList curr = tail;
+            while (curr != null) {
+                if (prev.head.equals(curr.head)) {
+                    prev.tail = curr.tail;
+                    curr = prev.tail;
+                }
+                else {
+                    prev = prev.tail;
+                    curr = prev.tail;
+                }
+            }
         }
     }
 
     /** Duplicates each Comparable so that for every original
      *  Comparable, there will end up being two consecutive Comparables.
      *
-     *  You can assume the list is in sorted order when this method is
-     *  called.
-     *
-     *  For example, if the input list is [ 2 3 4 7 ], the
-     *  output list is [ 2 2 3 3 4 4 7 7 ].
+     *  For example, if the input list is [ 3 7 4 2 2 ], the
+     *  output list is [ 3 3 7 7 4 4 2 2 2 2].
      *
      *  NOTE: Do not try to make copies of the Comparables. Set
      *  the HEAD variable equal to the HEAD variable you are trying to
      *  duplicate.
      **/
     public void twin() {
-        extend(this);
-        // SortedComparableList duplicated = this;
-        //   while (duplicated != null) {
-        //   duplicated.tail = new SortedComparableList(duplicated.head, duplicated.tail);
-        //   duplicated = duplicated.tail.tail;
-        // }          
+        SortedComparableList prev = this;
+        while (prev != null) {
+            prev.tail = new SortedComparableList(prev.head, prev.tail);
+            prev = prev.tail.tail;
+        }
     }
 
     /** Returns NULL if no cycle exists, else returns cycle location. */
@@ -183,6 +184,7 @@ public class SortedComparableList {
     /** Returns true iff X is a SortedComparableList containing the
      *  same sequence of Comparables as THIS. Cannot handle cycles. */
     public boolean equals(Object x) {
+        //make them do this
         if (!(x instanceof SortedComparableList)) {
             return false;
         }
@@ -219,4 +221,6 @@ public class SortedComparableList {
         out.format(")");
         return out.toString();
     }
+
+
 }
