@@ -16,7 +16,7 @@ public class SortedComparableList {
         tail = tail0;
     }
 
-    /** A list with null tail, and head = 0. */
+    /*** A list with null tail, and head = 0. */
     public SortedComparableList(){
         head = 0;
         tail = null;
