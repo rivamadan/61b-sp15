@@ -28,7 +28,7 @@ public class ApplicableIntList{
             copy = new ApplicableIntList(i, null);
         }
         else if (i < head) {
-            copy = new ApplicableIntList(head, tail);
+            tail = new ApplicableIntList(head, tail);
             head = i;
         } else {
             copy.tail.insert(i);
@@ -49,11 +49,15 @@ public class ApplicableIntList{
     public void apply(IntUnaryFunction f) {
         ApplicableIntList copy = this;
         int temp;
+        ApplicableIntList newList = new ApplicableIntList(f.apply(head), null);
+        copy = copy.tail;
         while (copy != null) {
             temp = f.apply(head);
-            insert(temp);
+            newList.insert(temp);
             copy = copy.tail;
         }
+        head = newList.head;
+        tail = newList.tail;
     }
 
     /** Returns NULL if no cycle exists, else returns cycle location. */

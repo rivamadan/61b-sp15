@@ -30,7 +30,7 @@ public class SortedComparableList {
                 copy = new SortedComparableList(c, null);
             }
             else if (c.compareTo(head) < 0) {
-                copy = new SortedComparableList(head, tail);
+                tail = new SortedComparableList(head, tail);
                 head = c;
             } else {
                 copy.tail.insert(c);
