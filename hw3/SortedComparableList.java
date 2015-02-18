@@ -26,14 +26,14 @@ public class SortedComparableList {
     public void insert(Comparable c) {
         SortedComparableList copy = this;
         if (c != null) {
-            if (copy == null) {
-                copy = new SortedComparableList(c, null);
+            if (copy.tail == null) {
+                copy.tail = new SortedComparableList(c, null);
             }
             else if (c.compareTo(head) < 0) {
                 tail = new SortedComparableList(head, tail);
                 head = c;
             } else {
-                copy.tail.insert(c);
+                (copy.tail).insert(c);
             }
         }
     }

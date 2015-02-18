@@ -24,8 +24,8 @@ public class ApplicableIntList{
     /** Inserts int i into its correct location, doesn't handle cycles. */
     public void insert(int i) {
         ApplicableIntList copy = this;
-        if (copy == null) {
-            copy = new ApplicableIntList(i, null);
+        if (copy.tail == null) {
+            copy.tail = new ApplicableIntList(i, null);
         }
         else if (i < head) {
             tail = new ApplicableIntList(head, tail);
@@ -47,6 +47,9 @@ public class ApplicableIntList{
 
     /** Applies the function f to every item in this list. */
     public void apply(IntUnaryFunction f) {
+        if (this == null) {
+            return null;
+        }
         ApplicableIntList copy = this;
         int temp;
         ApplicableIntList newList = new ApplicableIntList(f.apply(head), null);
