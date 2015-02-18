@@ -52,7 +52,7 @@ public class ApplicableIntList{
         while (copy != null) {
             temp = f.apply(head);
             insert(temp);
-            copy.tail;
+            copy = copy.tail;
         }
     }
 
