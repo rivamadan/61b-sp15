@@ -12,12 +12,14 @@ public class SortedComparableList {
 
     /** A list with head HEAD0 and tail TAIL0. */
     public SortedComparableList(Comparable head0, SortedComparableList tail0) {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+        head = head0;
+        tail = tail0;
     }
 
     /** A list with null tail, and head = 0. */
     public SortedComparableList(){
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+        head = 0;
+        tail = null;
     }
 
     /** Inserts Comparable c into its correct location in this list. */
@@ -29,12 +31,18 @@ public class SortedComparableList {
      *  The first element, which is in location 0, is the 0th element.
      *  Assume i takes on the values [0, length of list - 1]. */
     public Comparable get(int i) {
-        return null; // REPLACE THIS LINE WITH YOUR SOLUTION
+        SortedComparableList copy = this;
+        for (int loc = 0; loc < i; loc++) {
+            copy = copy.next;
+        } return copy.head;
     }
 
     /** Adds every item in THAT to this list. */
     public void extend(SortedComparableList that) {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+        for (int loc = 0; that.get(loc) != null; loc++) {
+            thatElement = that.get(loc);
+            this.insert(thatElement);
+        }
     }
 
     /** Returns a list consisting of the elements of L starting from
@@ -43,7 +51,10 @@ public class SortedComparableList {
       *
       * This method should NOT modify L. */
     public static SortedComparableList subTail(SortedComparableList L, int start) {
-        return null; // REPLACE THIS LINE WITH YOUR SOLUTION
+        for (int i = 0; i < start; i++) {
+            L = L.next;
+        }
+        return L;
     }
 
     /** Returns the sublist consisting of LEN items from list L,
@@ -53,7 +64,15 @@ public class SortedComparableList {
      *  Assume START and END are >= 0.
      */
     public static SortedComparableList sublist(SortedComparableList L, int start, int len) {
-        return null; // REPLACE THIS LINE WITH YOUR SOLUTION
+        for (int i = 0; i < start; i++) {
+            L = L.next;
+        }
+        SortedComparableList copy = L;
+        for (int i = 0; i < len; i++) {
+            copy = copy.next;
+        }
+        copy.next = null;
+        return L
     }
 
     /** Removes items from L at position len+1 and later. */
