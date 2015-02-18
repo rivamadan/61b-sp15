@@ -24,15 +24,16 @@ public class SortedComparableList {
 
     /** Inserts Comparable c into its correct location in this list. */
     public void insert(Comparable c) {
+        SortedComparableList copy = this;
         if (c != null) {
-            if (this == null) {
-                this = c;
+            if (copy == null) {
+                copy = new SortedComparableList(c, null);
             }
             else if (c.compareTo(head) < 0) {
-                this = new SortedComparableList(head, tail);
+                copy = new SortedComparableList(head, tail);
                 head = c;
             } else {
-                this.tail.insert(c);
+                copy.tail.insert(c);
             }
         }
     }
@@ -49,6 +50,7 @@ public class SortedComparableList {
 
     /** Adds every item in THAT to this list. */
     public void extend(SortedComparableList that) {
+        Comparable thatElement;
         for (int loc = 0; that.get(loc) != null; loc++) {
             thatElement = that.get(loc);
             this.insert(thatElement);
@@ -83,27 +85,25 @@ public class SortedComparableList {
             return null;
         } else {
             for (int i = 0; i < start; i++) {
-                L = L.next;
+                L = L.tail;
             }
             SortedComparableList copy = L;
             for (int i = 0; i < len; i++) {
-                copy = copy.next;
+                copy = copy.tail;
             }
-            copy.next = null;
-            return L
+            copy.tail = null;
+            return L;
         }
     }
 
     /** Removes items from L at position len+1 and later. */
     public static void expungeTail(SortedComparableList L, int len) {
-       if (len == 0 || L == null) {
-            return null;
-        } else {
+       if (len != 0 || L != null) {
             SortedComparableList copy = L;
             for (int i = 0; i <= len; i++) {
-                copy = copy.next;
+                copy = copy.tail;
             }
-            copy.next = null;
+            copy.tail = null;
         }
     }
 
@@ -123,7 +123,7 @@ public class SortedComparableList {
         SortedComparableList copy = this;
         SortedComparableList next = this.tail;
         while (next != null) {
-          if (copy.compareTo(next) == 0) {
+          if (copy.head.compareTo(next.head) == 0) {
               next = next.tail;
           } else {
               copy = copy.tail;
