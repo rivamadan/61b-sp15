@@ -12,30 +12,48 @@ public class ApplicableIntList{
 
     /** A list with head HEAD0 and tail TAIL0. */
     public ApplicableIntList(int head0, ApplicableIntList tail0) {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+        head = head0;
+        tail = tail0;
     }
 
     /** A list with null tail, and head = 0. */
     public ApplicableIntList() {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+        this(0, null);
     }
 
     /** Inserts int i into its correct location, doesn't handle cycles. */
     public void insert(int i) {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+        ApplicableIntList copy = this;
+        if (copy == null) {
+            copy = new ApplicableIntList(i, null);
+        }
+        else if (i < head) {
+            copy = new ApplicableIntList(head, tail);
+            head = i;
+        } else {
+            copy.tail.insert(i);
+        }
     }
 
     /** Returns the i-th int in this list.
      *  The first element, which is in location 0, is the 0th element.
      *  Assume i takes on the values [0, length of list - 1]. */
     public int get(int i) {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
-        return 0;
+        ApplicableIntList copy = this;
+        for (int loc = 0; loc < i; loc++) {
+            copy = copy.tail;
+        } return copy.head;
     }
 
     /** Applies the function f to every item in this list. */
     public void apply(IntUnaryFunction f) {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+        ApplicableIntList copy = this;
+        int temp;
+        while (copy != null) {
+            temp = f.apply(head);
+            insert(temp);
+            copy.tail;
+        }
     }
 
     /** Returns NULL if no cycle exists, else returns cycle location. */
