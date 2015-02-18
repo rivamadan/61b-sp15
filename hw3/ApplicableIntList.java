@@ -59,7 +59,9 @@ public class ApplicableIntList{
             }
             head = newList.head;
             tail = newList.tail;
-    }
+        }
+    }   
+
 
     /** Returns NULL if no cycle exists, else returns cycle location. */
     private int detectCycles(ApplicableIntList A) {
