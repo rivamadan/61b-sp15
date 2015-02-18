@@ -47,20 +47,18 @@ public class ApplicableIntList{
 
     /** Applies the function f to every item in this list. */
     public void apply(IntUnaryFunction f) {
-        if (this == null) {
-            return null;
-        }
-        ApplicableIntList copy = this;
-        int temp;
-        ApplicableIntList newList = new ApplicableIntList(f.apply(head), null);
-        copy = copy.tail;
-        while (copy != null) {
-            temp = f.apply(head);
-            newList.insert(temp);
+        if (this != null) {
+            ApplicableIntList copy = this;
+            int temp;
+            ApplicableIntList newList = new ApplicableIntList(f.apply(head), null);
             copy = copy.tail;
-        }
-        head = newList.head;
-        tail = newList.tail;
+            while (copy != null) {
+                temp = f.apply(head);
+                newList.insert(temp);
+                copy = copy.tail;
+            }
+            head = newList.head;
+            tail = newList.tail;
     }
 
     /** Returns NULL if no cycle exists, else returns cycle location. */
