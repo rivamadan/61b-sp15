@@ -30,6 +30,7 @@ public class ApplicableIntList{
      *  Assume i takes on the values [0, length of list - 1]. */
     public int get(int i) {
         // REPLACE THIS LINE WITH YOUR SOLUTION
+        return 0;
     }
 
     /** Applies the function f to every item in this list. */
