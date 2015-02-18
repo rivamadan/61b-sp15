@@ -7,6 +7,7 @@ public class Board {
 	private int waterPieces = 0;
 	private Piece selectedPiece;
 	private boolean hasMoved;
+	/* should use piece.x instead if public*/
 	private int pieceX;
 	private int pieceY;
 
@@ -42,9 +43,10 @@ public class Board {
 	}
 
 	public boolean canSelect(int x, int y) {
+		/*make eeach commented section a separate function*/
 		if (!hasMoved) {
 			/* selecting a piece*/
-			if ((selectedPiece == null) || ((selectedPiece != null) && (pieceAt(x,y) != null))) {
+			if ((selectedPiece == null) || ((selectedPiece != null) && (pieceAt(x,y) != null))) { /* create separate functions that checks if piece hasn't been captured + location has a piece for readability*/ 
 				if (pieceAt(x, y) == null) {
 					return false;
 				} 
@@ -69,12 +71,13 @@ public class Board {
 
 	/* check if piece is moving in the right direction*/
 	private boolean validMove(int x, int y) {
-		return ((selectedPiece.isFire() && (x == pieceX + 1 || x == pieceX - 1) && y == pieceY + 1) ||
+		return ((selectedPiece.isFire() && (x == pieceX + 1 || x == pieceX - 1) && y == pieceY + 1) || /* create a separate functions that looks at directions*/
 				(!selectedPiece.isFire() && (x == pieceX + 1 || x == pieceX - 1) && y == pieceY - 1) ||
 				(selectedPiece.isKing() && (x == pieceX + 1 || x == pieceX - 1) && (y == pieceY + 1 || y == pieceY - 1)));
 	}
 
 	/* check if piece can capture and if it is capturing in the right direction*/
+	/* separate out if selected piece is king */
 	private boolean validCapture(int x, int y) {
 		if (selectedPiece.isKing()) {
 			if (y == pieceY + 2) {

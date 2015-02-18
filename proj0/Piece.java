@@ -38,8 +38,9 @@ public class Piece {
 		return pieceType.equals("shield");
 	}
 
+	/* should move not be in piece? */
 	public void move(int x, int y) {
-
+		/*rename variables to something better, ex. destinationX, either in the method name or the body if can't change method name*/
 		board.place(this, x, y);
 		board.remove(xPosition, yPosition);
 
@@ -65,11 +66,13 @@ public class Piece {
 		
 		xPosition = x;
 		yPosition = y;
+		/* if board size is public, shouldn't use # 7 */
 		if ((yPosition == 7 && firePiece) || (yPosition == 0 && !firePiece)) {
 			isKing = true;
 		}
 	}
 
+	/* create a method that does a scanning around instead of always having for loops*/
 	private void bombCapture(int x, int y) {
 		if (isBomb()) {
 			for (int i = -1; i <= 1; i++) {

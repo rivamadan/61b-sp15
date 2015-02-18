@@ -24,10 +24,6 @@ public class Calculator {
     //     return (x >>> i) & (1);
     // }
 
-    // private int setBit(int x, int i) {
-    //     return x & (1 << i);
-    // }
-
     /**
      * TASK 3: MULTIPLYING WITH BIT OPERATIONS
      * multiply() is a method which computes the product of two integers x and 
