@@ -18,6 +18,12 @@ public class Plip extends Creature {
     private int g;
     /** blue color. */
     private int b;
+    /** fraction of energy to retain when replicating. */
+    private double repEnergyRetained = 0.5;
+    /** fraction of energy to bestow upon offspring. */
+    private double repEnergyGiven = 0.5;
+    /** probability of taking a move when space is available. */
+    private double moveProbability = 0.5;
 
     /** creates plip with energy equal to E. */
     public Plip(double e) {
@@ -41,7 +47,9 @@ public class Plip extends Creature {
      *  that you get this exactly correct.
      */
     public Color color() {
-        g = 63;
+        r = 99;
+        b = 76;
+		g = (int) (energy * 96) + 63;
         return color(r, g, b);
     }
 
@@ -54,11 +62,16 @@ public class Plip extends Creature {
      *  private static final variable. This is not required for this lab.
      */
     public void move() {
+    	energy -= 0.15;
     }
 
 
     /** Plips gain 0.2 energy when staying due to photosynthesis. */
     public void stay() {
+    	energy += 0.2;
+    	if (energy > 2) {
+    		energy = 2;
+    	}
     }
 
     /** Plips and their offspring each get 50% of the energy, with none
@@ -66,7 +79,9 @@ public class Plip extends Creature {
      *  Plip.
      */
     public Plip replicate() {
-        return this;
+    	double babyEnergy = energy * repEnergyGiven;
+        energy = energy * repEnergyRetained;
+        return new Plip(babyEnergy);
     }
 
     /** Plips take exactly the following actions based on NEIGHBORS:
@@ -80,6 +95,19 @@ public class Plip extends Creature {
      *  for an example to follow.
      */
     public Action chooseAction(Map<Direction, Occupant> neighbors) {
+    	List<Direction> empties = getNeighborsOfType(neighbors, "empty");
+    	List<Direction> clorus = getNeighborsOfType(neighbors, "clorus");
+	    if (empties.size() > 0) {
+	        if (energy > 1.0) {
+	            Direction moveDir = HugLifeUtils.randomEntry(empties);
+	            return new Action(Action.ActionType.REPLICATE, moveDir);
+	        } if (clorus.size() > 0) {
+	        	if (HugLifeUtils.random() < moveProbability) {
+	                Direction moveDir = HugLifeUtils.randomEntry(empties);
+	                return new Action(Action.ActionType.MOVE, moveDir);
+	            }
+	        } return new Action(Action.ActionType.STAY);
+	    }
         return new Action(Action.ActionType.STAY);
     }
 }
