@@ -51,7 +51,7 @@ public class Clorus extends Creature {
     *   it should gain that Creature's energy.
     */
     public void attack(Creature c) {
-        energy = c.energy();
+        energy += c.energy();
     }
 
     /** Clorus should lose 0.03 units of energy when moving. If you want to
