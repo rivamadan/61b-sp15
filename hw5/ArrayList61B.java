@@ -19,10 +19,10 @@ public class ArrayList61B<Lsty> extends AbstractList<Lsty> {
 	}
 
 	public Lsty get(int i) {
-		if (i >= 0 || i < length) {
-			return array[i];
+		if (i < 0 || i >= length) {
+			throw new IllegalArgumentException();	
 		} else {
-			throw new IllegalArgumentException();
+			return array[i];
 		}
 
 	}

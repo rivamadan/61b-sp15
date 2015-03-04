@@ -76,7 +76,7 @@ public class ULLMap<K, V> implements Map61B<K, V>, Iterable<K>{
         public Entry get(K k) {
             Entry curr = this;
             while (curr != null) {
-                if ((curr.key).equals(k)) {
+                if (k != null && (curr.key).equals(k)) {
                     return curr;
                 } curr = curr.next;
             } 
