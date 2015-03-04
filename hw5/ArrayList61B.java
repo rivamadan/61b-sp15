@@ -19,7 +19,7 @@ public class ArrayList61B<Lsty> extends AbstractList<Lsty> {
 	}
 
 	public Lsty get(int i) {
-		if (i > 0 || i < length) {
+		if (i >= 0 || i < length) {
 			return array[i];
 		} else {
 			throw new IllegalArgumentException();
@@ -28,8 +28,9 @@ public class ArrayList61B<Lsty> extends AbstractList<Lsty> {
 	}
 
 	public boolean add(Lsty item) {
-		if (length == capacity - 1) {
-			Lsty[] resized = (Lsty[]) new Object[capacity * 2];
+		if (length == capacity) {
+			capacity = capacity * 2;
+			Lsty[] resized = (Lsty[]) new Object[capacity];
 			System.arraycopy(array, 0, resized, 0, length);
 			array = resized;
 		}
