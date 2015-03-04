@@ -21,7 +21,7 @@ public class ULLMap<K, V> implements Map61B<K, V>, Iterable<K>{
 
     @Override
     public V get(K key) {
-        if (!containsKet(key)) {
+        if (!containsKey(key)) {
             return null;
         }
         Entry keyEntry = front.get(key);
