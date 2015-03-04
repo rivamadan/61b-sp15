@@ -27,7 +27,7 @@ public class ULLMap<K, V> implements Map61B<K, V>, Iterable<K>{
 
     @Override
     public void put(K key, V val) {
-        if (front == null || !containsKey(key)) {
+        if (!containsKey(key)) {
             front = new Entry(key, val, front);
             size += 1;
         } else {
@@ -38,7 +38,11 @@ public class ULLMap<K, V> implements Map61B<K, V>, Iterable<K>{
 
     @Override
     public boolean containsKey(K key) {
-        return front.get(key) != null;
+        if (front == null) {
+            return false;
+        } else {
+            return front.get(key) != null;
+        }
     }
 
     @Override

@@ -6,6 +6,9 @@ public class ArrayList61B<Lsty> extends AbstractList<Lsty> {
 	private Lsty[] array;
 
 	public ArrayList61B(int initialCapacity) {
+		if (initialCapacity < 1) {
+			throw new IllegalArgumentException();
+		}
 		capacity = initialCapacity;
 		array = (Lsty[]) new Object[capacity];
 	}
@@ -25,7 +28,7 @@ public class ArrayList61B<Lsty> extends AbstractList<Lsty> {
 	}
 
 	public boolean add(Lsty item) {
-		if (length == capacity) {
+		if (length == capacity - 1) {
 			Lsty[] resized = (Lsty[]) new Object[capacity * 2];
 			System.arraycopy(array, 0, resized, 0, length);
 			array = resized;
