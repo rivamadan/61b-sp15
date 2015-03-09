@@ -1,6 +1,5 @@
 package ngordnet;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -12,8 +11,8 @@ import edu.princeton.cs.introcs.In;
 
 public class WordNet {
     private Map<Integer, String[]> idToSynset = new HashMap<Integer, String[]>();
-    private Map<String, ArrayList<Integer>> synsetToId = new HashMap<String, ArrayList<Integer>>();
-    private Digraph idRelation; 
+    private Map<String, Set<Integer>> synsetToId = new HashMap<String, Set<Integer>>();
+    private Digraph idRelation;
     private int numSynsets = 0;
 
     public WordNet(String synsetFilename, String hyponymFilename) {
@@ -25,7 +24,7 @@ public class WordNet {
     }
 
     private void createMapAndSet(In file) {
-        while (file.hasNextLine()) {   
+        while (file.hasNextLine()) {
             String currLine = file.readLine();
             String[] eachColumn = currLine.split(",");
 
@@ -36,10 +35,10 @@ public class WordNet {
             idToSynset.put(id, synsetArr);
 
             for (int i = 0; i < synsetArr.length; i++) {
-                if (synsetToId.containsKey(synsetArr[i])){
+                if (synsetToId.containsKey(synsetArr[i])) {
                     synsetToId.get(synsetArr[i]).add(id);
                 } else {
-                    ArrayList idList = new ArrayList();
+                    Set<Integer> idList = new HashSet<Integer>();
                     idList.add(id);
                     synsetToId.put(synsetArr[i], idList);
                 }
@@ -79,12 +78,8 @@ public class WordNet {
      * of synonyms.
      */
     public Set<String> hyponyms(String word) {
-        ArrayList<Integer> ids = synsetToId.get(word); 
-        Set<Integer> hypernym = new HashSet<Integer>();
-        for (int eachID : ids) {
-            hypernym.add(eachID);
-        }
-        Set<Integer> hypoIDs = GraphHelper.descendants(idRelation, hypernym);
+        Set<Integer> hyperIDs = synsetToId.get(word);
+        Set<Integer> hypoIDs = GraphHelper.descendants(idRelation, hyperIDs);
         return idToHypo(hypoIDs);
     }
 

@@ -8,12 +8,6 @@ import org.junit.Test;
 public class WordNetTest {
 
     @Test
-    public void testConstructor() {
-        WordNet wn = new WordNet("./p1data/wordnet/synsets11.txt",
-                "./p1data/wordnet/hyponyms11.txt");
-    }
-
-    @Test
     public void testIsNoun() {
         WordNet wn = new WordNet("./p1data/wordnet/synsets11.txt",
                 "./p1data/wordnet/hyponyms11.txt");

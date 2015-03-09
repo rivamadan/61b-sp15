@@ -1,0 +1,80 @@
+package ngordnet;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.NavigableSet;
+import java.util.TreeMap;
+
+public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
+    /** Constructs a new empty TimeSeries. */
+    public TimeSeries() {
+        new TreeMap<Integer, T>();
+    }
+
+    /**
+     * Returns the years in which this time series is valid. Doesn't really need
+     * to be a NavigableSet. This is a private method and you don't have to
+     * implement it if you don't want to.
+     */
+    private NavigableSet<Integer> validYears(int startYear, int endYear) {
+        return null;
+
+    }
+
+    /**
+     * Creates a copy of TS, but only between STARTYEAR and ENDYEAR. inclusive
+     * of both end points.
+     */
+    public TimeSeries(TimeSeries<T> ts, int startYear, int endYear) {
+        ts.subMap(startYear, true, endYear, true);
+    }
+
+    /** Creates a copy of TS. */
+    public TimeSeries(TimeSeries<T> ts) {
+
+    }
+
+    /**
+     * Returns the quotient of this time series divided by the relevant value in
+     * ts. If ts is missing a key in this time series, return an
+     * IllegalArgumentException.
+     */
+    public TimeSeries<Double> dividedBy(TimeSeries<? extends Number> ts) {
+        return null;
+
+    }
+
+    /**
+     * Returns the sum of this time series with the given ts. The result is a a
+     * Double time series (for simplicity).
+     */
+    public TimeSeries<Double> plus(TimeSeries<? extends Number> ts) {
+        return null;
+
+    }
+
+    /** Returns all years for this time series (in any order). */
+    public Collection<Number> years() {
+        Collection<Integer> yearInt = keySet();
+        Collection<Number> yearNum = new ArrayList<Number>();
+        for(Integer eachYear : yearInt) {
+            yearNum.add(eachYear);
+        }
+        return yearNum;
+
+    }
+
+    /**
+     * Returns all data for this time series. Must be in the same order as
+     * years().
+     */
+    public Collection<Number> data() {
+        Collection<T> dataT = values();
+        Collection<Number> dataNum = new ArrayList<Number>();
+        for(T eachData : dataT) {
+            dataNum.add(eachData);
+        }
+        return dataNum;
+
+    }
+}
