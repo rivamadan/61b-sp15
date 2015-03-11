@@ -24,6 +24,8 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
         for (Integer year : thisYear) {
             if (ts.containsKey(year)) {
                 valid.add(year);
+            } else  {
+                throw new IllegalArgumentException();
             }
         }
         return valid;

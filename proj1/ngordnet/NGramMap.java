@@ -6,7 +6,8 @@ import edu.princeton.cs.introcs.In;
 
 public class NGramMap {
     private TimeSeries<Long> totalCountTs = new TimeSeries<Long>();
-    private HashMap<String, TimeSeries<Integer>> allWordTs = new HashMap<String, TimeSeries<Integer>>();
+    private HashMap<String, TimeSeries<Integer>> allWordTs = 
+            new HashMap<String, TimeSeries<Integer>>();
     private HashMap<Integer, YearlyRecord> allYears = new HashMap<Integer, YearlyRecord>();
 
     /** Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME. */
@@ -133,7 +134,8 @@ public class NGramMap {
      * Provides processed history of all words between STARTYEAR and ENDYEAR as
      * processed by YRP.
      */
-    public TimeSeries<Double> processedHistory(int startYear, int endYear, YearlyRecordProcessor yrp) {
+    public TimeSeries<Double> processedHistory(int startYear, int endYear, 
+            YearlyRecordProcessor yrp) {
         return null;
     }
 
