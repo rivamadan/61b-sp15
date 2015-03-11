@@ -2,9 +2,6 @@ package ngordnet;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
 import edu.princeton.cs.introcs.In;
 
 public class NGramMap {
@@ -75,7 +72,13 @@ public class NGramMap {
 
     /** Returns a defensive copy of the YearlyRecord of WORD. */
     public YearlyRecord getRecord(int year) {
-        return allYears.get(year);
+        YearlyRecord record = allYears.get(year);
+        YearlyRecord copy = new YearlyRecord();
+        for (String word : record.words()) {
+            int count = record.count(word);
+            copy.put(word, count);
+        }
+        return copy;
     }
 
     /** Returns the total number of words recorded in all volumes. */
@@ -103,11 +106,6 @@ public class NGramMap {
     /** Provides the relative frequency of WORD. */
     public TimeSeries<Double> weightHistory(String word) {
         TimeSeries<Integer> wordTs = allWordTs.get(word);
-        // TimeSeries<Double> frequency = new TimeSeries<Double>();
-        // for (Integer year : wordTs.keySet()) {
-        // long total = totalCountTs.get(year);
-        // frequency.put(year, (double) (wordTs.get(year))/total);
-        // }
         return wordTs.dividedBy(totalCountTs);
     }
 

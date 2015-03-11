@@ -54,20 +54,9 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
             throw new IllegalArgumentException();
         }
 
-        if (ts.size() > this.size()) {
-            Collection<Integer> tsYear = ts.keySet();
-            for (Integer year : tsYear) {
-                sharedYears.add(year);
-            }
-        }
-
         for (Integer year : sharedYears) {
-            if (this.containsKey(year)) {
-                double dividedVal = (this.get(year).doubleValue() / ts.get(year).doubleValue());
-                divided.put(year, dividedVal);
-            } else {
-                divided.put(year, 0.0);
-            }
+            double dividedVal = (this.get(year).doubleValue() / ts.get(year).doubleValue());
+            divided.put(year, dividedVal);
         }
         return divided;
     }

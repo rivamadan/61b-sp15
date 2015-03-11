@@ -7,38 +7,38 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 public class YearlyRecord {
-    private HashMap<String, Integer> yearRecord;
+    private HashMap<String, Integer> record;
     private TreeMap<String, Integer> rankMap = new TreeMap<String, Integer>();
     private TreeMap<String, Integer> sorted;
     private boolean frozen;
 
     /** Creates a new empty YearlyRecord. */
     public YearlyRecord() {
-        yearRecord = new HashMap<String, Integer>();
+        record = new HashMap<String, Integer>();
         frozen = true;
     }
 
     /** Creates a YearlyRecord using the given data. */
     public YearlyRecord(HashMap<String, Integer> otherCountMap) {
-        yearRecord = new HashMap<String, Integer>(otherCountMap);
+        record = new HashMap<String, Integer>(otherCountMap);
         frozen = false;
     }
 
     /** Returns the number of times WORD appeared in this year. */
     public int count(String word) {
-        return yearRecord.get(word);
+        return record.get(word);
 
     }
 
     /** Records that WORD occurred COUNT times in this year. */
     public void put(String word, int count) {
-        yearRecord.put(word, count);
+        record.put(word, count);
         frozen = false;
     }
 
     /** Returns the number of words recorded this year. */
     public int size() {
-        return yearRecord.size();
+        return record.size();
 
     }
 
@@ -65,8 +65,8 @@ public class YearlyRecord {
     }
 
     private void sortWords() {
-        sorted = new TreeMap<String, Integer>(new ValueComparator(yearRecord));
-        sorted.putAll(yearRecord);
+        sorted = new TreeMap<String, Integer>(new ValueComparator(record));
+        sorted.putAll(record);
         frozen = true;
     }
 
