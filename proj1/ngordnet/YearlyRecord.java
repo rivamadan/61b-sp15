@@ -9,9 +9,9 @@ import java.util.TreeMap;
 public class YearlyRecord {
     private TreeMap<String, Integer> yearRecord;
     private TreeMap<String, Integer> rankMap = new TreeMap<String, Integer>();
-    TreeMap<String, Integer> sorted; 
+    private TreeMap<String, Integer> sorted;
     private boolean frozen;
-    
+
     /** Creates a new empty YearlyRecord. */
     public YearlyRecord() {
         yearRecord = new TreeMap<String, Integer>();
@@ -22,12 +22,12 @@ public class YearlyRecord {
     public YearlyRecord(HashMap<String, Integer> otherCountMap) {
         yearRecord = new TreeMap<String, Integer>(otherCountMap);
         frozen = false;
-    } 
+    }
 
     /** Returns the number of times WORD appeared in this year. */
     public int count(String word) {
         return yearRecord.get(word);
-        
+
     }
 
     /** Records that WORD occurred COUNT times in this year. */
@@ -39,7 +39,7 @@ public class YearlyRecord {
     /** Returns the number of words recorded this year. */
     public int size() {
         return yearRecord.size();
-        
+
     }
 
     /** Returns all words in ascending order of count. */
@@ -48,7 +48,7 @@ public class YearlyRecord {
             sortWords();
         }
         return sorted.keySet();
-        
+
     }
 
     /** Returns all counts in ascending order of count. */
@@ -63,43 +63,49 @@ public class YearlyRecord {
         }
         return countNum;
     }
-    
+
     private void sortWords() {
         sorted = new TreeMap<String, Integer>(new ValueComparator(yearRecord));
         sorted.putAll(yearRecord);
         frozen = true;
     }
 
-    /** Returns rank of WORD. Most common word is rank 1. 
-      * If two words have the same rank, break ties arbitrarily. 
-      * No two words should have the same rank.
-      */
+    /**
+     * Returns rank of WORD. Most common word is rank 1. If two words have the
+     * same rank, break ties arbitrarily. No two words should have the same
+     * rank.
+     */
     public int rank(String word) {
         if (!frozen) {
             sortWords();
-        	rankWords();
+            rankWords();
         }
         return rankMap.get(word);
     }
 
-	private void rankWords() {
+    private void rankWords() {
         int i = sorted.size();
         for (String word : sorted.keySet()) {
             rankMap.put(word, i);
             i -= 1;
-        }	
-		frozen = true;
-	}
-	
-	private class ValueComparator implements Comparator<String> {
-  
-	    TreeMap<String, Integer> map;
-	    public ValueComparator(TreeMap<String, Integer> map) {
-	        this.map = map;
-	    }
-	    
-	    public int compare(String a, String b) {
-	        return map.get(a) - map.get(b);
-	    }
-	} 
+        }
+        frozen = true;
+    }
+
+    private class ValueComparator implements Comparator<String> {
+
+        private TreeMap<String, Integer> map;
+
+        public ValueComparator(TreeMap<String, Integer> map) {
+            this.map = map;
+        }
+
+        public int compare(String a, String b) {
+            if (map.get(a) >= map.get(b)) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    }
 }
