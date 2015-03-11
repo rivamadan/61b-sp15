@@ -94,14 +94,14 @@ public class YearlyRecord {
 
     private class ValueComparator implements Comparator<String> {
 
-        private TreeMap<String, Integer> map;
+        private TreeMap<String, Integer> compareMap;
 
-        public ValueComparator(TreeMap<String, Integer> map) {
-            this.map = map;
+        public ValueComparator(TreeMap<String, Integer> compareMap) {
+            this.compareMap = compareMap;
         }
 
         public int compare(String a, String b) {
-            if (map.get(a) >= map.get(b)) {
+            if (compareMap.get(a) >= compareMap.get(b)) {
                 return 1;
             } else {
                 return -1;

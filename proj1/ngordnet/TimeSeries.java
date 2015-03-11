@@ -50,7 +50,7 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
     public TimeSeries<Double> dividedBy(TimeSeries<? extends Number> ts) {
         TimeSeries<Double> divided = new TimeSeries<Double>();
         NavigableSet<Integer> sharedYears = validYears(ts);
-        if (ts.size() < this.size() || sharedYears.isEmpty() || ts.isEmpty()) {
+        if (ts.size() < this.size() || sharedYears.isEmpty()) {
             throw new IllegalArgumentException();
         }
         
