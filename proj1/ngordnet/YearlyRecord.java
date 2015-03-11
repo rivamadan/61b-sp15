@@ -7,20 +7,20 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 public class YearlyRecord {
-    private TreeMap<String, Integer> yearRecord;
+    private HashMap<String, Integer> yearRecord;
     private TreeMap<String, Integer> rankMap = new TreeMap<String, Integer>();
     private TreeMap<String, Integer> sorted;
     private boolean frozen;
 
     /** Creates a new empty YearlyRecord. */
     public YearlyRecord() {
-        yearRecord = new TreeMap<String, Integer>();
+        yearRecord = new HashMap<String, Integer>();
         frozen = true;
     }
 
     /** Creates a YearlyRecord using the given data. */
     public YearlyRecord(HashMap<String, Integer> otherCountMap) {
-        yearRecord = new TreeMap<String, Integer>(otherCountMap);
+        yearRecord = new HashMap<String, Integer>(otherCountMap);
         frozen = false;
     }
 
@@ -94,10 +94,10 @@ public class YearlyRecord {
 
     private class ValueComparator implements Comparator<String> {
 
-        private TreeMap<String, Integer> compareMap;
+        private HashMap<String, Integer> compareMap;
 
-        public ValueComparator(TreeMap<String, Integer> compareMap) {
-            this.compareMap = compareMap;
+        public ValueComparator(HashMap<String, Integer> yearRecord) {
+            this.compareMap = yearRecord;
         }
 
         public int compare(String a, String b) {

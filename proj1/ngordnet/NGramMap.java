@@ -11,7 +11,7 @@ public class NGramMap {
     private TimeSeries<Long> totalCountTs = new TimeSeries<Long>();
     private HashMap<String, TimeSeries<Integer>> allWordTs = new HashMap<String, TimeSeries<Integer>>();
     private HashMap<Integer, YearlyRecord> allYears = new HashMap<Integer, YearlyRecord>();
-    
+
     /** Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME. */
     public NGramMap(String wordsFilename, String countsFilename) {
         In words = new In(wordsFilename);
@@ -20,7 +20,7 @@ public class NGramMap {
         createAllWordTsAndAllYears(words);
     }
 
-    private void  createAllWordTsAndAllYears(In file) {
+    private void createAllWordTsAndAllYears(In file) {
         while (file.hasNextLine()) {
             String currLine = file.readLine();
             String[] column = currLine.split("\t");
@@ -28,18 +28,18 @@ public class NGramMap {
             String word = column[0];
             int year = Integer.parseInt(column[1]);
             int count = Integer.parseInt(column[2]);
-            
+
             TimeSeries<Integer> wordTs;
-            if (allWordTs.containsKey(word)) {
+            if (allWordTs.get(word) != null) {
                 wordTs = allWordTs.get(word);
             } else {
                 wordTs = new TimeSeries<Integer>();
                 allWordTs.put(word, wordTs);
             }
             wordTs.put(year, count);
-            
+
             YearlyRecord words;
-            if (allYears.containsKey(year)) {
+            if (allYears.get(year) != null) {
                 words = allYears.get(year);
             } else {
                 words = new YearlyRecord();
@@ -65,8 +65,12 @@ public class NGramMap {
      * appear in the given year, return 0.
      */
     public int countInYear(String word, int year) {
-        TimeSeries<Integer> countAllYears = allWordTs.get(word);
-        return countAllYears.get(year);
+        if (allWordTs.get(word) == null) {
+            return 0;
+        } else {
+            TimeSeries<Integer> countAllYears = allWordTs.get(word);
+            return countAllYears.get(year);
+        }
     }
 
     /** Returns a defensive copy of the YearlyRecord of WORD. */
@@ -99,11 +103,11 @@ public class NGramMap {
     /** Provides the relative frequency of WORD. */
     public TimeSeries<Double> weightHistory(String word) {
         TimeSeries<Integer> wordTs = allWordTs.get(word);
-//      TimeSeries<Double> frequency = new TimeSeries<Double>();
-//        for (Integer year : wordTs.keySet()) {
-//            long total = totalCountTs.get(year);
-//            frequency.put(year, (double) (wordTs.get(year))/total);
-//        }
+        // TimeSeries<Double> frequency = new TimeSeries<Double>();
+        // for (Integer year : wordTs.keySet()) {
+        // long total = totalCountTs.get(year);
+        // frequency.put(year, (double) (wordTs.get(year))/total);
+        // }
         return wordTs.dividedBy(totalCountTs);
     }
 
@@ -120,7 +124,7 @@ public class NGramMap {
 
     /** Returns the summed relative frequency of all WORDS. */
     public TimeSeries<Double> summedWeightHistory(Collection<String> words) {
-        TimeSeries <Double> summedTs = new TimeSeries<Double>();
+        TimeSeries<Double> summedTs = new TimeSeries<Double>();
         for (String word : words) {
             summedTs = summedTs.plus(weightHistory(word));
         }
