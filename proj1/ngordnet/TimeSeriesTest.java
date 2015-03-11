@@ -72,7 +72,7 @@ public class TimeSeriesTest {
         
         assertEquals((Double) 2.0, tQuotient.get(1991));
         assertEquals((Double) 2.5, tQuotient.get(1992));
-        assertEquals((Double) 0.0, tQuotient.get(1993));
+        assertEquals((Double) 0.0, tQuotient.get(1993));   
     }
     
     @Test
