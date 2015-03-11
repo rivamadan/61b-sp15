@@ -11,7 +11,7 @@ import edu.princeton.cs.introcs.Stopwatch;
  */
 public class YearlyRecordTimeTest {
 
-    /** Stright from: http://www.baeldung.com/java-random-string. Returns
+    /** Straight from: http://www.baeldung.com/java-random-string. Returns
       * a random string. */
     public static String randomString() {
         int leftLimit = 97; // letter 'a'
