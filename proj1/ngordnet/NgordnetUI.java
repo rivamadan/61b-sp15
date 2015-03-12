@@ -41,10 +41,18 @@ public class NgordnetUI {
                 System.out.println(wn.hyponyms(tokens[0]));
                 break;
             case "history":
-                Plotter.plotAllWords(ngm, tokens, startDate, endDate);
+                try {
+                    Plotter.plotAllWords(ngm, tokens, startDate, endDate);
+                } catch (IllegalArgumentException e) {
+                    System.err.println(e);
+                }
                 break;
             case "hypohist":
-                Plotter.plotCategoryWeights(ngm, wn, tokens, startDate, endDate);
+                try {
+                    Plotter.plotCategoryWeights(ngm, wn, tokens, startDate, endDate);
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e);
+                }
                 break;
             case "wordlength":
                 YearlyRecordProcessor yrp = new WordLengthProcessor();
