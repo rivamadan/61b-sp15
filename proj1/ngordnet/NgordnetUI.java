@@ -19,12 +19,12 @@ public class NgordnetUI {
         String hyponymFile = in.readString();
         System.out.println("\nBased on ngordnetui.config, using the following: " + wordFile + ", "
                 + countFile + ", " + synsetFile + ", and " + hyponymFile + ".");
-        
+
         NGramMap ngm = new NGramMap(wordFile, countFile);
         WordNet wn = new WordNet(synsetFile, hyponymFile);
         int startDate = -19283123;
         int endDate = 857173;
-        
+
         while (true) {
             System.out.print("> ");
             String line = StdIn.readLine();
@@ -32,6 +32,7 @@ public class NgordnetUI {
             String command = rawTokens[0];
             String[] tokens = new String[rawTokens.length - 1];
             System.arraycopy(rawTokens, 1, tokens, 0, rawTokens.length - 1);
+
             switch (command) {
             case "count":
                 System.out.println(ngm.countInYear(tokens[0], Integer.parseInt(tokens[1])));
@@ -40,7 +41,7 @@ public class NgordnetUI {
                 System.out.println(wn.hyponyms(tokens[0]));
                 break;
             case "history":
-                Plotter.plotWeightHistory(ngm, tokens[0], startDate, endDate);
+                Plotter.plotAllWords(ngm, tokens, startDate, endDate);
                 break;
             case "hypohist":
                 Plotter.plotCategoryWeights(ngm, wn, tokens, startDate, endDate);
