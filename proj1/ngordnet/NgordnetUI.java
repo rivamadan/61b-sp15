@@ -35,23 +35,37 @@ public class NgordnetUI {
 
             switch (command) {
             case "count":
-                System.out.println(ngm.countInYear(tokens[0], Integer.parseInt(tokens[1])));
+                try {
+                    System.out.println(ngm.countInYear(tokens[0], Integer.parseInt(tokens[1])));
+                } catch (NullPointerException e) {
+                    System.err.println(tokens[0] + " does not exist: " + e);
+                } catch (NumberFormatException e) {
+                    System.err.println(tokens[1] + " is not valid input: " + e);
+                }
                 break;
             case "hyponyms":
-                System.out.println(wn.hyponyms(tokens[0]));
+                try {
+                    System.out.println(wn.hyponyms(tokens[0]));
+                } catch (NullPointerException e) {
+                    System.err.println(tokens[0] + " does not exist: " + e);
+                }
                 break;
             case "history":
                 try {
                     Plotter.plotAllWords(ngm, tokens, startDate, endDate);
                 } catch (IllegalArgumentException e) {
-                    System.err.println(e);
+                    System.err.println("Command could not be processed:" + e);
+                } catch (NullPointerException e) {
+                    System.err.println("Command could not be processed:" + e);
                 }
                 break;
             case "hypohist":
                 try {
                     Plotter.plotCategoryWeights(ngm, wn, tokens, startDate, endDate);
                 } catch (IllegalArgumentException e) {
-                    System.out.println(e);
+                    System.err.println("Command could not be processed:" + e);
+                } catch (NullPointerException e) {
+                    System.err.println("Command could not be processed:" + e);
                 }
                 break;
             case "wordlength":
@@ -59,7 +73,11 @@ public class NgordnetUI {
                 Plotter.plotProcessedHistory(ngm, startDate, endDate, yrp);
                 break;
             case "zipf":
-                Plotter.plotZipfsLaw(ngm, Integer.parseInt(tokens[0]));
+                try {
+                    Plotter.plotZipfsLaw(ngm, Integer.parseInt(tokens[0]));
+                } catch (NumberFormatException e) {
+                    System.err.println(tokens[0] + " is not valid input: " + e);
+                }
                 break;
             case "quit":
                 return;
@@ -69,10 +87,14 @@ public class NgordnetUI {
                 System.out.println(helpStr);
                 break;
             case "range":
-                startDate = Integer.parseInt(tokens[0]);
-                endDate = Integer.parseInt(tokens[1]);
-                System.out.println("Start date: " + startDate);
-                System.out.println("End date: " + endDate);
+                try {
+                    startDate = Integer.parseInt(tokens[0]);
+                    endDate = Integer.parseInt(tokens[1]);
+                    System.out.println("Start date: " + startDate);
+                    System.out.println("End date: " + endDate);
+                } catch (NumberFormatException e) {
+                    System.err.println(tokens[0] + " or " + tokens[1] + " are not valid input: " + e);
+                }
                 break;
             default:
                 System.out.println("Invalid command.");

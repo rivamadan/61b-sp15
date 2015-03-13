@@ -63,10 +63,10 @@ public class NGramMap {
      * appear in the given year, return 0.
      */
     public int countInYear(String word, int year) {
-        if (allWordTs.get(word) == null) {
+        TimeSeries<Integer> countAllYears = allWordTs.get(word);
+        if (countAllYears.get(word) == null) {
             return 0;
         } else {
-            TimeSeries<Integer> countAllYears = allWordTs.get(word);
             return countAllYears.get(year);
         }
     }
@@ -125,7 +125,9 @@ public class NGramMap {
     public TimeSeries<Double> summedWeightHistory(Collection<String> words) {
         TimeSeries<Double> summedTs = new TimeSeries<Double>();
         for (String word : words) {
-            summedTs = summedTs.plus(weightHistory(word));
+            if (allWordTs.get(word) != null) {
+                summedTs = weightHistory(word).plus(summedTs);
+            }
         }
         return summedTs;
     }
