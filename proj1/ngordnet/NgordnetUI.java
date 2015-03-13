@@ -82,8 +82,8 @@ public class NgordnetUI {
             case "quit":
                 return;
             case "help":
-                In inHelp = new In("help.txt");
-                String helpStr = in.readAll();
+                In inHelp = new In("./ngordnet/help.txt");
+                String helpStr = inHelp.readAll();
                 System.out.println(helpStr);
                 break;
             case "range":

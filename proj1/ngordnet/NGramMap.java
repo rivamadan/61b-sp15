@@ -63,10 +63,10 @@ public class NGramMap {
      * appear in the given year, return 0.
      */
     public int countInYear(String word, int year) {
-        TimeSeries<Integer> countAllYears = allWordTs.get(word);
-        if (countAllYears.get(word) == null) {
+        if (allWordTs.get(word) == null) {
             return 0;
         } else {
+            TimeSeries<Integer> countAllYears = allWordTs.get(word);
             return countAllYears.get(year);
         }
     }
