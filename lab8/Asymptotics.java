@@ -29,6 +29,8 @@ public class Asymptotics {
                     break;
                 case 5: function5(arg);
                     break;
+		case 6: function6(arg);
+		    break;
                 default: usage();
                         return;
                 }
@@ -92,6 +94,16 @@ public class Asymptotics {
             } i--;
         }
     }
+
+    public static void function6(long n) {
+	for (long i = 0; i < n; i++) {
+	    long j = i*i;
+	    while (j <= n) {
+		j += 1;
+	    }
+	}
+    }
+
 
     public static void usage() {
         System.out.println("To run function x with input n (where x and n " +

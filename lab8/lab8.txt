@@ -5,30 +5,34 @@ function3: Theta( n^3 )
 
 Data:
                n         time
-function1:	2000		.028
+function1:	
+			2000		.028
 			4000		.042
 			8000		.111
 			16000		.359
 
-function2:	10000000	.051
+function2:	
+			10000000	.051
 			20000000	.076
 			40000000	.135
 			80000000	.251
 
-function3: 	250 		.088
+function3: 	
+			250 		.088
 			500 		.567
 			1000		5.383
 			2000		45.214
 
 Experimentally determined running time, assuming runtime is of the form ~aN^b:
 
-function1: ~  N^ 
-function2: ~  N^ 
-function3: ~  N^ 
+function1: ~ 0.01 N^1.7
+function2: ~ 1.9x10^-8 N^0.9
+function3: ~ 2.6x10^-9 N^3.1
 
 2. Data:
                               n             time
-function4:			22801763489				.012
+function4:			
+					22801763489				.012
 					1000000000000037		.0256
 					100000000000097			.09
 					100000000000000013		2.473
@@ -80,16 +84,17 @@ Insertion sort with linked list:
 
 Experimentally determined running time:
 
-Insertion sort with array:        O(___)
-Insertion sort with linked list:  O(___)
+Insertion sort with array:        O( n^2 )
+Insertion sort with linked list:  O( n^3 )
 
-5. Initial guess: O(log n)
+5. Initial guess: O(n log n)
 
 Data:             n               time
+				1000000			0.158
+				2000000 		0.472
+				4000000 		1.347
+				8000000 		3.706
 
-
-
-
-Experimentally determined running time: O(___)
+Experimentally determined running time: O(n log n)
 
 
