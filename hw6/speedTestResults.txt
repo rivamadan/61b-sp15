@@ -1,0 +1,26 @@
+Insert Random
+N			Type		Time
+10000		ULLMap		0.38
+10000		BSTMap		0.05
+10000		TreeMap		0.01
+
+20000		ULLMap		1.20
+20000		BSTMap		0.05
+20000		TreeMap		0.04
+
+40000		BSTMap		0.10
+40000		TreeMap		0.06
+
+Insert In Order
+N			Type		Time
+10000		ULLMap		0.54
+10000		BSTMap		0.84
+10000		TreeMap		0.10
+
+20000		ULLMap		1.37
+20000		BSTMap		2.00
+20000		TreeMap		0.11
+
+40000		TreeMap		0.08
+
+With InsertInOrder, the BSTMap actually took longer than the ULLMap.
