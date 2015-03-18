@@ -21,7 +21,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     public void clear() {
         root = null;
-        size = 0;
     }
 
     /* Returns true if this map contains a mapping for the specified key. */
@@ -72,7 +71,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private Node put(Node n, K key, V value) {
         if (n == null) {
-            return new Node(key, value);
+            return new Node(key, value, 1);
         }
         int compared = key.compareTo(n.key);
         if (compared < 0) {
