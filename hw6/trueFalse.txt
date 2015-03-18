@@ -1,8 +1,8 @@
-1 F
-2 F 
-3 F 
-4 T due to the worst case scenario is a spindly tree
-5 T anything greater than the runtime can be in big O
-6
-7
-8
+1 F In the worst case scenario the order of growth is N which is larger than log N.
+2 F put() has two possible runtimes, N or log N, and they aren't in the same family so there is no big theta bounds
+3 F put() has two possible runtimes, N or log N, and they aren't in the same family so there is no big theta bounds
+4 T The runtime won't be larger than N for the worst case scenario (a spindly tree). 
+5 T Anything greater than the worst casce runtime can be in big O.
+6 T ~2 ln(N) is the same as O(log N), which is the average runtime for random calls
+7 T The fastest runtime is log N.
+8 O(N^2) In the worst case scenario, the mystery method will call numberOfNodes (runtime theta N) for a spindly tree (N times).

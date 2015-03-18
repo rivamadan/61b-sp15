@@ -72,7 +72,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             n.right = put(n.right, key, value);
         } else {
             n.val = value;
-            this.size -= 1;
         }
         this.size += 1;
         return n;
