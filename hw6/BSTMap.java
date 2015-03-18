@@ -58,10 +58,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private int size(Node n) {
         if (n == null) {
-    	   return 0;
-    	} else {
-    	   return n.numNodes;
-    	}
+            return 0;
+        } else {
+            return n.numNodes;
+        }
     }
 
     /* Associates the specified value with the specified key in this map. */
