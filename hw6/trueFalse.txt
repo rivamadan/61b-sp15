@@ -1,0 +1,8 @@
+1 F
+2 F 
+3 F 
+4 T due to the worst case scenario is a spindly tree
+5 T anything greater than the runtime can be in big O
+6
+7
+8

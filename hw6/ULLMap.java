@@ -5,7 +5,7 @@ import java.util.Set;
  *  Any key must appear at most once in the dictionary, but values may appear multiple
  *  times. Supports get(key), put(key, value), and contains(key) methods. The value
  *  associated to a key is the value in the last call to put with that key. */
-public class ULLMap<K extends Comparable, V extends Comparable> implements Map61B<K, V>, Iterable<K>{
+public class ULLMap<K, V>  implements Map61B<K, V>, Iterable<K>{
     int size = 0;
 
     /** Returns the value corresponding to KEY or null if no such value exists. */
