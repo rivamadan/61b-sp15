@@ -5,16 +5,17 @@ import java.util.Set;
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private Node root;
-    private int size;
 
     private class Node {
         private K key;
         private V val;
         private Node left, right;
+        private int numNodes;
 
-        public Node(K key, V val) {
+        public Node(K key, V val, int numNodes) {
             this.key = key;
             this.val = val;
+            this.numNodes = numNodes;
         }
     }
 
@@ -53,7 +54,15 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     /* Returns the number of key-value mappings in this map. */
     public int size() {
-        return size;
+        return size(root);
+    }
+
+    private int size(Node n) {
+    	if (n == null) {
+    		return 0;
+    	} else {
+    		return n.numNodes;
+    	}
     }
 
     /* Associates the specified value with the specified key in this map. */
@@ -73,7 +82,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         } else {
             n.val = value;
         }
-        this.size += 1;
+        n.numNodes = 1 + size(n.left) + size(n.right);
         return n;
     }
 
