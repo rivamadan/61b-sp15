@@ -75,20 +75,19 @@ public class Piece {
     @Override
     public int hashCode() {
         int hash = x + y;
-        hash = hash << 5;
         if (isKing) {
-            hash = hash & 1;
+            hash = hash << 1;
         } if (side) {
-            hash = hash & 2;
+            hash = hash << 2;
         } if (hasCaptured) {
-            hash = hash & 4;
+            hash = hash << 4;
         } if (isShield()) {
-            hash = hash & 8;
+            hash = hash << 8;
         } if (isBomb()) {
-            hash = hash & 16;
+            hash = hash << 16;
         }
         hash = hash << shifter;
-        shifter ++;
+        shifter++;
         return hash;
     }
 
