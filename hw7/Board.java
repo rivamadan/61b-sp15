@@ -41,7 +41,9 @@ public class Board {
         int hash = 0;
         for (int i = 0; i < pieces.length; i++) {
             for (int j = 0; j < pieces[0].length; j++) {
-                hash += pieces[i][j].hashCode();
+                if (pieces[i][j] != null) {
+                    hash += pieces[i][j].hashCode();
+                }
             }
         }
         return hash;
