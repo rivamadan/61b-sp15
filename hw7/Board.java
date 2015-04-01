@@ -22,11 +22,27 @@ public class Board {
 
 	@Override
 	public boolean equals(Object o) {
-        return true; // YOUR CODE HERE
+        if (o != null && o instanceof Board) {
+            for (int i = 0; i < pieces.length; i++) {
+                for (int j = 0; j < pieces[0].length; j++) {
+                    if !(pieces[i][j].equals(other.pieces[i][j])) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
 	}
 
     @Override
     public int hashCode() {
-        return 6; // YOUR CODE HERE
+        int hash = 0;
+        for (int i = 0; i < pieces.length; i++) {
+            for (int j = 0; j < pieces[0].length; j++) {
+                hash += pieces[i][j].hashCode();
+            }
+        }
     }
+
 }

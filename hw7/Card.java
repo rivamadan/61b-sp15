@@ -2,10 +2,10 @@
 public class Card {
 
     // Declare some constants. Your code may or may not find this helpful.
-    public static final int SPADES = 0;
-    public static final int HEARTS = 1;
-    public static final int DIAMONDS = 2;
-    public static final int CLUBS = 3;
+    public static final int SPADES = 1;
+    public static final int HEARTS = 2;
+    public static final int DIAMONDS = 3;
+    public static final int CLUBS = 4;
 
     // These should be declared private, but declare them public for ease of
     // testing (name, for compatibility with the provided Junit test)
