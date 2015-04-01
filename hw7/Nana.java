@@ -81,83 +81,83 @@ public class Nana {
 
     // Is hashCodeA() a perfect hash for Nana? Return "yes" or "no"
     public static final String isPerfectHashA() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "no"; 
     }
 
     // Is hashCodeB() a perfect hash for Nana? Return "yes" or "no"
     public static final String isPerfectHashB() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "yes";
     }
 
     // Is hashCodeC() a perfect hash for Nana? Return "yes" or "no"
     public static final String isPerfectHashC() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "yes"; 
     }
 
     // Is hashCodeD() a perfect hash for Nana? Return "yes" or "no"
     public static final String isPerfectHashD() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "no";
     }
 
     // Is hashCodeE() a perfect hash for Nana? Return "yes" or "no"
     public static final String isPerfectHashE() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "no";
     }
 
     // Is hashCodeF() a perfect hash for Nana? Return "yes" or "no"
     public static final String isPerfectHashF() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
-    }
+        return "no";
+
 
     /**************************************************************/
     /****************** Questions 1.2.A to 1.2.F ******************/
 
     // Is hashCodeA() a valid hash for Nana? Return "yes" or "no"
     public static final String isValidHashA() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "no";
     }
 
     // Is hashCodeB() a valid hash for Nana? Return "yes" or "no"
     public static final String isValidHashB() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "yes";
     }
 
     // Is hashCodeC() a valid hash for Nana? Return "yes" or "no"
     public static final String isValidHashC() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "yes";
     }
 
     // Is hashCodeD() a valid hash for Nana? Return "yes" or "no"
     public static final String isValidHashD() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "yes";  
     }
 
     // Is hashCodeE() a valid hash for Nana? Return "yes" or "no"
     public static final String isValidHashE() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "no"; 
     }
 
     // Is hashCodeF() a valid hash for Nana? Return "yes" or "no"
     public static final String isValidHashF() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "yes";
     }
 
     /**************************************************************/
     /************************ Question #1.3 ***********************/
 
     public static final String worst2Best() {
-        return "A, B, C, D"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "A, D, C, B";
     }
 
     /**************************************************************/
     /************************ Question #1.4 ************************/
 
     public static final String thereWasCollision() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "yes"; 
     }
 
     public static final String canGetDrake() {
-        return "maybe"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "no";
     }
 
 } // End Nana.java

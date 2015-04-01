@@ -25,8 +25,9 @@ public class Card {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Card) {
-            return (suit == ((Card) o).suit) && (number == ((Card) o).number);
+        if (o != null && o instanceof Card) {
+            Card other = (Card) o;
+            return (suit == other.suit) && (number == other.number);
         }
         return false;
     }
