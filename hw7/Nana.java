@@ -107,7 +107,7 @@ public class Nana {
     // Is hashCodeF() a perfect hash for Nana? Return "yes" or "no"
     public static final String isPerfectHashF() {
         return "no";
-
+    }
 
     /**************************************************************/
     /****************** Questions 1.2.A to 1.2.F ******************/
@@ -157,7 +157,7 @@ public class Nana {
     }
 
     public static final String canGetDrake() {
-        return "no";
+        return "yes";
     }
 
 } // End Nana.java
