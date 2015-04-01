@@ -86,8 +86,6 @@ public class Piece {
         } if (isBomb()) {
             hash = hash << 16;
         }
-        hash = hash << shifter;
-        shifter++;
         return hash;
     }
 
