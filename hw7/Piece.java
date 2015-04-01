@@ -15,6 +15,8 @@ public class Piece {
     /** Keeps track of the board to which this piece belongs.
      *  Necessary for callbacks. */
 
+    private static int shifter = 1;
+
     /** Returns whether or not this piece is on the Fire team. */
     public boolean isFire() {
         return side;
@@ -85,6 +87,8 @@ public class Piece {
         } if (isBomb()) {
             hash = hash & 16;
         }
+        hash = hash << shifter;
+        shifter ++;
         return hash;
     }
 
