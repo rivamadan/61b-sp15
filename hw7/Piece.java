@@ -78,11 +78,11 @@ public class Piece {
         } if (side) {
             hash += 2;
         } if (hasCaptured) {
-            hash += 3;
-        } if (isShield()) {
             hash += 4;
+        } if (isShield()) {
+            hash += 8;
         } if (isBomb()) {
-            hash += 5;
+            hash += 16;
         }
         return hash;
     }
