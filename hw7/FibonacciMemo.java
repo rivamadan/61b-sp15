@@ -28,11 +28,10 @@ public class FibonacciMemo {
     public static int fibMemo(int n) {
         if (memoMap.containsKey(n)) {
             return memoMap.get(n);
-        } else if (n <= 1) {
-            memoMap.put(n, n);
+        } if (n <= 1) {
             return n;
         } else {
-            int fibNum = fibNoMemo(n - 2) + fibNoMemo(n - 1);
+            int fibNum = fibMemo(n - 2) + fibMemo(n - 1);
             memoMap.put(n, fibNum);
             return fibNum;
         }
@@ -58,8 +57,9 @@ public class FibonacciMemo {
         System.out.println("2: " + FibonacciMemo.fibNoMemo(2));
         System.out.println("3: " + FibonacciMemo.fibNoMemo(3));
         System.out.println("4: " + FibonacciMemo.fibNoMemo(4));
-        System.out.println("46: " + FibonacciMemo.fibNoMemo(46));
-        System.out.println("47: " + FibonacciMemo.fibNoMemo(47));
+        System.out.println("46: " + FibonacciMemo.fibMemo(46));
+        System.out.println("47: " + FibonacciMemo.fibMemo(47));
+        System.out.println("300: " + FibonacciMemo.fibMemo(300));
 
         // 46th Fibonacci = 1,836,311,903
         // 47th Fibonacci = 2,971,215,073
