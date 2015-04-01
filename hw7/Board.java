@@ -23,9 +23,10 @@ public class Board {
 	@Override
 	public boolean equals(Object o) {
         if (o != null && o instanceof Board) {
+            Board other = (Board) o;
             for (int i = 0; i < pieces.length; i++) {
                 for (int j = 0; j < pieces[0].length; j++) {
-                    if !(pieces[i][j].equals(other.pieces[i][j])) {
+                    if (!(pieces[i][j].equals(other.pieces[i][j]))) {
                         return false;
                     }
                 }
@@ -43,6 +44,7 @@ public class Board {
                 hash += pieces[i][j].hashCode();
             }
         }
+        return hash;
     }
 
 }
