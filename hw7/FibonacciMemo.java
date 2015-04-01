@@ -2,7 +2,7 @@ import java.util.HashMap; // Import Java's HashMap so we can use it
 
 public class FibonacciMemo {
 
-    private static HashMap memoMap = new HashMap();
+    private static HashMap<Integer, Integer> memoMap = new HashMap<Integer, Integer>();
 
     /**
      * The classic recursive implementation with no memoization. Don't care
@@ -28,10 +28,11 @@ public class FibonacciMemo {
     public static int fibMemo(int n) {
         if (memoMap.containsKey(n)) {
             return memoMap.get(n);
-        } if (n <= 1) {
+        } else if (n <= 1) {
+            memoMap.put(n, n);
             return n;
         } else {
-            fibNum = fibNoMemo(n - 2) + fibNoMemo(n - 1);
+            int fibNum = fibNoMemo(n - 2) + fibNoMemo(n - 1);
             memoMap.put(n, fibNum);
             return fibNum;
         }
@@ -43,8 +44,7 @@ public class FibonacciMemo {
      * as the 47th Fibonacci number?
      */
     public static String why47() {
-        String answer = "potatoes";
-        answer += ", " + answer + " and tapioca";
+        String answer = "overflow";
         return answer;
     }
 
@@ -58,6 +58,8 @@ public class FibonacciMemo {
         System.out.println("2: " + FibonacciMemo.fibNoMemo(2));
         System.out.println("3: " + FibonacciMemo.fibNoMemo(3));
         System.out.println("4: " + FibonacciMemo.fibNoMemo(4));
+        System.out.println("46: " + FibonacciMemo.fibNoMemo(46));
+        System.out.println("47: " + FibonacciMemo.fibNoMemo(47));
 
         // 46th Fibonacci = 1,836,311,903
         // 47th Fibonacci = 2,971,215,073
