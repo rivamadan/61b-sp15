@@ -76,15 +76,15 @@ public class Piece {
     public int hashCode() {
         int hash = x * y;
         if (isKing) {
-            hash = hash << 5;
+            hash = hash << 1;
         } if (side) {
-            hash = hash << 6;
+            hash = hash << 2;
         } if (hasCaptured) {
-            hash = hash << 7;
+            hash = hash << 4;
         } if (isShield()) {
             hash = hash << 8;
         } if (isBomb()) {
-            hash = hash << 9;
+            hash = hash << 16;
         }
         return hash;
     }
