@@ -121,8 +121,8 @@ public class MapRace {
     }
 
     public static final String followUp() {
-        String answer = "no, the treemap is usually slower because it has to maintain order,
-         but for many puts the speed is almost the same. (I used java's built in maps.)"
+        String answer = "no, the treemap is usually slower because it has to maintain order, but for many puts the speed is almost the same.";
+        answer += "(I used java's built in maps.)";
         return answer;
     }
 
