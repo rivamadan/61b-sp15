@@ -74,18 +74,17 @@ public class Piece {
 
     @Override
     public int hashCode() {
-        int hash = x;
-        hash = hash & (y << 4);
+        int hash = x * y;
         if (isKing) {
-            hash = hash & (1 << 8);
+            hash = hash << 5;
         } if (side) {
-            hash = hash & (1 << 9);
+            hash = hash << 6;
         } if (hasCaptured) {
-            hash = hash & (1 << 10);
+            hash = hash << 7;
         } if (isShield()) {
-            hash = hash & (1 << 11);
+            hash = hash << 8;
         } if (isBomb()) {
-            hash = hash & (1 << 12);
+            hash = hash << 9;
         }
         return hash;
     }
