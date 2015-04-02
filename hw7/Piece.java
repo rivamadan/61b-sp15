@@ -74,8 +74,8 @@ public class Piece {
 
     @Override
     public int hashCode() {
-        int hash = x
-        hash = hash & (y << 4)
+        int hash = x;
+        hash = hash & (y << 4);
         if (isKing) {
             hash = hash & (1 << 8);
         } if (side) {
