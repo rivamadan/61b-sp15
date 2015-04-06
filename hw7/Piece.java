@@ -15,8 +15,6 @@ public class Piece {
     /** Keeps track of the board to which this piece belongs.
      *  Necessary for callbacks. */
 
-    private static int shifter = 1;
-
     /** Returns whether or not this piece is on the Fire team. */
     public boolean isFire() {
         return side;
@@ -63,30 +61,54 @@ public class Piece {
 
     @Override
     public boolean equals(Object o) {
-        if (o != null && o instanceof Piece) {
-            Piece other = (Piece) o;
-            return (x == other.x) && (y == other.y) && (side == other.side) 
-                    && (isKing == other.isKing) && (type.equals(other.type) 
-                    && (hasCaptured == other.hasCaptured));
+        if (!(o instanceof Piece)) {
+            return false;
         }
-        return false;
+
+        Piece other = (Piece) o;
+        if (this.isKing() != other.isKing()) {
+            return false;
+        }
+        if (this.isShield() != other.isShield()) {
+            return false;
+        }
+        if (this.isBomb() != other.isBomb()) {
+            return false;
+        }
+        if (this.isFire() != other.isFire()) {
+            return false;
+        }
+        return this.x == other.x && this.y == other.y;
     }
 
     @Override
     public int hashCode() {
-        int hash = x * y;
-        if (isKing) {
-            hash = hash << 1;
-        } if (side) {
-            hash = hash << 2;
-        } if (hasCaptured) {
-            hash = hash << 4;
-        } if (isShield()) {
-            hash = hash << 8;
-        } if (isBomb()) {
-            hash = hash << 16;
+        int type = hashType();
+        int locVal = (y * Board.SIZE + x);
+        return locVal * 12 + type;
+    }
+
+    // Returns a value 0-11 describing the race of this piece.
+    private int hashType() {
+        // Twelve possibilities
+        int answer;
+        if (isBomb()) {
+            answer = 1;
+        } else if (isShield()) {
+            answer = 2;
+        } else {
+            answer = 3;
         }
-        return hash;
+        if (isFire() && !isKing()) {
+            answer += 3 * 1;
+        }
+        if (!isFire() && isKing()) {
+            answer += 3 * 2;
+        }
+        if (isFire() && isKing()) {
+            answer += 3 * 3;
+        }
+        return answer - 1;
     }
 
     public static void main(String[] args) {

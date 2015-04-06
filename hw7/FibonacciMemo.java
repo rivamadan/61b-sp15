@@ -43,7 +43,7 @@ public class FibonacciMemo {
      * as the 47th Fibonacci number?
      */
     public static String why47() {
-        String answer = "overflow";
+        String answer = "overflow, 2,971,215,073 is too large to be represented by a 32-bit int";
         return answer;
     }
 
