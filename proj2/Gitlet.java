@@ -1,4 +1,3 @@
-package gitlet;
 
 public class Gitlet {
 
