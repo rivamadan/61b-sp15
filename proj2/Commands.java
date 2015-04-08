@@ -6,6 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,19 +18,19 @@ import edu.princeton.cs.introcs.In;
 /* methods for gitlet's commands */
 
 public class Commands {
+    private static final String separator = File.separator;
 
     /* initializes gitlet */
     public static void initialize() {
-        FileUtils.createFolder(".gitlet");
+        createFolder(".gitlet");
         Commit commitList = new Commit(getDateTime());
         saveCommitList(commitList);
     }
     
+    /* need to add failure cases */
     public static void add(String file) throws IOException {
         String currDir = System.getProperty("user.dir");
-        String separator = File.separator;
         File filesToAdd = new File(currDir, ".gitlet" + separator + "filesToAdd.txt");
-        System.out.println(filesToAdd);
 
         if(!filesToAdd.exists()){
             filesToAdd.createNewFile();
@@ -38,27 +42,30 @@ public class Commands {
         bw.close();
     }
     
-
+    /* need to add failure cases */
     public static void commit(String msg) throws IOException {
         Commit commitList = loadCommitList();
         commitList.addCommit(msg, getDateTime());
-        String separator = File.separator;
-        String commitFolder = "commit" + commitList.getCommitNum();
-        FileUtils.createFolder(commitFolder);
+        String commitFolder = ".gitlet" + separator + "commit" + commitList.getCommitNum();
+        createFolder(commitFolder);
         
         In filesToAdd = new In(".gitlet" + separator + "filesToAdd.txt");
         
         while (filesToAdd.hasNextLine()) {
             String file = filesToAdd.readLine();
-            FileUtils.copyFile(file, "commit" + commitList.getCommitNum());
+            copyFile(file, ".gitlet" + separator + "commit" + commitList.getCommitNum() + separator + file);
         }
+        File file = new File(".gitlet" + separator + "filesToAdd.txt");
+        file.delete();
+        
         saveCommitList(commitList);
     }
 
-    public static void checkout(String string) throws IOException {
+    /* need to add other types of checkout */
+    public static void checkout(String file) throws IOException {
         Commit commitList = loadCommitList();
-        String separator = File.separator;
-        FileUtils.copyFile("commit1" + separator + string, System.getProperty("user.dir"));
+        /* need to add way to get commit id for the file */
+        copyFile(".gitlet" + separator + "commit1" + separator + file, file);
     }
 
     public static void log() {
@@ -80,7 +87,6 @@ public class Commands {
     
     private static Commit loadCommitList() {
         Commit allCommits = null;
-        String separator = File.separator;
         File commitFile = new File(".gitlet" + separator + "allCommits.ser");
         if (commitFile.exists()) {
             try {
@@ -104,7 +110,6 @@ public class Commands {
             return;
         }
         try {
-            String separator = File.separator;
             File commitFile = new File(".gitlet" + separator + "allCommits.ser");
             FileOutputStream fileOut = new FileOutputStream(commitFile);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
@@ -115,5 +120,32 @@ public class Commands {
             System.out.println(msg);
         }
     }
+    
+    /* Copies the file from it's source location relative to .gitlet to the destination folder */
+    public static void copyFile(String src, String dst) throws IOException {
+        String currDirectory = System.getProperty("user.dir");
+        String separator = System.getProperty("file.separator");
+        Path fileToCopy = Paths.get(currDirectory + separator + src);
+        Path destination = Paths.get(currDirectory + separator + dst);
+        File dest = new File(dst);
+        dest = new File(dest.getParent());
+        if (!dest.exists()) {
+            dest.mkdirs();
+        }
+        Files.copy(fileToCopy, destination, StandardCopyOption.REPLACE_EXISTING);
+    }
+    
+    
+    /* Creates a new folder in the current directory.
+     * If the new folder already exists, it throw a runtime exception. */
+    public static void createFolder(String name) {
+        String currDir = System.getProperty("user.dir");      
+        File newFolder = new File(currDir, name);
+        if (newFolder.exists()) {
+            //throw new RuntimeException();
+        } else {
+            newFolder.mkdirs();
+        }       
+    } 
     
 }
