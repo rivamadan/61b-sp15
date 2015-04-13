@@ -12,11 +12,11 @@ public class Commit implements Serializable {
 
     private class Node implements Serializable {
         private static final long serialVersionUID = -714753247872804263L;
-        public Node parent, left, right;
-        public String branch;
-        public String message;
-        public int commitNum;
-        public String dateTime;
+        private Node parent, left, right;
+        private String branch;
+        private String message;
+        private int commitNum;
+        private String dateTime;
 
         public Node(Node parent, Node left, Node right, String branch, String message, int commitNum, String dateTime) {
             this.parent = parent;
@@ -26,7 +26,6 @@ public class Commit implements Serializable {
             this.message = message;
             this.commitNum = commitNum;
             this.dateTime = dateTime;
-            
         }
     }
 
@@ -36,7 +35,7 @@ public class Commit implements Serializable {
         currHead = "master";
     }
 
-    private Node getCurrHeadNode() {
+    public Node getCurrHeadNode() {
         return branches.get(currHead);
     }
 
@@ -58,10 +57,20 @@ public class Commit implements Serializable {
             headNode.left = new Node(headNode, null, null, currHead, msg, generateID(), dateTime);
             updateBranchPointers(currHead, headNode.left);
         }
-    }  
+    }
     
-    public int getCommitNum() {
+    public int getCurrCommitNum() {
         return getCurrHeadNode().commitNum;    
+    }
+    
+    /* Returns the commit number of the previous commit of the current head node.
+     * If the current head node is the initial commit 0 and it has no parent, it returns -1.
+     */
+    public int getPrevCommitNum() {
+    	if (getCurrHeadNode().parent != null){
+    		return getCurrHeadNode().parent.commitNum;
+    	}
+    	return -1;
     }
     
     public void log() {
