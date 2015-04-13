@@ -8,11 +8,7 @@ public class Gitlet {
 
 		switch (command) {
 		case "init":
-
-				Commands.initialize();
-			} catch (RuntimeException e) {
-				System.out.println("A gitlet version control system already exits in the current directory.");
-			}
+			Commands.initialize();
 			break;
 		case "add":
 			try {
@@ -31,15 +27,21 @@ public class Gitlet {
 				e.printStackTrace();
 			}
 			break;
+		case "remove":
+		    Commands.remove(args[1]);
+		    break;
+	    case "log":
+	        Commands.log();
+	        break;
+	    case "global-log":
+	        Commands.globalLog();
+	        break;
 		case "checkout":
 			try {
 				Commands.checkout(args[1]);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			break;
-		case "log":
-			Commands.log();
 			break;
 		}
 	}

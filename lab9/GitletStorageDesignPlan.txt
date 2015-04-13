@@ -3,10 +3,10 @@ Basic Storage Design Plan for Gitlet
 
 Overview
 -------
-- .gitlet/toAddFiles.ser: contains a list of the current added files
-- .gitlet/commits/allCommits.ser: contains a tree of the commits
-- .gitlet/commits/XXX/: contains copies of the added files in commit XXX
-- .gitlet/commits/XXX/: addedFiles.ser: contains a map of all files in the commit and the most previous commit it was added in
+-  a set of the current added files
+- .gitlet/allCommits.ser: contains a tree of the commits
+- .gitlet/XXX/: contains copies of the added files in commit XXX
+-  a map of all files in the commit and the most previous commit it was added in
 
 
 Sequential Example
@@ -21,14 +21,14 @@ $ java Gitlet init
 
 $ java Gitlet add dog.txt
 
-- create new toAddFiles.ser with dog.txt
+- add dog.txt to set
 
 $ java Gitlet commit “initial commit of dog.txt”
 
 - overwrite allCommits.ser with an updated version with current commit 1 added
-- overwrite toAddFiles.ser with an empty version
-- create directory .gitlet/commits/1 with a copy of dog.txt
-- create .gitlet/commits/1/addedFiles.ser with dog.txt associated with commit 1
+- clear set
+- create directory .gitlet/1 with a copy of dog.txt
+- create map with dog.txt associated with commit 1
 
 $ java Gitlet add dog.txt
 
@@ -37,29 +37,29 @@ $ java Gitlet add dog.txt
 $ cp manyDogs.txt dog.txt
 $ java Gitlet add dog.txt
 
-- overwrite toAddFiles.ser with an updated version with dog.txt added
+- add dog.txt to set
 
 $ java Gitlet commit “replaced dog.txt with manyDogs”
 
 - overwrite allCommits.ser with an updated version with current commit 2 added
-- overwrite toAddFiles.ser with an empty version
-- create directory .gitlet/commits/2 with a copy of dog.txt
-- create .gitlet/commits/2/addedFiles.ser with the contents of commit 1, but updated with dog.txt associated with commit 2
+- clear set
+- create directory .gitlet/2 with a copy of dog.txt
+- create map with the contents of commit 1, but updated with dog.txt associated with commit 2
 
 $ java Gitlet add manyDogs.txt
 
--overwrite toAddFiles.ser with an updated version with manyDogs.txt added
+- add manyDogs.txt to set
 
 $ java Gitlet add ketchupFriend.txt
 
--overwrite toAddFiles.ser with an updated version with ketchupFriend.txt added
+- add ketchupFriend.txt to set
 
 $ java Gitlet commit “added manyDogs and ketchupFriend”
 
 - overwrite allCommits.ser with an updated version with current commit 3 added
-- overwrite toAddFiles.ser with an empty version
-- create directory .gitlet/commits/3 with a copy of manyDogs.txt and ketchupFriend.txt
-- create .gitlet/commits/3/addedFiles.ser with the contents of commit 2's, but updated with manyDogs.txt and ketchupFriend associated with commit 3
+- clear set
+- create directory .gitlet/3 with a copy of manyDogs.txt and ketchupFriend.txt
+- create map with the contents of commit 2's, but updated with manyDogs.txt and ketchupFriend associated with commit 3
 
 $ java Gitlet commit YOLO
 
@@ -68,14 +68,14 @@ $ java Gitlet commit YOLO
 $ cp doge.txt manyDogs.txt
 $ java Gitlet add manyDogs.txt
 
--overwrite toAddFiles.ser with an updated version with manyDogs.txt added
+- add manyDogs.txt to set
 
 $ java Gitlet commit “replaced manyDogs with doge”
 
 - overwrite allCommits.ser with an updated version with current commit 4 added
-- overwrite toAddFiles.ser with an empty version
+- clear set
 - create directory .gitlet/commits/4 with a copy of manyDogs.txt
-- create .gitlet/commits/3/addedFiles.ser with the contents of commit 3's, but updated with manyDogs.txt associated with commit 4
+- create map with the contents of commit 3's, but updated with manyDogs.txt associated with commit 4
 
 $ java Gitlet add dog.txt
 
