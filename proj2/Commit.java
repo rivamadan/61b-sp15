@@ -221,4 +221,7 @@ public class Commit implements Serializable {
         return curr.parent;
     }
 
+    public void resetHelper(int id) {
+        updateBranchPointers(currBranch, commitIDs.get(id));
+    }
 }

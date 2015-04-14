@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+
 /* methods for gitlet's commands */
 
 public class Commands {
@@ -184,7 +185,7 @@ public class Commands {
         if (commitList.getBranches().contains(arg)) {
             checkoutBranch(arg);
         }
-        if (commitList.getCommitedFilesBranch(commitList.getCurrBranch()).containsKey(arg)) {
+        else if (commitList.getCommitedFilesBranch(commitList.getCurrBranch()).containsKey(arg)) {
             checkoutFile(arg);
         } else {
             System.out
@@ -207,7 +208,7 @@ public class Commands {
                 copyFile(".gitlet" + separator + commitFolder + separator + file, file);
             }
             commitList.changeBranch(branch);
-        }
+        } saveCommitList(commitList);
     }
 
     /*
@@ -252,7 +253,7 @@ public class Commands {
             System.out.println("Cannot remove the current branch.");
         } else {
             commitList.removeBranch(name);
-        }
+        } saveCommitList(commitList);
     }
 
     public static void reset(String commitID) {
@@ -261,7 +262,9 @@ public class Commands {
         for (String file : fileCommitAssoc.keySet()) {
             Integer commitFolder = fileCommitAssoc.get(file);
             copyFile(".gitlet" + separator + commitFolder + separator + file, file);
-        }
+        } 
+        commitList.resetHelper(Integer.parseInt(commitID));
+        saveCommitList(commitList);
     }
 
     public static void merge(String branch) {

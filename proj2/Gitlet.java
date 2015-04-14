@@ -47,6 +47,7 @@ public class Gitlet {
             break;
         case "rm-branch":
             Commands.removeBranch(args[1]);
+            break;
         case "reset":
             if (dangerousOK()) {
                 Commands.reset(args[1]);     
