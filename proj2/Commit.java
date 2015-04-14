@@ -24,7 +24,7 @@ public class Commit implements Serializable {
         private String message;
         private int commitNum;
         private String dateTime;
-        private HashMap<String, Integer> commitedFiles;
+        private HashMap<String, Integer> commitedFiles = new HashMap<String, Integer>();
 
         public Node(Node parent, Node left, Node right, String branch, String message,
                 int commitNum, String dateTime) {
@@ -128,7 +128,7 @@ public class Commit implements Serializable {
     public void updateFileAndCommits(String addFile) {
         HashMap<String, Integer> inheritedFiles;
         Node currNode = getHeadNode();
-        if (currNode.parent != null) {
+        if (currNode.parent == null) {
             inheritedFiles = new HashMap<String, Integer>();
         } else {
             inheritedFiles = currNode.parent.commitedFiles;
@@ -142,6 +142,7 @@ public class Commit implements Serializable {
      * which commit folder each file can be found in.
      */
     public HashMap<String, Integer> getCommitedFilesBranch(String branch) {
+        
         return branches.get(branch).commitedFiles;
     }
 

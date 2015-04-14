@@ -99,7 +99,7 @@ public class Commands {
         saveCommitList(commitList);
     }
 
-    /* Mark file for removal or unstage it if it is staged. */
+    /* Mark file for removal or unstage it if it is staged. NOT WORKING*/
     public static void remove(String file) {
         Commit commitList = loadCommitList();
         HashSet<String> filesToAdd = commitList.getFilesToAdd();
@@ -108,12 +108,13 @@ public class Commands {
         HashSet<String> filesToRemove = commitList.getFilesToRemove();
         if (filesToAdd.contains(file)) {
             filesToAdd.remove(file);
+            saveCommitList(commitList);
         } else if (fileCommitAssoc.containsKey(file)) {
             filesToRemove.add(file);
+            saveCommitList(commitList);
         } else {
             System.out.println("No reason to remove the file.");
-        }
-        saveCommitList(commitList);
+        } 
     }
 
     /*
@@ -208,7 +209,8 @@ public class Commands {
                 copyFile(".gitlet" + separator + commitFolder + separator + file, file);
             }
             commitList.changeBranch(branch);
-        } saveCommitList(commitList);
+            saveCommitList(commitList);
+        }
     }
 
     /*
