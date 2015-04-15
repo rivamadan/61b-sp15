@@ -1,6 +1,6 @@
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertArrayEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -145,18 +145,19 @@ public class GitletPublicTest {
         //System.out.println(output);
         gitlet("add", wugFileName);
         gitlet("commit", "added wug");
-        gitlet("remove", wugFileName);
-        //String statusContent = gitlet("status");
-        //System.out.println(statusContent);
-        gitlet("commit", "remove wug");
-        //statusContent = gitlet("status");
-        //System.out.println(statusContent);
         String testFileName = TESTING_DIR + "t1.txt";
         createFile(testFileName, "tester");
         gitlet("add", testFileName);
         gitlet("commit", testFileName);
-        //output = gitlet("checkout", wugFileName);
-        //System.out.println(output);
+        gitlet("rm", wugFileName);
+        //String statusContent = gitlet("status");
+        //System.out.println(statusContent);
+        gitlet("commit", "remove wug");
+        //String logContent = gitlet("log");
+        //System.out.println(logContent);
+        //statusContent = gitlet("status");
+        //System.out.println(statusContent);
+
     }
     
     @Test
@@ -239,6 +240,215 @@ public class GitletPublicTest {
         assertEquals("This is not a wug.", getText(notWugFileName));
     }
     
+    @Test
+    public void testMerge() {
+        String wugFileName = TESTING_DIR + "wug.txt";
+        String testFileName = TESTING_DIR + "test.txt";
+        createFile(wugFileName, "This is a nothing.");
+        createFile(testFileName, "nothing");
+        gitlet("init");
+        gitlet("add", wugFileName);
+        gitlet("add", testFileName);
+        gitlet("commit", "added");
+        gitlet("branch", "b1");
+        gitlet("checkout", "b1");
+        writeFile(testFileName, "test");
+        gitlet("add", testFileName);
+        gitlet("commit", "changed wug");
+        writeFile(testFileName, "test test");
+        gitlet("add", testFileName);
+        gitlet("commit", "changed wug");
+        gitlet("checkout", "master");
+        writeFile(wugFileName, "This is a BIG wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        writeFile(wugFileName, "This is a REALLY BIG wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        gitlet("merge", "b1");
+        assertEquals("This is a REALLY BIG wug.", getText(wugFileName));
+        assertEquals("test test", getText(testFileName));
+    }
+    
+    @Test
+    public void testMergeConflict() {
+        String wugFileName = TESTING_DIR + "wug.txt";
+        String wugConflict = TESTING_DIR + "wug.txt.conflicted";
+        createFile(wugFileName, "This is a nothing.");
+        gitlet("init");
+        gitlet("add", wugFileName);
+        gitlet("commit", "added");
+        gitlet("branch", "b1");
+        gitlet("checkout", "b1");
+        writeFile(wugFileName, "This is a wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        writeFile(wugFileName, "This is not a wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        gitlet("checkout", "master");
+        writeFile(wugFileName, "This is a BIG wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        writeFile(wugFileName, "This is a REALLY BIG wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        gitlet("merge", "b1");
+        assertEquals("This is a REALLY BIG wug.", getText(wugFileName));
+        assertEquals("This is not a wug.", getText(wugConflict));
+    }
+    
+    @Test
+    public void testRebase() {
+        String wugFileName = TESTING_DIR + "wug.txt";
+        createFile(wugFileName, "This is a nothing.");
+        gitlet("init");
+        gitlet("add", wugFileName);
+        gitlet("commit", "1");
+        gitlet("branch", "b1");
+        writeFile(wugFileName, "This is a wug.");        
+        gitlet("add", wugFileName);
+        gitlet("commit", "2");
+        writeFile(wugFileName, "This is not a wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "3"); 
+        gitlet("checkout", "b1");
+        writeFile(wugFileName, "This is a BIG wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "4");
+        writeFile(wugFileName, "This is a REALLY BIG wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "5");     
+        gitlet("rebase", "master");
+        assertEquals("This is a REALLY BIG wug.", getText(wugFileName));
+        //String output = gitlet("global-log");
+        //System.out.println(output);
+        //output = gitlet("log");
+        //System.out.println(output);
+    }
+    
+    @Test
+    public void testRebaseComplex() {
+        gitlet("init");
+        String PII = "yourtestFiles/PII.txt";
+        String common1 = "yourtestFiles/common1.txt";
+        String common2 = "yourtestFiles/common2.txt";
+        String common3 = "yourtestFiles/common3.txt";
+        String PI = "yourtestFiles/PI.txt";
+        createFile(PII, "PII: file that's very old");
+        createFile(common1, "commmon1: Apple WATCH PRICE: 20,000USD. Are you going to buy?");
+        createFile(common2, "commmon2: This Summer: 61C Class sucks");
+        createFile(common3, "commmon3: Should You go to MIT instead?");
+        createFile(PI, "PI: file that's no one knows what it is");
+        gitlet("add", common1);
+        gitlet("add", common2);
+        gitlet("add", common3);
+        gitlet("add", PI);
+        gitlet("add", PII);
+        gitlet("commit", "ORIGIN");
+        gitlet("branch", "F");
+        gitlet("rm", PII);
+        writeFile(common2, "commmon2: This Summer: 61C Class rocks!");
+        gitlet("add", common2);
+        gitlet("commit", "PI");
+        gitlet("branch", "C");
+        String GI = "yourtestFiles/GII.txt";
+        createFile(GI, "GI: file that's miracle");
+        gitlet("add", GI);
+        gitlet("commit", "GI");
+        String GII = "yourtestFiles/GII.txt";
+        createFile(GII, "GII: file that's changing everything");
+        writeFile(common1, "commmon1: Apple WATCH PRICE: 20,000USD. Buy the cheap one you idiot!");
+        gitlet("add", common1);
+        gitlet("commit", "GII");
+        gitlet("branch", "D");
+        gitlet("rm", common3);
+        gitlet("commit", "MI");
+        String MII = "yourtestFiles/MII.txt";
+        createFile(MII, "MII: file that's improving over G");
+        gitlet("add", MII);
+        gitlet("commit", "MII");
+        gitlet("add", common3);
+        gitlet("commit", "MIII");
+        String HI = "yourtestFiles/HI.txt";
+        createFile(HI, "HI: I added a new app to this pool");
+        gitlet("checkout", "D");
+        gitlet("add", HI);
+        writeFile(common2, "commmon2: This Summer: 61C Don't need it any more , take the OS class instead!");
+        gitlet("add", common2);
+        gitlet("commit", "HII");
+        String DI = "yourtestFiles/DI.txt";
+        createFile(DI, "DI: Revenue increased by this new feature!");
+        gitlet("branch", "E");
+        gitlet("add", DI);
+        gitlet("rm", common2);
+        gitlet("commit", "DI");
+        String EI = "yourtestFiles/EI.txt";
+        createFile(EI, "EI: ok we overestimated the revenue");
+        writeFile(common2, "common2: Our final Vow towards merge");
+        gitlet("checkout", "E");
+        gitlet("add", EI);
+        gitlet("add", common2);
+        gitlet("commit", "EI");
+        String CI = "yourtestFiles/CI.txt";
+        createFile(EI, "CI: this is a garbage branch. Level 1");
+        gitlet("checkout", "C");
+        gitlet("add", CI);
+        gitlet("commit", "CI");
+        gitlet("rm", common2);
+        gitlet("commit", "CII");
+        gitlet("add", common2);
+        gitlet("commit", "CIII");
+        String CIV = "yourtestFiles/CIV.txt";
+        createFile(CIV, "CIV: this is a 'garbage' branch. Level 4");
+        gitlet("add", CIV);
+        gitlet("commit", "CIV");
+        gitlet("checkout", "F");
+        gitlet("rm", PI);
+        writeFile(common1, "commmon1: We go bankrupt, no Apple Watches");
+        writeFile(common2, "commmon2: the department is shutting");
+        writeFile(common3, "commmon3: find jobs in Microsoft now.");
+        gitlet("add", common1);
+        gitlet("add", common2);
+        gitlet("add", common3);
+        gitlet("commit", "PII");
+        gitlet("branch", "A");
+        String FI = "yourtestFiles/FI.txt";
+        createFile(FI, "FI: Luckily we are still alive");
+        gitlet("rm", PII);
+        gitlet("add", FI);
+        gitlet("commit", "FI");
+        String QI = "yourtestFiles/QI.txt";
+        createFile(QI, "QI: I am who is still living");
+        gitlet("checkout", "A");
+        gitlet("add", QI);
+        writeFile(common2,"commmon2: a small group of people survived and we are making a new game for product!");
+        gitlet("add", common2);
+        gitlet("commit", "QI");
+        gitlet("branch", "B");
+        gitlet("rm", common2);
+        gitlet("commit", "AI");
+        gitlet("rm", common3);
+        writeFile(common1,"commmon1: funding stage arrived! we are hiring..");
+        gitlet("add", common1);
+        gitlet("commit", "AII");
+        String AIII = "yourtestFiles/AIII.txt";
+        createFile(AIII, "AIII: sunny day!");
+        gitlet("add", AIII);
+        gitlet("commit", "AIII");
+        gitlet("checkout", "B");
+        gitlet("rm", common1);
+        gitlet("commit", "BI");
+        String BII = "yourtestFiles/BII.txt";
+        createFile(AIII, "BII: sleeping, huh? I guess this is the end of our branch!");
+        gitlet("rm", common2);
+        gitlet("add", BII);
+        gitlet("commit", "BII");
+        gitlet("add", common1);
+        gitlet("commit", "BIII");
+        gitlet("checkout", "D");
+        gitlet("merge", "E");
+    }
 
     /**
      * Convenience method for calling Gitlet's main. Anything that is printed

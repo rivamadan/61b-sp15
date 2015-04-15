@@ -18,7 +18,7 @@ public class Gitlet {
                 Commands.commit(args[1]);
             }
             break;
-        case "remove":
+        case "rm":
             Commands.remove(args[1]);
             break;
         case "log":
