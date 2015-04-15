@@ -109,6 +109,136 @@ public class GitletPublicTest {
         assertArrayEquals(new String[] { commitMessage2, commitMessage1 },
                 extractCommitMessages(logContent));
     }
+    
+    @Test
+    public void testStatus() {
+        gitlet("init");
+        gitlet("branch", "b1");
+        gitlet("checkout", "b1");
+        //String statusContent = gitlet("status");
+        //System.out.println(statusContent);
+        gitlet("checkout", "master");
+        //statusContent = gitlet("status");
+        //System.out.println(statusContent);
+
+    }
+    
+    @Test
+    public void testRemoveStaged() {
+    	String wugFileName = TESTING_DIR + "wug.txt";
+        createFile(wugFileName, "This is a nothing.");
+    	gitlet("init");
+        gitlet("add", wugFileName);
+        //String statusContent = gitlet("status");
+        //System.out.println(statusContent);
+        gitlet("remove", wugFileName);
+        //statusContent = gitlet("status");
+        //System.out.println(statusContent);
+    }
+    
+    @Test
+    public void testMarkForRemoval() {
+    	String wugFileName = TESTING_DIR + "wug.txt";
+        createFile(wugFileName, "This is a nothing.");
+        gitlet("init");
+        //String output = gitlet("remove", wugFileName);
+        //System.out.println(output);
+        gitlet("add", wugFileName);
+        gitlet("commit", "added wug");
+        gitlet("remove", wugFileName);
+        //String statusContent = gitlet("status");
+        //System.out.println(statusContent);
+        gitlet("commit", "remove wug");
+        //statusContent = gitlet("status");
+        //System.out.println(statusContent);
+        String testFileName = TESTING_DIR + "t1.txt";
+        createFile(testFileName, "tester");
+        gitlet("add", testFileName);
+        gitlet("commit", testFileName);
+        //output = gitlet("checkout", wugFileName);
+        //System.out.println(output);
+    }
+    
+    @Test
+    public void testBranchCheckout() {
+    	String wugFileName = TESTING_DIR + "wug.txt";
+        createFile(wugFileName, "This is a nothing.");
+        gitlet("init");
+        gitlet("add", wugFileName);
+        gitlet("commit", "added wug");
+        writeFile(wugFileName, "This is a wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        gitlet("branch", "b1");
+        gitlet("checkout", "b1");
+        writeFile(wugFileName, "This is not a wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        gitlet("checkout", "master");
+        assertEquals("This is a wug.", getText(wugFileName));
+    }
+    
+    @Test
+    public void testBranchCheckoutTwice() {
+    	String wugFileName = TESTING_DIR + "wug.txt";
+        createFile(wugFileName, "This is a nothing.");
+        gitlet("init");
+        gitlet("add", wugFileName);
+        gitlet("commit", "added wug");
+        writeFile(wugFileName, "This is a wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        gitlet("branch", "b1");
+        gitlet("checkout", "b1");
+        writeFile(wugFileName, "This is not a wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        gitlet("checkout", "master");
+        writeFile(wugFileName, "This is definitely a wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        assertEquals("This is definitely a wug.", getText(wugFileName));
+    }
+    
+    @Test
+    public void testFindAndReset() {
+    	String wugFileName = TESTING_DIR + "wug.txt";
+        createFile(wugFileName, "This is a nothing.");
+        gitlet("init");
+        gitlet("add", wugFileName);
+        gitlet("commit", "added wug");
+        writeFile(wugFileName, "This is a wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        writeFile(wugFileName, "This is not a wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        writeFile(wugFileName, "This is definitely a wug.");
+        gitlet("add", wugFileName);
+        gitlet("commit", "changed wug");
+        //String output = gitlet("find", "changed wug");
+        //System.out.println(output);
+        gitlet("reset", "2");                                                             
+        assertEquals("This is a wug.", getText(wugFileName));
+    }
+    
+    public void testCheckout2Args() {
+    	String wugFileName = TESTING_DIR + "wug.txt";
+        createFile(wugFileName, "This is a wug.");
+        gitlet("init");
+        gitlet("add", wugFileName);
+        gitlet("commit", "added wug");       
+        writeFile(wugFileName, "This is a BIG wug.");
+        String notWugFileName = TESTING_DIR + "notwug.txt";
+        createFile(notWugFileName, "This is not a wug.");
+        gitlet("add", wugFileName);
+        gitlet("add", notWugFileName);
+        gitlet("commit", "changed wug and added not wug");
+        gitlet("checkout", "1", "wug.txt");
+        assertEquals("This is a wug.", getText(wugFileName));
+        assertEquals("This is not a wug.", getText(notWugFileName));
+    }
+    
 
     /**
      * Convenience method for calling Gitlet's main. Anything that is printed
@@ -226,7 +356,7 @@ public class GitletPublicTest {
         int numMessages = logChunks.length - 1;
         String[] messages = new String[numMessages];
         for (int i = 0; i < numMessages; i++) {
-            System.out.println(logChunks[i + 1]);
+            //System.out.println(logChunks[i + 1]);
             String[] logLines = logChunks[i + 1].split(LINE_SEPARATOR);
             messages[i] = logLines[3];
         }
