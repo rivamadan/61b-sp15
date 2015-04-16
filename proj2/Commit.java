@@ -26,8 +26,8 @@ public class Commit implements Serializable {
         private String dateTime;
         private HashMap<String, Integer> commitedFiles = new HashMap<String, Integer>();
 
-        public Node(Node parent, Node left, Node right, String message,
-                int commitNum, String dateTime) {
+        public Node(Node parent, Node left, Node right, String message, int commitNum,
+                String dateTime) {
             this.parent = parent;
             this.left = left;
             this.right = right;
@@ -107,12 +107,12 @@ public class Commit implements Serializable {
         }
         commits.add(nextID);
         commitMsgs.put(msg, commits);
-        
+
         HashMap<String, Integer> inheritedFiles = headNode.commitedFiles;
         if (headNode.right == null) {
             headNode.right = new Node(headNode, null, null, msg, nextID, dateTime);
             branches.put(currBranch, headNode.right);
-            commitIDs.put(nextID, headNode.right);  
+            commitIDs.put(nextID, headNode.right);
             headNode.right.commitedFiles = new HashMap<String, Integer>(inheritedFiles);
         } else if (headNode.left == null) {
             headNode.left = new Node(headNode, null, null, msg, nextID, dateTime);
@@ -218,7 +218,6 @@ public class Commit implements Serializable {
         branches.put(branch, commitIDs.get(id));
     }
 
-    
     private Node findSplitPointNode(String name) {
         Node curr = getHeadNode();
         HashSet<Node> currBranchHistory = new HashSet<>();
@@ -235,7 +234,7 @@ public class Commit implements Serializable {
         }
         return null;
     }
-    
+
     /* Adds a node to the commit tree and associates the message with the commit */
     public void addRebase(String msg, String dateTime, String movingBranch) {
         Node headNode = branches.get(movingBranch);

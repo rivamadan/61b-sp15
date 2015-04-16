@@ -50,20 +50,24 @@ public class Gitlet {
             break;
         case "reset":
             if (dangerousOK()) {
-                Commands.reset(args[1]);     
-            } break;
+                Commands.reset(args[1]);
+            }
+            break;
         case "merge":
             if (dangerousOK()) {
-                Commands.merge(args[1]);     
-            } break;
+                Commands.merge(args[1]);
+            }
+            break;
         case "rebase":
             if (dangerousOK()) {
-                Commands.rebase(args[1]);     
-            } break;
+                Commands.rebase(args[1]);
+            }
+            break;
         case "i-rebase":
             if (dangerousOK()) {
-                Commands.irebase(args[1]);     
-            } break;
+                Commands.irebase(args[1]);
+            }
+            break;
         }
     }
 
@@ -73,7 +77,7 @@ public class Gitlet {
                 .println("Warning: The command you entered may alter the files in your working directory. "
                         + "Uncommitted changes may be lost. Are you sure you want to continue? (yes/no)");
         String answer = keyboard.next();
-        
+
         return answer.equals("yes");
     }
 
