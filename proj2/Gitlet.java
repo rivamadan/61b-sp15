@@ -73,7 +73,7 @@ public class Gitlet {
                 .println("Warning: The command you entered may alter the files in your working directory. "
                         + "Uncommitted changes may be lost. Are you sure you want to continue? (yes/no)");
         String answer = keyboard.next();
-        keyboard.close();
+        
         return answer.equals("yes");
     }
 
