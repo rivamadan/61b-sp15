@@ -81,7 +81,7 @@ public class Commit implements Serializable {
 
     /* Returns previous commit id number. */
     public int getLastCommitNum() {
-        return getHeadNode().commitNum;
+        return id;
     }
 
     /* Get head pointer of the current branch. */
@@ -238,7 +238,7 @@ public class Commit implements Serializable {
     
     /* Adds a node to the commit tree and associates the message with the commit */
     public void addRebase(String msg, String dateTime, String movingBranch) {
-        Node headNode = getHeadNode();
+        Node headNode = branches.get(movingBranch);
         int nextID = generateID();
 
         HashSet<Integer> commits;

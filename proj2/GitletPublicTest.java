@@ -298,34 +298,34 @@ public class GitletPublicTest {
         assertEquals("This is not a wug.", getText(wugConflict));
     }
     
-    @Test
-    public void testRebase() {
-        String wugFileName = TESTING_DIR + "wug.txt";
-        createFile(wugFileName, "This is a nothing.");
-        gitlet("init");
-        gitlet("add", wugFileName);
-        gitlet("commit", "1");
-        gitlet("branch", "b1");
-        writeFile(wugFileName, "This is a wug.");        
-        gitlet("add", wugFileName);
-        gitlet("commit", "2");
-        writeFile(wugFileName, "This is not a wug.");
-        gitlet("add", wugFileName);
-        gitlet("commit", "3"); 
-        gitlet("checkout", "b1");
-        writeFile(wugFileName, "This is a BIG wug.");
-        gitlet("add", wugFileName);
-        gitlet("commit", "4");
-        writeFile(wugFileName, "This is a REALLY BIG wug.");
-        gitlet("add", wugFileName);
-        gitlet("commit", "5");     
-        gitlet("rebase", "master");
-        assertEquals("This is a REALLY BIG wug.", getText(wugFileName));
-        //String output = gitlet("global-log");
-        //System.out.println(output);
-        //output = gitlet("log");
-        //System.out.println(output);
-    }
+//    @Test
+//    public void testRebase() {
+//        String wugFileName = TESTING_DIR + "wug.txt";
+//        createFile(wugFileName, "This is a nothing.");
+//        gitlet("init");
+//        gitlet("add", wugFileName);
+//        gitlet("commit", "1");
+//        gitlet("branch", "b1");
+//        writeFile(wugFileName, "This is a wug.");        
+//        gitlet("add", wugFileName);
+//        gitlet("commit", "2");
+//        writeFile(wugFileName, "This is not a wug.");
+//        gitlet("add", wugFileName);
+//        gitlet("commit", "3"); 
+//        gitlet("checkout", "b1");
+//        writeFile(wugFileName, "This is a BIG wug.");
+//        gitlet("add", wugFileName);
+//        gitlet("commit", "4");
+//        writeFile(wugFileName, "This is a REALLY BIG wug.");
+//        gitlet("add", wugFileName);
+//        gitlet("commit", "5");     
+//        gitlet("rebase", "master");
+//        assertEquals("This is a REALLY BIG wug.", getText(wugFileName));
+//        //String output = gitlet("global-log");
+//        //System.out.println(output);
+//        //output = gitlet("log");
+//        //System.out.println(output);
+//    }
     
     @Test
     public void testRebaseComplex() {
@@ -352,12 +352,13 @@ public class GitletPublicTest {
         gitlet("add", common2);
         gitlet("commit", "PI");
         gitlet("branch", "C");
-        String GI = "yourtestFiles/GII.txt";
+        String GI = "yourtestFiles/GI.txt";
         createFile(GI, "GI: file that's miracle");
         gitlet("add", GI);
         gitlet("commit", "GI");
         String GII = "yourtestFiles/GII.txt";
         createFile(GII, "GII: file that's changing everything");
+        gitlet("add", GII);
         writeFile(common1, "commmon1: Apple WATCH PRICE: 20,000USD. Buy the cheap one you idiot!");
         gitlet("add", common1);
         gitlet("commit", "GII");
@@ -446,8 +447,8 @@ public class GitletPublicTest {
         gitlet("commit", "BII");
         gitlet("add", common1);
         gitlet("commit", "BIII");
-        gitlet("checkout", "D");
-        gitlet("merge", "E");
+        gitlet("checkout", "A");
+        gitlet("rebase", "master");
     }
 
     /**
