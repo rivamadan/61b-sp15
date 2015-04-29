@@ -22,7 +22,10 @@ public class Sorts {
      *    and containing the same keys sorted according to the chosen digit.
      **/
     public static int[] countingSort(int[] keys, int whichDigit) {
-        //YOUR CODE HERE
+        int[] digitSort;
+        for (int i = 0; i < keys.length(), i++) {
+            digit = keys[i] << whichDigit;
+        }
     }
 
     /**
@@ -34,7 +37,11 @@ public class Sorts {
      *    and containing the same keys in sorted order.
      **/
     public static int[] radixSort(int[] keys) {
-        //YOUR CODE HERE
+        int[] sorted = keys;
+        for (int i = 7; i >= 0; i--) {
+            sorted = countingSort(sorted, i);
+        }
+        return sorted;
     }
 
 }
