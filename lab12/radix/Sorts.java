@@ -1,7 +1,5 @@
 /* Radix.java */
-
-package radix;
-
+import java.util.Arrays;
 /**
  * Sorts is a class that contains an implementation of radix sort.
  * @author
@@ -24,22 +22,20 @@ public class Sorts {
     public static int[] countingSort(int[] keys, int whichDigit) {
         int[] digitSort = new int[keys.length];
        	int[] counts = new int[16];
-       	counts[0] = 0;
         for (int i = 0; i < keys.length; i++) {
-            int digit = keys[i] & (15 << whichDigit * 4);
+            int digit = (keys[i] & (15 << whichDigit * 4)) >> (whichDigit * 4);
             counts[digit+1]++;
         }
 
-        for (int i = 0; i < counts.length; i++) {
+        for (int i = 0; i < counts.length-1; i++) {
         	counts[i+1] += counts[i]; 
         }
 
         for (int i = 0; i < keys.length; i++) {
-            int digit = keys[i] & (15 << whichDigit * 4);
+            int digit = (keys[i] & (15 << whichDigit * 4)) >> (whichDigit * 4);
             digitSort[counts[digit]] = keys[i];
             counts[digit]++;
         }
-
 
         return digitSort;
     }
@@ -53,8 +49,9 @@ public class Sorts {
      *    and containing the same keys in sorted order.
      **/
     public static int[] radixSort(int[] keys) {
-        int[] sorted = keys;
-        for (int i = 7; i >= 0; i--) {
+        int[] sorted = new int[keys.length];
+        System.arraycopy(keys, 0, sorted, 0, keys.length);
+        for (int i = 0; i < 8; i++) {
             sorted = countingSort(sorted, i);
         }
         return sorted;
