@@ -1,5 +1,6 @@
 /* Radix.java */
-import java.util.Arrays;
+package radix;
+
 /**
  * Sorts is a class that contains an implementation of radix sort.
  * @author
