@@ -23,7 +23,7 @@ public class Sorts {
      **/
     public static int[] countingSort(int[] keys, int whichDigit) {
         int[] digitSort = new int[keys.length];
-       	int[] counts = new int[15];
+       	int[] counts = new int[16];
        	counts[0] = 0;
         for (int i = 0; i < keys.length; i++) {
             int digit = keys[i] & (15 << whichDigit * 4);
