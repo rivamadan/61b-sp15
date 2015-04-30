@@ -98,6 +98,9 @@ public class UserList {
     *   @param q is an unsorted CatenableQueue containing User items.
     **/
     public static void quickSort(String sortFeature, CatenableQueue<User> q){ 
+        if (q.isEmpty()) {
+        	return;
+        }
         CatenableQueue<User> less = new CatenableQueue<User>();
         CatenableQueue<User> greater = new CatenableQueue<User>();
         CatenableQueue<User> equal = new CatenableQueue<User>();
@@ -164,8 +167,8 @@ public class UserList {
     public static CatenableQueue<User> mergeTwoQueues(String sortFeature, CatenableQueue<User> q1, CatenableQueue<User> q2){
         CatenableQueue<User> sorted = new CatenableQueue<User>();
         while (!q1.isEmpty() && !q2.isEmpty()) {
-            User item1 = q1.dequeue();
-            User item2 = q2.dequeue();
+            User item1 = q1.front();
+            User item2 = q2.front();
             int val1, val2;
             if (sortFeature == "id") {
                 val1 = item1.getId();
@@ -177,10 +180,10 @@ public class UserList {
 
             if (val2 < val1) {
                 sorted.enqueue(item2);
-                q1.enqueue(item1);
+                q2.dequeue();
             } else {
                 sorted.enqueue(item1);
-                q2.enqueue(item2);
+                q1.dequeue();
             }
         }
 
@@ -216,11 +219,25 @@ public class UserList {
     *       printed, sortFeatures equals "pages".
     **/
     public void mergeSort(String sortFeature) {
-        // int mid = userList.size()/2;
+        int mid = userQueue.size()/2;
 
-        // for (int i = 0; i < mid; i++){
-            
-        // }   
+        CatenableQueue<User> firstHalf = new CatenableQueue<User>(); //change to userList
+        CatenableQueue<User> secondHalf = new CatenableQueue<User>();
+
+        for (int i = 0; i < mid; i++){
+            firstHalf.enqueue(userList.dequeue()); //change to userQueue
+        }
+        firstHalf.mergeSort(sortFeature);
+
+        for (int i = mid; i < userList.size(); i++){
+            secondHalf.enqueue(userList.dequeue());
+        }
+        secondHalf.mergeSort(sortFeature);
+
+        if (userList.isEmpty()) {
+        	userList = firstHalf.append(secondHalf);
+        }
+
     }
 
     /**
@@ -293,21 +310,27 @@ public class UserList {
         CatenableQueue<User> q1 = new CatenableQueue<User>();
         CatenableQueue<User> q2 = new CatenableQueue<User>();
         q1.enqueue(new User(0, 20));
-        q2.enqueue(new User(1, 10));
+        q1.enqueue(new User(2, 30));
+        q1.enqueue(new User(3, 40));
+        q2.enqueue(new User(1, 0));
+        q2.enqueue(new User(4, 10));
 
         CatenableQueue<User> merged = mergeTwoQueues("pages", q1, q2);
         String mergeByPages = 
-        "[ User ID: 1, Pages Printed: 10,\n  User ID: 0, Pages Printed: 20 ]";
+        "[ User ID: 1, Pages Printed: 0,\n  User ID: 4, Pages Printed: 10,\n  User ID: 0, Pages Printed: 20,\n  User ID: 2, Pages Printed: 30,\n  User ID: 3, Pages Printed: 40 ]";
         assertEquals(mergeByPages, merged.toString());        
 
         q1 = new CatenableQueue<User>();
         q2 = new CatenableQueue<User>();
         q1.enqueue(new User(0, 20));
-        q2.enqueue(new User(1, 10));
+        q1.enqueue(new User(2, 30));
+        q1.enqueue(new User(3, 40));
+        q2.enqueue(new User(1, 0));
+        q2.enqueue(new User(4, 10));
 
         merged = mergeTwoQueues("id", q1, q2);
         String mergeById = 
-        "[ User ID: 0, Pages Printed: 20,\n  User ID: 1, Pages Printed: 10 ]";
+        "[ User ID: 0, Pages Printed: 20,\n  User ID: 1, Pages Printed: 0,\n  User ID: 2, Pages Printed: 30,\n  User ID: 3, Pages Printed: 40,\n  User ID: 4, Pages Printed: 10 ]";
         assertEquals(mergeById, merged.toString());        
     }
 
