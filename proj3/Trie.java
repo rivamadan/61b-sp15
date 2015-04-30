@@ -5,13 +5,14 @@
  * @author Riva Madan
  */
 public class Trie {
-
+    private static final int R = 255;
+    
 	private class Node {
 		private boolean end;
 		private Node[] children;
 
 		public Node() {
-			children = new Node[128];
+			children = new Node[R];
 			end = false;
 		}
 	}
@@ -71,4 +72,5 @@ public class Trie {
     	return x;
     }
 }
+
 
