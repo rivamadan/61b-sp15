@@ -35,14 +35,14 @@ public class AlphabetSort {
         if (!sc.hasNext()) {
             throw new IllegalArgumentException("No alphabet given.");
         }
-        String alphabet = sc.nextLine();
+        String alphabet = sc.next();
         makeAlphabet(alphabet);
         if (!sc.hasNext()) {
             throw new IllegalArgumentException("No words given.");
         }
         HashSet<String> words = new HashSet<String>();
         while (sc.hasNext()) {
-            words.add(sc.nextLine());
+            words.add(sc.next());
         }
         addToTrie(words);
         sort();
