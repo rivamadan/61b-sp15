@@ -31,12 +31,12 @@ public class AlphabetSort {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        sc.useDelimiter("\\n");
+        //sc.useDelimiter("\\n");
         if (!sc.hasNext()) {
             throw new IllegalArgumentException("No alphabet given.");
         }
         String alphabet = sc.next();
-System.out.println(alphabet);
+//System.out.println(alphabet);
         makeAlphabet(alphabet);
         if (!sc.hasNext()) {
             throw new IllegalArgumentException("No words given.");
