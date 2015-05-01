@@ -1,20 +1,39 @@
+import java.util.ArrayList;
 
 public class AlphabetSort {
-    private static String alphabet;
+	private static Trie ourTrie = new Trie();
+    private static ArrayList<Character> alphabetSet = new ArrayList<Character>();
     
-    //make a map each letter from the alphabet as key, and 0,1,2... as value
-    //use regular trie but need to convert each word into the corresponding value (0,1,2..) before entering it in the trie
-    //so "hello" for alphabet "lohe" becomes "23001"
-    //get rid of words with letters not in alphabet, b/c need to do containsKey()
-    //iwith a normal Trie, you would iteratively sort at each depth like MSD sort, sorting per print call???????
+    private static void addToTrie(String[] words) {
+    	for (String word : words) {
+    		ourTrie.insert(word);
+    	}
+    }
+    
+    private static void makeAlphabet(String alphabet) {
+    	for(int i = 0; i < alphabet.length(); i++) {
+    		char c = alphabet.charAt(i);
+    		if (alphabetSet.contains(c)) {
+    			throw new IllegalArgumentException();
+    		}
+    		alphabetSet.add(c);
+    	}
+    }
+    
+    private static void sort() {
+    	ourTrie.sort(alphabetSet);
+    }
     
     public static void main(String[] args) {
         if (args == null) {
             throw new IllegalArgumentException();
         }
-        alphabet = args[0];
-        // TODO Auto-generated method stub
-
+        String alphabet = args[0];
+        makeAlphabet(alphabet);
+        String[] words = new String[args.length-1];
+        System.arraycopy(args, 1, words, 0, args.length-1);
+        addToTrie(words);
+        sort();
     }
 
 }
