@@ -14,6 +14,7 @@ public class Trie {
     private class Node {
         private boolean end;
         private Map<Character, Node> children;
+        private String word;
 
         /* node constructor */
         public Node() {
@@ -73,6 +74,7 @@ public class Trie {
 
         if (i == s.length()) {
             x.end = true;
+            x.word = s;
             return x;
         }
 
@@ -83,22 +85,18 @@ public class Trie {
 
     /* prints out words in trie in sorted order according to a given alphabet */
     public void sort(ArrayList<Character> alphabetSet) {
-        sort(root, alphabetSet, new StringBuilder());
+        sort(root, alphabetSet);
     }
 
     /* helper method for sort */
-    private void sort(Node x, ArrayList<Character> alphabetSet, StringBuilder string) {
+    private void sort(Node x, ArrayList<Character> alphabetSet) {
         for (char eachChar : alphabetSet) {
             if (x.children.containsKey(eachChar)) {
                 if (x.children.get(eachChar).end) {
-                    string.append(eachChar);
-                    System.out.println(string);
-                } else {
-                    sort(x.children.get(eachChar), alphabetSet, string.append(eachChar));
+                    System.out.println(x.children.get(eachChar).word);
                 }
-                string.deleteCharAt(string.length() - 1);
+                sort(x.children.get(eachChar), alphabetSet);
             }
-
         }
     }
 

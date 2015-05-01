@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class AlphabetSort {
     private static Trie ourTrie = new Trie();
-    private static ArrayList<Character> alphabetSet = new ArrayList<Character>();
 
     /* add all the words to a trie */
     private static void addToTrie(HashSet<String> words) {
@@ -13,31 +12,18 @@ public class AlphabetSort {
         }
     }
 
-    /* saves the alphabet */
-    private static void makeAlphabet(String alphabet) {
-        for (int i = 0; i < alphabet.length(); i++) {
-            char c = alphabet.charAt(i);
-            if (alphabetSet.contains(c)) {
-                throw new IllegalArgumentException("Duplicate letters in alphabet");
-            }
-            alphabetSet.add(c);
-        }
-    }
-
     /* prints the words in sorted order */
-    private static void sort(ArrayList<Character> alphabetSet) {
-        ourTrie.sort(alphabetSet);
+    private static void sort(ArrayList<Character> alphabet) {
+        ourTrie.sort(alphabet);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        sc.useDelimiter("\\n");
         if (!sc.hasNext()) {
             throw new IllegalArgumentException("No alphabet given.");
         }
-        String alphabet = sc.next();
-	ArrayList<Character> alphabetSet = new ArrayList<Character>();
-        //makeAlphabet(alphabet);
+        String alphabet = sc.nextLine();
+        ArrayList<Character> alphabetSet = new ArrayList<Character>();
         for (int i = 0; i < alphabet.length(); i++) {
             char c = alphabet.charAt(i);
             if (alphabetSet.contains(c)) {
@@ -45,13 +31,12 @@ public class AlphabetSort {
             }
             alphabetSet.add(c);
         }
-
         if (!sc.hasNext()) {
             throw new IllegalArgumentException("No words given.");
         }
         HashSet<String> words = new HashSet<String>();
         while (sc.hasNext()) {
-            words.add(sc.next());
+            words.add(sc.nextLine());
         }
         addToTrie(words);
         sort(alphabetSet);
