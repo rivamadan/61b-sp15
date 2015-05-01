@@ -17,15 +17,15 @@ public class AlphabetSort {
     private static void makeAlphabet(String alphabet) {
         for (int i = 0; i < alphabet.length(); i++) {
             char c = alphabet.charAt(i);
-            //if (alphabetSet.contains(c)) {
-                //throw new IllegalArgumentException("Duplicate letters in alphabet");
-            //}
+            if (alphabetSet.contains(c)) {
+                throw new IllegalArgumentException("Duplicate letters in alphabet");
+            }
             alphabetSet.add(c);
         }
     }
 
     /* prints the words in sorted order */
-    private static void sort() {
+    private static void sort(ArrayList<Character> alphabetSet) {
         ourTrie.sort(alphabetSet);
     }
 
@@ -36,8 +36,16 @@ public class AlphabetSort {
             throw new IllegalArgumentException("No alphabet given.");
         }
         String alphabet = sc.next();
-System.out.println(alphabet);
-        makeAlphabet(alphabet);
+	ArrayList<Character> alphabetSet = new ArrayList<Character>();
+        //makeAlphabet(alphabet);
+        for (int i = 0; i < alphabet.length(); i++) {
+            char c = alphabet.charAt(i);
+            if (alphabetSet.contains(c)) {
+                throw new IllegalArgumentException("Duplicate letters in alphabet");
+            }
+            alphabetSet.add(c);
+        }
+
         if (!sc.hasNext()) {
             throw new IllegalArgumentException("No words given.");
         }
@@ -46,7 +54,7 @@ System.out.println(alphabet);
             words.add(sc.next());
         }
         addToTrie(words);
-        sort();
+        sort(alphabetSet);
     }
 
 }
