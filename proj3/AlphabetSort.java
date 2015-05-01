@@ -17,9 +17,9 @@ public class AlphabetSort {
     private static void makeAlphabet(String alphabet) {
         for (int i = 0; i < alphabet.length(); i++) {
             char c = alphabet.charAt(i);
-            //if (alphabetSet.contains(c)) {
-                //throw new IllegalArgumentException("Duplicate letters in alphabet");
-            //}
+            if (alphabetSet.contains(c)) {
+                throw new IllegalArgumentException("Duplicate letters in alphabet");
+            }
             alphabetSet.add(c);
         }
     }
@@ -31,6 +31,7 @@ public class AlphabetSort {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        sc.useDelimiter("\\n");
         if (!sc.hasNext()) {
             throw new IllegalArgumentException("No alphabet given.");
         }
