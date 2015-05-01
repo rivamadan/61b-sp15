@@ -61,7 +61,7 @@ public class Trie {
         insert(root, s, 0);
     }
 
-    /* helper method for insert */
+    /* helper method for insert *//* make iterative!!!!!!!!!!!!!! */
     private Node insert(Node x, String s, int i) {
         if (s.equals("") || s == null) {
             throw new IllegalArgumentException();
@@ -82,14 +82,13 @@ public class Trie {
     }
 
     /* prints out words in trie in sorted order according to a given alphabet */
-    public void sort(char[] alphabetSet) {
+    public void sort(ArrayList<Character> alphabetSet) {
         sort(root, alphabetSet, new StringBuilder());
     }
 
     /* helper method for sort */
-    private void sort(Node x, char[] alphabetSet, StringBuilder string) {
-        for (int i = 0; i < alphabetSet.length; i++) {
-            char eachChar = alphabetSet[i];
+    private void sort(Node x, ArrayList<Character> alphabetSet, StringBuilder string) {
+        for (char eachChar : alphabetSet) {
             if (x.children.containsKey(eachChar)) {
                 if (x.children.get(eachChar).end) {
                     string.append(eachChar);
