@@ -36,6 +36,7 @@ public class AlphabetSort {
             throw new IllegalArgumentException("No alphabet given.");
         }
         String alphabet = sc.next();
+System.out.println(alphabet);
         makeAlphabet(alphabet);
         if (!sc.hasNext()) {
             throw new IllegalArgumentException("No words given.");
