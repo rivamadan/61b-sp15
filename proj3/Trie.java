@@ -82,13 +82,14 @@ public class Trie {
     }
 
     /* prints out words in trie in sorted order according to a given alphabet */
-    public void sort(ArrayList<Character> alphabetSet) {
+    public void sort(char[] alphabetSet) {
         sort(root, alphabetSet, new StringBuilder());
     }
 
     /* helper method for sort */
-    private void sort(Node x, ArrayList<Character> alphabetSet, StringBuilder string) {
-        for (char eachChar : alphabetSet) {
+    private void sort(Node x, char[] alphabetSet, StringBuilder string) {
+        for (int i = 0; i < alphabetSet.length; i++) {
+            char eachChar = alphabetSet[i];
             if (x.children.containsKey(eachChar)) {
                 if (x.children.get(eachChar).end) {
                     string.append(eachChar);
