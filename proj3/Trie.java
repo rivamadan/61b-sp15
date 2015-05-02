@@ -67,8 +67,6 @@ public class Trie {
             if (isFullWord) {
                 if (x.children.get(c).end) {
                     return true;
-                } else {
-                    return false;
                 }
             } else {
                 return true;
@@ -98,6 +96,7 @@ public class Trie {
      *            String to insert
      * @param i
      *            Index of which character to look at
+     * @return Node last node that was inserted
      */
     private Node insert(Node x, String s, int i) {
         if (s.equals("") || s == null) {
