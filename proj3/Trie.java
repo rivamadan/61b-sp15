@@ -31,6 +31,12 @@ public class Trie {
 
     /**
      * Returns whether or not a string is in the trie.
+     * 
+     * @param s
+     *            String to find
+     * @param isFullWord
+     *            Whether or not to look for only the full word
+     * @return Whether or not the word is found
      */
     public boolean find(String s, boolean isFullWord) {
         return find(root, s, isFullWord);
@@ -38,6 +44,14 @@ public class Trie {
 
     /**
      * helper method for find
+     * 
+     * @param x
+     *            Current node
+     * @param s
+     *            String to find
+     * @param isFullWord
+     *            Whether or not to look for only the full word
+     * @return Whether or not the word is found
      */
     private boolean find(Node x, String s, boolean isFullWord) {
         if (s == null) {
@@ -67,6 +81,9 @@ public class Trie {
 
     /**
      * Inserts a string into the trie.
+     * 
+     * @param s
+     *            String to insert
      */
     public void insert(String s) {
         insert(root, s, 0);
@@ -74,6 +91,13 @@ public class Trie {
 
     /**
      * helper method for insert
+     * 
+     * @param x
+     *            Current node
+     * @param s
+     *            String to insert
+     * @param i
+     *            Index of which character to look at
      */
     private Node insert(Node x, String s, int i) {
         if (s.equals("") || s == null) {
@@ -97,6 +121,9 @@ public class Trie {
 
     /**
      * Prints out words in trie in sorted order according to a given alphabet.
+     * 
+     * @param alphabetSet
+     *            Order to sort characters
      */
     public void sort(ArrayList<Character> alphabetSet) {
         sort(root, alphabetSet);
@@ -104,6 +131,11 @@ public class Trie {
 
     /**
      * helper method for sort
+     * 
+     * @param x
+     *            Current node
+     * @param alphabetSet
+     *            Order to sort characters
      */
     private void sort(Node x, ArrayList<Character> alphabetSet) {
         for (char eachChar : alphabetSet) {

@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 /* based off of princeton's TST */
 
 public class TST {
-    private Node root = new Node();
+    private Node root;
 
     private class Node {
         private char c;
@@ -108,7 +108,6 @@ public class TST {
             start = root;
         } else {
             start = get(root, prefix, 0);
-            System.out.print(start.c);
         }
         if (start.max == start.val) {
             return start.word;
@@ -145,14 +144,24 @@ public class TST {
             }
         });
 
-        PriorityQueue<Node> bestAnswer = new PriorityQueue<Node>();
+        PriorityQueue<Node> bestAnswer = new PriorityQueue<Node>(1, new Comparator<Node>() {
+            @Override
+            public int compare(Node n1, Node n2) {
+                return Double.compare(n1.max, n2.max);
+            }
+        });
 
-        Node start = get(root, prefix, 0);
+        Node start;
+        if (prefix == "") {
+            start = root;
+        } else {
+            start = get(root, prefix, 0);
+        }
         maxPQ.add(start.mid);
 
         while (!maxPQ.isEmpty()) {
             Node x = maxPQ.remove();
-            if (x.max < bestAnswer.peek().max) {
+            if (bestAnswer.size() == k && x.max < bestAnswer.peek().max) {
                 break;
             }
             if (x.word != null) {
@@ -184,7 +193,7 @@ public class TST {
         }
 
         ArrayList<String> kthTerms = new ArrayList<String>();
-        for (int i = 0; i < k; i++) {
+        while (!temp.isEmpty()) {
             kthTerms.add(temp.remove().word);
         }
         return kthTerms;

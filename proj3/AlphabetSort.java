@@ -12,7 +12,10 @@ public class AlphabetSort {
     private Trie ourTrie = new Trie();
 
     /**
-     * Ddds all the words to a trie.
+     * Adds all the words to a trie.
+     * 
+     * @param words
+     *            Words to add
      */
     private void addToTrie(HashSet<String> words) {
         for (String word : words) {
@@ -22,6 +25,9 @@ public class AlphabetSort {
 
     /**
      * Prints the words in sorted order.
+     * 
+     * @param alphabet
+     *            The ordering of characters
      */
     private void sort(ArrayList<Character> alphabet) {
         ourTrie.sort(alphabet);
@@ -30,6 +36,9 @@ public class AlphabetSort {
     /**
      * Takes input for alphabet and words from stdin. Sorts the given words
      * based on the alphabet and prints them on stdout.
+     * 
+     * @param args
+     *            Arguments, but should be empty.
      */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

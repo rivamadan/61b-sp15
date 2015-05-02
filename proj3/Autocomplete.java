@@ -129,15 +129,20 @@ public class Autocomplete {
 
         Autocomplete autocomplete = new Autocomplete(terms, weights);
 
-        String term = autocomplete.topMatch("nor");
-        StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
+        // String term = autocomplete.topMatch("nor");
+        // StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
 
-        // process queries from standard input
-        // int k = Integer.parseInt(args[1]);
-        // while (StdIn.hasNextLine()) {
-        // String prefix = StdIn.readLine();
-        // for (String term : autocomplete.topMatches(prefix, k))
+        // Iterable<String> list = autocomplete.topMatches("", 3);
+        // for (String term : list) {
         // StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
         // }
+
+        // process queries from standard input
+        int k = Integer.parseInt(args[1]);
+        while (StdIn.hasNextLine()) {
+            String prefix = StdIn.readLine();
+            for (String term : autocomplete.topMatches(prefix, k))
+                StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
+        }
     }
 }
