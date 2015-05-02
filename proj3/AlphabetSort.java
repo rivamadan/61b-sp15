@@ -3,17 +3,17 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 public class AlphabetSort {
-    private static Trie ourTrie = new Trie();
+    private Trie ourTrie = new Trie();
 
     /* add all the words to a trie */
-    private static void addToTrie(HashSet<String> words) {
+    private void addToTrie(HashSet<String> words) {
         for (String word : words) {
             ourTrie.insert(word);
         }
     }
 
     /* prints the words in sorted order */
-    private static void sort(ArrayList<Character> alphabet) {
+    private void sort(ArrayList<Character> alphabet) {
         ourTrie.sort(alphabet);
     }
 
@@ -38,8 +38,11 @@ public class AlphabetSort {
         while (sc.hasNext()) {
             words.add(sc.nextLine());
         }
-        addToTrie(words);
-        sort(alphabetSet);
+
+        AlphabetSort sorter = new AlphabetSort();
+        sorter.addToTrie(words);
+        sorter.sort(alphabetSet);
     }
 
 }
+
