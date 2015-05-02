@@ -2,21 +2,35 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 
+/**
+ * Uses a Trie to sort words based on a given alphabet.
+ * 
+ * @author Riva Madan
+ *
+ */
 public class AlphabetSort {
     private Trie ourTrie = new Trie();
 
-    /* add all the words to a trie */
+    /**
+     * Ddds all the words to a trie.
+     */
     private void addToTrie(HashSet<String> words) {
         for (String word : words) {
             ourTrie.insert(word);
         }
     }
 
-    /* prints the words in sorted order */
+    /**
+     * Prints the words in sorted order.
+     */
     private void sort(ArrayList<Character> alphabet) {
         ourTrie.sort(alphabet);
     }
 
+    /**
+     * Takes input for alphabet and words from stdin. Sorts the given words
+     * based on the alphabet and prints them on stdout.
+     */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         if (!sc.hasNext()) {
@@ -45,4 +59,3 @@ public class AlphabetSort {
     }
 
 }
-

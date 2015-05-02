@@ -4,6 +4,8 @@ import java.util.LinkedList;
 /**
  * Implements autocomplete on prefixes for a given dictionary of terms and
  * weights.
+ * 
+ * @author Riva Madan
  */
 public class Autocomplete {
 
@@ -126,12 +128,15 @@ public class Autocomplete {
 
         Autocomplete autocomplete = new Autocomplete(terms, weights);
 
+        String term = autocomplete.topMatch("s");
+        StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
+
         // process queries from standard input
-        int k = Integer.parseInt(args[1]);
-        while (StdIn.hasNextLine()) {
-            String prefix = StdIn.readLine();
-            for (String term : autocomplete.topMatches(prefix, k))
-                StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
-        }
+//        int k = Integer.parseInt(args[1]);
+//        while (StdIn.hasNextLine()) {
+//            String prefix = StdIn.readLine();
+//            for (String term : autocomplete.topMatches(prefix, k))
+//                StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
+        // }
     }
 }

@@ -10,13 +10,17 @@ import java.util.Map;
  */
 public class Trie {
 
-    /* Data structure that holds information for each character in the trie */
+    /**
+     * Data structure that holds information for each character in the trie/
+     */
     private class Node {
         private boolean end;
         private Map<Character, Node> children;
         private String word;
 
-        /* node constructor */
+        /**
+         * node constructor
+         */
         public Node() {
             children = new HashMap<Character, Node>();
             end = false;
@@ -25,12 +29,16 @@ public class Trie {
 
     private Node root = new Node();
 
-    /* returns whether or not a string is in the trie */
+    /**
+     * Returns whether or not a string is in the trie.
+     */
     public boolean find(String s, boolean isFullWord) {
         return find(root, s, isFullWord);
     }
 
-    /* helper method for find */
+    /**
+     * helper method for find
+     */
     private boolean find(Node x, String s, boolean isFullWord) {
         if (s == null) {
             return false;
@@ -57,12 +65,16 @@ public class Trie {
         return find(x.children.get(c), next, isFullWord);
     }
 
-    /* inserts a string into the trie */
+    /**
+     * Inserts a string into the trie.
+     */
     public void insert(String s) {
         insert(root, s, 0);
     }
 
-    /* helper method for insert *//* make iterative!!!!!!!!!!!!!! */
+    /**
+     * helper method for insert
+     */
     private Node insert(Node x, String s, int i) {
         if (s.equals("") || s == null) {
             throw new IllegalArgumentException();
@@ -83,12 +95,16 @@ public class Trie {
         return x;
     }
 
-    /* prints out words in trie in sorted order according to a given alphabet */
+    /**
+     * Prints out words in trie in sorted order according to a given alphabet.
+     */
     public void sort(ArrayList<Character> alphabetSet) {
         sort(root, alphabetSet);
     }
 
-    /* helper method for sort */
+    /**
+     * helper method for sort
+     */
     private void sort(Node x, ArrayList<Character> alphabetSet) {
         for (char eachChar : alphabetSet) {
             if (x.children.containsKey(eachChar)) {
