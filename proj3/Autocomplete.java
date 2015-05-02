@@ -1,7 +1,5 @@
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 
 /**
  * Implements autocomplete on prefixes for a given dictionary of terms and
