@@ -154,10 +154,14 @@ public class TST {
         Node start;
         if (prefix.equals("")) {
             start = root;
+            maxPQ.add(start);
         } else {
             start = get(root, prefix, 0);
+            if (start == null) {
+                return new ArrayList<String>();
+            }
+            maxPQ.add(start.mid);
         }
-        maxPQ.add(start.mid);
 
         while (!maxPQ.isEmpty()) {
             Node x = maxPQ.remove();

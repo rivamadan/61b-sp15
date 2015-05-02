@@ -130,7 +130,7 @@ public class Autocomplete {
         // String term = autocomplete.topMatch("nor");
         // StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
 
-        // Iterable<String> list = autocomplete.topMatches("Jack", 10);
+        // Iterable<String> list = autocomplete.topMatches("", 6);
         // for (String term : list) {
         // StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
         // }
