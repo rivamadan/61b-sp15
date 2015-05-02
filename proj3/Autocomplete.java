@@ -18,6 +18,7 @@ public class Autocomplete {
     // use the weight of the
     // node and the maximum weight of its subtries to avoid exploration of
     // useless parts of the subtrie.
+
     private TST ourTST = new TST();
 
     /**
@@ -65,7 +66,7 @@ public class Autocomplete {
      * @return Best (highest weight) matching string in the dictionary.
      */
     public String topMatch(String prefix) {
-        return prefix;
+        return ourTST.topMatch(prefix);
     }
 
     /**
@@ -78,6 +79,9 @@ public class Autocomplete {
      * @return
      */
     public Iterable<String> topMatches(String prefix, int k) {
+        if (k < 0) {
+            throw new IllegalArgumentException();
+        }
         return null;
     }
 
