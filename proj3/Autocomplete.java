@@ -1,5 +1,7 @@
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 /**
  * Implements autocomplete on prefixes for a given dictionary of terms and
@@ -8,18 +10,6 @@ import java.util.LinkedList;
  * @author Riva Madan
  */
 public class Autocomplete {
-
-    // If a given prefix matches some node's character, we can descend into that
-    // node's middle subtrie. If not, we look either to the left or right
-    // subtrie, depending on whether or not the character comes before or after
-    // the node.
-
-    // All of the matching words are in the subtrie corresponding to the prefix,
-    // so the first step is to
-    // search for this node, say x. Now, to identify the top k matches, we will
-    // use the weight of the
-    // node and the maximum weight of its subtries to avoid exploration of
-    // useless parts of the subtrie.
 
     private TST ourTST = new TST();
 
@@ -53,7 +43,8 @@ public class Autocomplete {
      * 0.0
      * 
      * @param term
-     * @return
+     *            Word to find weight of.
+     * @return Weight of a given term.
      */
     public double weightOf(String term) {
         return ourTST.get(term);
@@ -77,15 +68,25 @@ public class Autocomplete {
      * terms.
      * 
      * @param prefix
+     *            Input prefix to match against.
      * @param k
-     * @return
+     *            Number of matches.
+     * @return The top k matching terms as an iterable.
      */
     public Iterable<String> topMatches(String prefix, int k) {
         if (k < 0) {
             throw new IllegalArgumentException();
         }
-        return null;
+
+        return ourTST.topMatches(prefix, k);
     }
+
+    /*
+     * You can try to use a MaxPQ and make sure it is always at size k. Use
+     * peek() to check the kth element. If you need to add on to the MaxPQ,
+     * remove the item that peek() returns to you and then enqueue. This ensures
+     * that you will always have the kth heaviest items.
+     */
 
     /**
      * Returns the highest weighted matches within k edit distance of the word.
@@ -128,15 +129,15 @@ public class Autocomplete {
 
         Autocomplete autocomplete = new Autocomplete(terms, weights);
 
-        String term = autocomplete.topMatch("s");
+        String term = autocomplete.topMatch("nor");
         StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
 
         // process queries from standard input
-//        int k = Integer.parseInt(args[1]);
-//        while (StdIn.hasNextLine()) {
-//            String prefix = StdIn.readLine();
-//            for (String term : autocomplete.topMatches(prefix, k))
-//                StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
+        // int k = Integer.parseInt(args[1]);
+        // while (StdIn.hasNextLine()) {
+        // String prefix = StdIn.readLine();
+        // for (String term : autocomplete.topMatches(prefix, k))
+        // StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
         // }
     }
 }

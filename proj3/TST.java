@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /* based off of princeton's TST */
 
 public class TST {
@@ -45,19 +49,19 @@ public class TST {
         if (x.left == null && x.right == null && x.mid == null) {
             x.max = x.val;
         } else if (x.left == null && x.right == null) {
-            x.max = x.mid.max;
+            x.max = Math.max(x.mid.max, x.val);
         } else if (x.left == null && x.mid == null) {
-            x.max = x.right.max;
+            x.max = Math.max(x.right.max, x.val);
         } else if (x.right == null && x.mid == null) {
-            x.max = x.left.max;
+            x.max = Math.max(x.left.max, x.val);
         } else if (x.left == null) {
-            x.max = Math.max(x.mid.max, x.right.max);
+            x.max = Math.max(x.mid.max, Math.max(x.right.max, x.val));
         } else if (x.right == null) {
-            x.max = Math.max(x.mid.max, x.left.max);
+            x.max = Math.max(x.mid.max, Math.max(x.left.max, x.val));
         } else if (x.mid == null) {
-            x.max = Math.max(x.left.max, x.right.max);
+            x.max = Math.max(x.left.max, Math.max(x.right.max, x.val));
         } else {
-            x.max = Math.max(x.mid.max, Math.max(x.left.max, x.right.max));
+            x.max = Math.max(x.mid.max, Math.max(x.left.max, Math.max(x.right.max, x.val)));
         }
     }
 
@@ -99,8 +103,18 @@ public class TST {
     }
     
     public String topMatch(String prefix) {
-        Node start = get(root, prefix, 0);
-        return topMatch(start);
+        Node start;
+        if (prefix == "") {
+            start = root;
+        } else {
+            start = get(root, prefix, 0);
+            System.out.print(start.c);
+        }
+        if (start.max == start.val) {
+            return start.word;
+        } else {
+            return topMatch(start.mid);
+        }
 
     }
 
@@ -122,4 +136,58 @@ public class TST {
         }
         return null;
     }
+
+    public Iterable<String> topMatches(String prefix, int k) {
+        PriorityQueue<Node> maxPQ = new PriorityQueue<Node>(1, new Comparator<Node>() {
+            @Override
+            public int compare(Node n1, Node n2) {
+                return Double.compare(n2.max, n1.max);
+            }
+        });
+
+        PriorityQueue<Node> bestAnswer = new PriorityQueue<Node>();
+
+        Node start = get(root, prefix, 0);
+        maxPQ.add(start.mid);
+
+        while (!maxPQ.isEmpty()) {
+            Node x = maxPQ.remove();
+            if (x.max < bestAnswer.peek().max) {
+                break;
+            }
+            if (x.word != null) {
+                if (bestAnswer.size() == k) {
+                    bestAnswer.remove();
+                }
+                bestAnswer.add(x);
+            }
+            if (x.left != null) {
+                maxPQ.add(x.left);
+            }
+            if (x.mid != null) {
+                maxPQ.add(x.mid);
+            }
+            if (x.right != null) {
+                maxPQ.add(x.right);
+            }
+        }
+
+        PriorityQueue<Node> temp = new PriorityQueue<Node>(1, new Comparator<Node>() {
+            @Override
+            public int compare(Node n1, Node n2) {
+                return Double.compare(n2.max, n1.max);
+            }
+        });
+
+        while (!bestAnswer.isEmpty()) {
+            temp.add(bestAnswer.remove());
+        }
+
+        ArrayList<String> kthTerms = new ArrayList<String>();
+        for (int i = 0; i < k; i++) {
+            kthTerms.add(temp.remove().word);
+        }
+        return kthTerms;
+    }
+
 }
