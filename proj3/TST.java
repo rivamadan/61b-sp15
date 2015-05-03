@@ -168,7 +168,7 @@ public class TST {
 
         while (!maxPQ.isEmpty()) {
             Node x = maxPQ.remove();
-            if (bestAnswer.size() == k && x.max < bestAnswer.peek().max) {
+            if (bestAnswer.size() == k && x.max < bestAnswer.peek().val) {
                 break;
             }
             if (x.word != null) {
@@ -207,4 +207,3 @@ public class TST {
     }
 
 }
-
