@@ -127,10 +127,10 @@ public class Autocomplete {
 
         Autocomplete autocomplete = new Autocomplete(terms, weights);
 
-        // String term = autocomplete.topMatch("nor");
+        // String term = autocomplete.topMatch("");
         // StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
 
-        // Iterable<String> list = autocomplete.topMatches("", 6);
+        // Iterable<String> list = autocomplete.topMatches("Guil", 10);
         // for (String term : list) {
         // StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
         // }

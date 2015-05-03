@@ -105,7 +105,7 @@ public class TST {
     public String topMatch(String prefix) {
         Node start;
         if (prefix.equals("")) {
-            start = root;
+            return topMatch(root);
         } else {
             start = get(root, prefix, 0);
         }
@@ -140,7 +140,7 @@ public class TST {
         PriorityQueue<Node> maxPQ = new PriorityQueue<Node>(1, new Comparator<Node>() {
             @Override
             public int compare(Node n1, Node n2) {
-                return Double.compare(n2.val, n1.val);
+                return (int) (n2.max - n1.max);
             }
         });
 
@@ -153,8 +153,7 @@ public class TST {
 
         Node start;
         if (prefix.equals("")) {
-            start = root;
-            maxPQ.add(start);
+            maxPQ.add(root);
         } else {
             start = get(root, prefix, 0);
             if (start == null) {
