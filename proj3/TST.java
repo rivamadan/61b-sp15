@@ -162,6 +162,9 @@ public class TST {
             if (start.mid == null) {
                 maxPQ.add(start);
             } else {
+                if (start.word != null) {
+                    bestAnswer.add(start);
+                }
                 maxPQ.add(start.mid);
             }
         }
