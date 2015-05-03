@@ -159,12 +159,10 @@ public class TST {
             if (start == null) {
                 return new ArrayList<String>();
             }
-            if (start.mid == null) {
-                maxPQ.add(start);
-            } else {
-                if (start.word != null) {
-                    bestAnswer.add(start);
-                }
+            if (start.word != null) {
+                bestAnswer.add(start);
+            }
+            if (start.mid != null) {
                 maxPQ.add(start.mid);
             }
         }
