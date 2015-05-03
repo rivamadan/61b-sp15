@@ -140,7 +140,7 @@ public class TST {
         PriorityQueue<Node> maxPQ = new PriorityQueue<Node>(1, new Comparator<Node>() {
             @Override
             public int compare(Node n1, Node n2) {
-                return (int) (n2.max - n1.max);
+                return Double.compare(n2.max, n1.max);
             }
         });
 
@@ -159,7 +159,11 @@ public class TST {
             if (start == null) {
                 return new ArrayList<String>();
             }
-            maxPQ.add(start.mid);
+            if (start.mid == null) {
+                maxPQ.add(start);
+            } else {
+                maxPQ.add(start.mid);
+            }
         }
 
         while (!maxPQ.isEmpty()) {
@@ -203,3 +207,4 @@ public class TST {
     }
 
 }
+
