@@ -219,25 +219,32 @@ public class UserList {
     *       printed, sortFeatures equals "pages".
     **/
     public void mergeSort(String sortFeature) {
-        int mid = userQueue.size()/2;
+        int prevSize = this.size;
+        int mid = this.size/2;
 
-        CatenableQueue<User> firstHalf = new CatenableQueue<User>(); //change to userList
-        CatenableQueue<User> secondHalf = new CatenableQueue<User>();
+        UserList firstHalf = new UserList();
+        UserList secondHalf = new UserList();
+
+        if (prevSize == 1) {
+        	return;
+        }
 
         for (int i = 0; i < mid; i++){
-            firstHalf.enqueue(userList.dequeue()); //change to userQueue
+            firstHalf.add(userQueue.dequeue());
         }
+
+        for (int i = mid; i < this.size; i++){
+            secondHalf.add(userQueue.dequeue());
+        }
+
+        if (prevSize == 2) {
+        	userQueue = mergeTwoQueues(sortFeature, (firstHalf.userQueue), (secondHalf.userQueue));
+        	return;
+        }
+        
         firstHalf.mergeSort(sortFeature);
-
-        for (int i = mid; i < userList.size(); i++){
-            secondHalf.enqueue(userList.dequeue());
-        }
         secondHalf.mergeSort(sortFeature);
-
-        if (userList.isEmpty()) {
-        	userList = firstHalf.append(secondHalf);
-        }
-
+        userQueue = mergeTwoQueues(sortFeature, (firstHalf.userQueue), (secondHalf.userQueue));
     }
 
     /**
@@ -345,7 +352,6 @@ public class UserList {
 
         String sorted =
          "[ User ID: 0, Pages Printed: 10,\n  User ID: 1, Pages Printed: 11,\n  User ID: 2, Pages Printed: 12 ]";
-
         assertEquals(sorted, list.toString());
 
         list.mergeSort("pages");
