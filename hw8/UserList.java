@@ -228,6 +228,7 @@ public class UserList {
     	CatenableQueue<CatenableQueue<User>> queues = makeQueueOfQueues();
     	if (queues.isEmpty()) {
     		userQueue = new CatenableQueue<User>();
+    		return;
     	}
     	// int n = queues.size();
 
