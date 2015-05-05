@@ -219,29 +219,17 @@ public class UserList {
     *       printed, sortFeatures equals "pages".
     **/
     public void mergeSort(String sortFeature) {
-    	int n = userQueue.size();
-        
-        for (int x = 1; x < n-x; x = x+x) {
-        	CatenableQueue<User> newUserQueue = new CatenableQueue<User>();
-        	for (int y = 0; y < n-x; y=x+x) {
-        		CatenableQueue<User> firstHalf = new CatenableQueue<User>();
-		        CatenableQueue<User> secondHalf = new CatenableQueue<User>();
-	        	for (int i = y; i < y+x; i++) {
-			           firstHalf.enqueue(userQueue.nth(i));
-			    }
-			    for (int i = y+x; i < y+x+x && i < n-x; i++){
-			        secondHalf.enqueue(userQueue.nth(i));
-			    }
-			    newUserQueue.append(mergeTwoQueues(sortFeature, firstHalf, secondHalf));
-			}
+    	CatenableQueue<CatenableQueue<User>> queues = makeQueueOfQueues();
+    	int n = queues.size();
 
-			CatenableQueue<User> extra = new CatenableQueue<User>();
-			for (int j = n-x; j < n; j++) {
-				extra.enqueue(userQueue.nth(j));
-			}
-			userQueue = mergeTwoQueues(sortFeature, newUserQueue, extra);
-        }
+    	CatenableQueue<CatenableQueue<User>> newUserQueue = new CatenableQueue<CatenableQueue<User>>();
+    	for (int x = 0; x < n-1; x++) {
+    		queues.enqueue(mergeTwoQueues(sortFeature, queues.dequeue(), queues.dequeue()));
+    	}
+
+    	userQueue = queues.dequeue();
     }
+
 
     //    public void mergeSortRecursive(String sortFeature) {
     //     int prevSize = this.size;
@@ -381,6 +369,16 @@ public class UserList {
 
         list.mergeSort("pages");
         assertEquals(sorted, list.toString()); 
+
+        UserList q1 = new UserList();
+        q1.add(new User(0, 20));
+        q1.add(new User(2, 30));
+        q1.add(new User(3, 40));
+        q1.add(new User(1, 0));
+        q1.add(new User(4, 10));
+
+        q1.mergeSort("page");
+        System.out.println(q1.toString());
     }
 
     @Test
