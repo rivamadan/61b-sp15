@@ -220,10 +220,14 @@ public class UserList {
     **/
     public void mergeSort(String sortFeature) {
     	CatenableQueue<CatenableQueue<User>> queues = makeQueueOfQueues();
-    	int n = queues.size();
+    	// int n = queues.size();
 
     	CatenableQueue<CatenableQueue<User>> newUserQueue = new CatenableQueue<CatenableQueue<User>>();
-    	for (int x = 0; x < n-1; x++) {
+    	// for (int x = 0; x < n-1; x++) {
+    	// 	queues.enqueue(mergeTwoQueues(sortFeature, queues.dequeue(), queues.dequeue()));
+    	// }
+
+    	while (queues.size() != 1) {
     		queues.enqueue(mergeTwoQueues(sortFeature, queues.dequeue(), queues.dequeue()));
     	}
 
