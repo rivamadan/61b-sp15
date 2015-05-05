@@ -231,8 +231,6 @@ public class UserList {
     		return;
     	}
 
-    	CatenableQueue<CatenableQueue<User>> newUserQueue = new CatenableQueue<CatenableQueue<User>>();
-
     	while (queues.size() > 1) {
     		queues.enqueue(mergeTwoQueues(sortFeature, queues.dequeue(), queues.dequeue()));
     	}
