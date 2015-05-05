@@ -378,7 +378,6 @@ public class UserList {
         q1.add(new User(4, 10));
 
         q1.mergeSort("page");
-        System.out.println(q1.toString());
     }
 
     @Test
