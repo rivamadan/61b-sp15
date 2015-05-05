@@ -237,7 +237,10 @@ public class UserList {
     		queues.enqueue(mergeTwoQueues(sortFeature, queues.dequeue(), queues.dequeue()));
     	}
 
-    	userQueue = queues.dequeue();
+    	CatenableQueue<User> sortedUserQueue = queues.dequeue();
+    	while (!sortedUserQueue.isEmpty()) {
+    		userQueue.enqueue(sortedUserQueue.dequeue());
+    	}
     }
 
 
