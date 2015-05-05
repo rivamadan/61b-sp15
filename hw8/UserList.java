@@ -219,33 +219,58 @@ public class UserList {
     *       printed, sortFeatures equals "pages".
     **/
     public void mergeSort(String sortFeature) {
-        int prevSize = this.size;
-        int mid = this.size/2;
-
-        UserList firstHalf = new UserList();
-        UserList secondHalf = new UserList();
-
-        if (prevSize == 1) {
-        	return;
-        }
-
-        for (int i = 0; i < mid; i++){
-            firstHalf.add(userQueue.dequeue());
-        }
-
-        for (int i = mid; i < this.size; i++){
-            secondHalf.add(userQueue.dequeue());
-        }
-
-        if (prevSize == 2) {
-        	userQueue = mergeTwoQueues(sortFeature, (firstHalf.userQueue), (secondHalf.userQueue));
-        	return;
-        }
+    	int n = userQueue.size();
         
-        firstHalf.mergeSort(sortFeature);
-        secondHalf.mergeSort(sortFeature);
-        userQueue = mergeTwoQueues(sortFeature, (firstHalf.userQueue), (secondHalf.userQueue));
+        for (int x = 1; x < n-x; x = x+x) {
+        	CatenableQueue<User> newUserQueue = new CatenableQueue<User>();
+        	for (int y = 0; y < n-x; y=x+x) {
+        		CatenableQueue<User> firstHalf = new CatenableQueue<User>();
+		        CatenableQueue<User> secondHalf = new CatenableQueue<User>();
+	        	for (int i = y; i < y+x; i++) {
+			           firstHalf.enqueue(userQueue.nth(i));
+			    }
+			    for (int i = y+x; i < y+x+x && i < n-x; i++){
+			        secondHalf.enqueue(userQueue.nth(i));
+			    }
+			    newUserQueue.append(mergeTwoQueues(sortFeature, firstHalf, secondHalf));
+			}
+
+			CatenableQueue<User> extra = new CatenableQueue<User>();
+			for (int j = n-x; j < n; j++) {
+				extra.enqueue(userQueue.nth(j));
+			}
+			userQueue = mergeTwoQueues(sortFeature, newUserQueue, extra);
+        }
     }
+
+    //    public void mergeSortRecursive(String sortFeature) {
+    //     int prevSize = this.size;
+    //     int mid = this.size/2;
+
+    //     UserList firstHalf = new UserList();
+    //     UserList secondHalf = new UserList();
+
+    //     if (prevSize == 1) {
+    //     	return;
+    //     }
+
+    //     for (int i = 0; i < mid; i++){
+    //         firstHalf.add(userQueue.dequeue());
+    //     }
+
+    //     for (int i = mid; i < this.size; i++){
+    //         secondHalf.add(userQueue.dequeue());
+    //     }
+
+    //     if (prevSize == 2) {
+    //     	userQueue = mergeTwoQueues(sortFeature, (firstHalf.userQueue), (secondHalf.userQueue));
+    //     	return;
+    //     }
+        
+    //     firstHalf.mergeSort(sortFeature);
+    //     secondHalf.mergeSort(sortFeature);
+    //     userQueue = mergeTwoQueues(sortFeature, (firstHalf.userQueue), (secondHalf.userQueue));
+    // }
 
     /**
     *   sortByBothFeatures() sorts this UserList's userQueue from smallest to largest pages printed.
