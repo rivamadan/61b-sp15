@@ -230,21 +230,14 @@ public class UserList {
     		userQueue = new CatenableQueue<User>();
     		return;
     	}
-    	// int n = queues.size();
 
     	CatenableQueue<CatenableQueue<User>> newUserQueue = new CatenableQueue<CatenableQueue<User>>();
-    	// for (int x = 0; x < n-1; x++) {
-    	// 	queues.enqueue(mergeTwoQueues(sortFeature, queues.dequeue(), queues.dequeue()));
-    	// }
 
     	while (queues.size() > 1) {
     		queues.enqueue(mergeTwoQueues(sortFeature, queues.dequeue(), queues.dequeue()));
     	}
 
     	userQueue = queues.dequeue();
-    	// while (!sortedUserQueue.isEmpty()) {
-    	// 	userQueue.enqueue(sortedUserQueue.dequeue());
-    	// }
     }
 
 
@@ -282,8 +275,8 @@ public class UserList {
     *   If two Users have printed the same number of pages, the User with the smaller user ID is first.
     **/
     public void sortByBothFeatures(){
-        quickSort("id");
-        mergeSort("pages");
+        quickSort("pages");
+        mergeSort("id");
     }
 
 
