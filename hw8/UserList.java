@@ -166,6 +166,12 @@ public class UserList {
     **/
     public static CatenableQueue<User> mergeTwoQueues(String sortFeature, CatenableQueue<User> q1, CatenableQueue<User> q2){
         CatenableQueue<User> sorted = new CatenableQueue<User>();
+        if (q1 == null) {
+        	return q2;
+        }
+        if (q2 == null) {
+        	return q1;
+        }
         while (!q1.isEmpty() && !q2.isEmpty()) {
             User item1 = q1.front();
             User item2 = q2.front();
